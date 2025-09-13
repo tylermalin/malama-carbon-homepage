@@ -91,7 +91,6 @@ export function Footer({
                 alt="Mālama Labs" 
                 className="h-[80px] w-auto object-contain"
               />
-              <span className="text-2xl font-medium">Mālama Labs</span>
             </div>
             <p className="text-primary-foreground/80 max-w-md mb-8 leading-relaxed">
               Automating carbon removal through innovative technology and traditional Hawaiian land stewardship practices.
