@@ -54,26 +54,7 @@ export function TeamPage({ onNavigate }: TeamPageProps) {
     }
   ];
 
-  const advisors = [
-    {
-      name: "Dr. Robert Jackson",
-      role: "Scientific Advisor",
-      organization: "Stanford Woods Institute",
-      expertise: "Global carbon cycle research"
-    },
-    {
-      name: "Nan Ransohoff",
-      role: "Climate Markets Advisor", 
-      organization: "Stripe Climate",
-      expertise: "Carbon removal procurement"
-    },
-    {
-      name: "Kathy Hannun",
-      role: "Technology Advisor",
-      organization: "Former President, Dandelion Energy",
-      expertise: "Climate technology scaling"
-    }
-  ];
+  // Advisory Board is now a call to action section
 
   return (
     <div className="min-h-screen bg-background">
@@ -196,7 +177,7 @@ export function TeamPage({ onNavigate }: TeamPageProps) {
         </div>
       </section>
 
-      {/* Advisory Board */}
+      {/* Advisory Board Call to Action */}
       <section className="py-20 px-6 bg-accent/20">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -208,33 +189,51 @@ export function TeamPage({ onNavigate }: TeamPageProps) {
           >
             <h2 className="text-4xl mb-6 text-primary">Advisory Board</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              World-class advisors guiding our technology and market strategy.
+              Mālama Labs is building a global community of leaders dedicated to advancing durable climate solutions.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {advisors.map((advisor, index) => (
-              <motion.div
-                key={advisor.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Card className="p-6 text-center hover:shadow-lg transition-shadow duration-300 bg-background border-2">
-                  <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Award className="w-8 h-8 text-secondary-foreground" />
-                  </div>
-                  
-                  <h3 className="text-lg mb-1 text-primary">{advisor.name}</h3>
-                  <Badge variant="outline" className="mb-3">{advisor.role}</Badge>
-                  
-                  <p className="text-sm text-muted-foreground mb-2">{advisor.organization}</p>
-                  <p className="text-sm text-muted-foreground italic">{advisor.expertise}</p>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto"
+          >
+            <Card className="p-8 text-center bg-background border-2">
+              <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                <Award className="w-10 h-10 text-primary-foreground" />
+              </div>
+              
+              <h3 className="text-2xl mb-6 text-primary">Join Our Advisory Board</h3>
+              
+              <div className="text-left space-y-6 mb-8">
+                <p className="text-muted-foreground leading-relaxed">
+                  Our Advisory Board brings together diverse expertise across science, technology, markets, and cultural stewardship to guide our mission and amplify our impact.
+                </p>
+                
+                <p className="text-muted-foreground leading-relaxed">
+                  We are currently recruiting industry leaders, carbon market experts, scientists, and climate activists to join our Advisory Board. Advisors play a critical role in shaping our strategy, strengthening partnerships, and ensuring that our work honors both ecological integrity and community values.
+                </p>
+                
+                <p className="text-muted-foreground leading-relaxed">
+                  If you are interested in joining the Advisory Board—or would like to nominate someone whose voice should be at the table—we welcome your outreach. Together, we can accelerate the transition to a climate-positive future.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <p className="text-lg font-medium text-primary">Get in touch:</p>
+                <Button 
+                  size="lg"
+                  onClick={() => onNavigate()}
+                  className="hover:scale-105 transition-transform duration-300"
+                >
+                  <Mail className="w-5 h-5 mr-2" />
+                  Contact Us About Advisory Board
+                </Button>
+              </div>
+            </Card>
+          </motion.div>
         </div>
       </section>
 
