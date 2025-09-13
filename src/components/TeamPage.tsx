@@ -28,7 +28,7 @@ export function TeamPage({ onNavigate }: TeamPageProps) {
     {
       name: "Tyler Malin",
       role: "Co-Founder",
-      bio: "Visionary leader with deep expertise in carbon markets and sustainable technology. Passionate about building solutions that bridge traditional land stewardship with cutting-edge climate technology.",
+      bio: "Founder, operator, and legal strategist working at the intersection of climate tech, blockchain, and AI. With 20+ years leading high-growth ventures, Tyler translates emerging technologies into trusted markets and real-world infrastructure. At Mālama Labs, he co-leads durable carbon markets powered by biochar, blockchain MRV, and token architecture. As founder of Beneficial Technology, he supports startups with compliant token ecosystems, fundraising, and global launches.",
       education: "Environmental Science & Business",
       location: "Los Angeles",
       expertise: ["Environmental Science & Business", "Carbon Markets", "Strategic Leadership", "Climate Technology"],
