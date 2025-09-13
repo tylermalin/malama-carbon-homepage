@@ -27,29 +27,29 @@ export function TeamPage({ onNavigate }: TeamPageProps) {
   const teamMembers = [
     {
       name: "Tyler Malin",
-      role: "Co-Founder & CEO",
+      role: "Co-Founder",
       bio: "Visionary leader with deep expertise in carbon markets and sustainable technology. Passionate about building solutions that bridge traditional land stewardship with cutting-edge climate technology.",
       education: "Environmental Science & Business",
-      location: "Hawaiʻi",
-      expertise: ["Carbon Markets", "Strategic Leadership", "Climate Technology"],
+      location: "Los Angeles",
+      expertise: ["Environmental Science & Business", "Carbon Markets", "Strategic Leadership", "Climate Technology"],
       image: tylerHeadshot
     },
     {
       name: "Dominick Garey",
-      role: "Co-Founder & CTO",
+      role: "Co-Founder",
       bio: "Technology innovator specializing in blockchain systems and digital measurement, reporting, and verification (dMRV) platforms. Expert in building scalable solutions for carbon credit verification and trading.",
       education: "Computer Science & Engineering",
-      location: "Hawaiʻi",
-      expertise: ["Blockchain Technology", "dMRV Systems", "Software Architecture"],
+      location: "Dallas, Texas",
+      expertise: ["Computer Science & Engineering", "Blockchain Technology", "dMRV Systems", "Software Architecture"],
       image: dominickHeadshot
     },
     {
       name: "Jeffrey Wise",
-      role: "Co-Founder & Head of Operations",
-      bio: "Operations specialist with extensive experience in project management and sustainable business development. Focused on creating efficient systems that support carbon project implementation and community engagement.",
-      education: "Business Administration & Environmental Studies",
+      role: "Co-Founder",
+      bio: "Jeffrey Wise is an entrepreneur and community builder focused on sustainability, technology, and trust-based systems. As Co-Founder of Mālama Labs, he integrates blockchain and IoT with land stewardship to support carbon markets and food security. He studied astronomy at The Ohio State University, holds a Blockchain Business Models certificate from Duke University, and works with farmers and scientists nationwide to advance regenerative solutions.",
+      education: "Astronomy at The Ohio State University, Blockchain Business Models certificate from Duke University",
       location: "Hawaiʻi",
-      expertise: ["Operations Management", "Project Development", "Community Relations"],
+      expertise: ["Sustainability & Technology", "Blockchain & IoT", "Community Building", "Regenerative Solutions"],
       image: jeffreyHeadshot
     }
   ];
