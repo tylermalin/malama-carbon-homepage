@@ -37,7 +37,7 @@ export function TeamPage({ onNavigate }: TeamPageProps) {
     {
       name: "Dominick Garey",
       role: "Co-Founder",
-      bio: "Technology innovator specializing in blockchain systems and digital measurement, reporting, and verification (dMRV) platforms. Expert in building scalable solutions for carbon credit verification and trading.",
+      bio: "Co-Founder and Lead Architect at Mālama Labs, Dominick Garey is a technology innovator specializing in blockchain infrastructure and digital measurement, reporting, and verification (dMRV) systems. With a background in back-end engineering and distributed systems, he builds scalable, secure platforms that turn raw environmental data into blockchain-verified carbon credits. At Mālama, he leads development of the Universal dMRV and Climate Intelligence Network, enabling projects to achieve pre-certification, access early financing, and issue high-integrity credits across registries like Puro.earth and Verra. His expertise spans smart contract design, token architecture, and API integration, with prior experience in DeFi, NFTs, and compliance-driven Web3 applications. Dominick is known for creating systems that combine regulatory-grade security with market usability, helping accelerate the growth of durable carbon removal markets. He is passionate about using blockchain and AI as practical tools for climate action, ensuring technology delivers measurable ecological impact.",
       education: "Computer Science & Engineering",
       location: "Dallas, Texas",
       expertise: ["Computer Science & Engineering", "Blockchain Technology", "dMRV Systems", "Software Architecture"],
