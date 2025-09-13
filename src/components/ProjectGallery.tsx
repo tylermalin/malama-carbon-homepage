@@ -12,49 +12,57 @@ export function ProjectGallery({ onNavigate }: ProjectGalleryProps) {
   // Sample project data showcasing different project types and variants
   const projects = [
     {
-      id: 'hawaii-macadamia-biochar-2024',
-      name: 'Hawaiʻi Macadamia Biochar Project',
+      id: 'hawaii-food-forest-project-2025',
+      name: 'Hawaiʻi Food Forest Project',
       developer: {
-        name: 'Pacific Agroforestry Co-op',
+        name: '505 Farms LLC',
         verified: true
       },
       type: 'biochar' as const,
       location: {
         country: 'United States',
-        region: 'Hawaiʻi'
+        region: 'Maui, Hawaiʻi'
       },
       images: [
         'https://images.unsplash.com/photo-1720170723453-dd9de7397bd7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHxtYWNhZGFtaWElMjBudXRzJTIwYWdyaWN1bHR1cmV8ZW58MXx8fHwxNzU2MjcyOTAxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
       ],
-      description: 'Converting agricultural waste from macadamia nut processing into high-quality biochar for permanent carbon sequestration.',
+      description: 'Developing a regenerative food forest that integrates biochar production, agroforestry, and climate-smart practices. In partnership with 505 Farms LLC, this project will convert diverse agricultural byproducts into durable carbon sequestration while supporting local food security and ecological restoration. Verified through Mālama\'s Universal dMRV and Climate Intelligence Network, the project is positioned to generate high-integrity carbon credits and early offtake opportunities.',
       certifications: [
-        { standard: 'LC02 Biochar Standard', status: 'verified' as const, certifier: 'Puro.earth', date: '2024-03-15' }
+        { standard: 'LC02 Biochar Standard', status: 'in_progress' as const, certifier: 'Puro.earth' },
+        { standard: 'Puro.earth', status: 'pending' as const, certifier: 'Puro.earth' },
+        { standard: 'Verra VCS', status: 'in_progress' as const, certifier: 'Verra' },
+        { standard: 'Gold Standard', status: 'pending' as const, certifier: 'Gold Standard' }
       ],
       metrics: {
-        totalCORCs: 2500,
-        estimatedCORCs: 3200,
-        permanenceRating: 95,
+        totalCORCs: 0, // Coming Soon
+        estimatedCORCs: 0, // Coming Soon
+        permanenceRating: 95, // High durability through biochar integration
         projectDuration: 10,
-        startDate: '2024-01-15',
-        verificationDate: '2024-08-20'
+        startDate: '2025-10-01', // Q4 2025
+        verificationDate: '2026-04-01' // Target Q2 2026
       },
       dMRV: {
-        activeSensors: 24,
-        dataPoints: 156840,
-        aiAccuracy: 97.3,
+        activeSensors: 0, // Planned
+        dataPoints: 0, // Planned
+        aiAccuracy: 0, // Pre-certification underway
         lastUpdate: '2024-12-15T10:30:00Z',
-        monitoringType: ['Temperature', 'Moisture', 'pH Levels', 'Carbon Content', 'Biochar Stability']
+        monitoringType: ['Universal dMRV deployment planned for site monitoring', 'Automated pre-certification data streams', 'Real-time metrics across soil health, biomass conversion, and carbon stability']
       },
       pricing: {
-        currentPrice: 120,
+        currentPrice: 0, // TBD
         currency: 'CORC',
-        minimumPurchase: 100,
-        earlyLiquidity: 35
+        minimumPurchase: 0, // TBD
+        earlyLiquidity: 0 // Pre-sales opening soon
       },
-      status: 'active' as const,
-      fundingProgress: 78,
-      keywords: ['Biochar', 'Agricultural Waste', 'Macadamia Processing'],
-      sustainabilityGoals: ['Climate Action (SDG 13)', 'Sustainable Agriculture (SDG 2)']
+      status: 'planning' as const,
+      fundingProgress: 0, // Pre-sales opening soon
+      keywords: ['Biochar', 'Agroforestry', 'Food Security', 'Circular Economy', 'Maui Agriculture', 'Soil Enhancement'],
+      sustainabilityGoals: ['Climate Action (SDG 13)', 'Sustainable Agriculture (SDG 2)', 'Life on Land (SDG 15)', 'Responsible Consumption (SDG 12)'],
+      riskFactors: [
+        'Agricultural yield variability',
+        'Carbon market price shifts',
+        'Certification and regulatory timelines'
+      ]
     },
     {
       id: 'costa-rica-forest-restoration-2024',

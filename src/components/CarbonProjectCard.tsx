@@ -182,11 +182,15 @@ export function CarbonProjectCard({
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
               <p className="text-xs text-muted-foreground mb-1">CORCs Available</p>
-              <p className="font-semibold">{project.metrics.totalCORCs.toLocaleString()}</p>
+              <p className="font-semibold">
+                {project.metrics.totalCORCs > 0 ? project.metrics.totalCORCs.toLocaleString() : 'Coming Soon'}
+              </p>
             </div>
             <div>
               <p className="text-xs text-muted-foreground mb-1">Price</p>
-              <p className="font-semibold">${project.pricing.currentPrice}/{project.pricing.currency}</p>
+              <p className="font-semibold">
+                {project.pricing.currentPrice > 0 ? `$${project.pricing.currentPrice}/${project.pricing.currency}` : 'TBD'}
+              </p>
             </div>
           </div>
           
@@ -328,7 +332,9 @@ export function CarbonProjectCard({
               <Target className="w-5 h-5 text-primary" />
               <span className="text-sm font-medium text-primary">Total CORCs</span>
             </div>
-            <p className="text-2xl font-bold text-primary">{project.metrics.totalCORCs.toLocaleString()}</p>
+            <p className="text-2xl font-bold text-primary">
+              {project.metrics.totalCORCs > 0 ? project.metrics.totalCORCs.toLocaleString() : 'Coming Soon'}
+            </p>
             <p className="text-xs text-muted-foreground">Available credits</p>
           </div>
           
@@ -337,7 +343,9 @@ export function CarbonProjectCard({
               <DollarSign className="w-5 h-5 text-secondary" />
               <span className="text-sm font-medium text-secondary">Price</span>
             </div>
-            <p className="text-2xl font-bold text-secondary">${project.pricing.currentPrice}</p>
+            <p className="text-2xl font-bold text-secondary">
+              {project.pricing.currentPrice > 0 ? `$${project.pricing.currentPrice}` : 'TBD'}
+            </p>
             <p className="text-xs text-muted-foreground">per {project.pricing.currency}</p>
           </div>
           
@@ -355,7 +363,9 @@ export function CarbonProjectCard({
               <Brain className="w-5 h-5 text-blue-600" />
               <span className="text-sm font-medium text-blue-600">AI Accuracy</span>
             </div>
-            <p className="text-2xl font-bold text-blue-600">{project.dMRV.aiAccuracy}%</p>
+            <p className="text-2xl font-bold text-blue-600">
+              {project.dMRV.aiAccuracy > 0 ? `${project.dMRV.aiAccuracy}%` : 'Pre-certification underway'}
+            </p>
             <p className="text-xs text-muted-foreground">dMRV confidence</p>
           </div>
         </div>
