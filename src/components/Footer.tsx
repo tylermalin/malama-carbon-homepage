@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { Separator } from './ui/separator';
 import { Twitter, Linkedin, Github, Mail } from 'lucide-react';
-import malamaLogo from 'figma:asset/37a47935d44775c05b14ffaa2c0ff28eb3dc4288.png';
+import malamaLogo from '../assets/malama-labs-logo.svg';
 
 interface FooterProps {
   onShowDocumentation?: () => void;
@@ -91,7 +91,7 @@ export function Footer({
                 alt="Mālama Labs" 
                 className="h-[80px] w-auto object-contain"
               />
-              <span className="text-2xl font-medium">Mālama Carbon</span>
+              <span className="text-2xl font-medium">Mālama Labs</span>
             </div>
             <p className="text-primary-foreground/80 max-w-md mb-8 leading-relaxed">
               Automating carbon removal through innovative technology and traditional Hawaiian land stewardship practices.

@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import malamaLogo from 'figma:asset/37a47935d44775c05b14ffaa2c0ff28eb3dc4288.png';
+import malamaLogo from '../assets/malama-labs-logo.svg';
 
 interface HeroSectionProps {
   onExplorePlatform?: () => void;
