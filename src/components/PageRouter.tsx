@@ -94,126 +94,492 @@ export function PageRouter({
       return user ? <ProjectDashboard user={user} /> : null;
     
     case 'platform':
-      return <PlatformPage onNavigate={navigateToSection} onStartProject={showGetStarted} />;
+      return (
+        <>
+          <PlatformPage onNavigate={navigateToSection} onStartProject={showGetStarted} />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
+      );
     
     case 'howItWorks':
-      return <HowItWorksPage onNavigate={navigateToSection} onStartProject={showGetStarted} />;
+      return (
+        <>
+          <HowItWorksPage onNavigate={navigateToSection} onStartProject={showGetStarted} />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
+      );
     
     case 'getStarted':
-      return <GetStartedPage onNavigate={navigateToSection} onAccountCreated={onAccountCreated} />;
+      return (
+        <>
+          <GetStartedPage onNavigate={navigateToSection} onAccountCreated={onAccountCreated} />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
+      );
     
     case 'landSteward':
-      return <LandStewardPage onNavigate={navigateToSection} onStartProject={showGetStarted} />;
+      return (
+        <>
+          <LandStewardPage onNavigate={navigateToSection} onStartProject={showGetStarted} />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
+      );
     
     case 'documentation':
-      return <DocumentationPage onNavigate={navigateToSection} />;
+      return (
+        <>
+          <DocumentationPage onNavigate={navigateToSection} />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
+      );
     
     case 'blog':
-      return <BlogPage onNavigate={navigateToSection} />;
+      return (
+        <>
+          <BlogPage onNavigate={navigateToSection} />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
+      );
     
     case 'projectGallery':
-      return <ProjectGallery onNavigate={navigateToSection} />;
+      return (
+        <>
+          <ProjectGallery onNavigate={navigateToSection} />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
+      );
     
     case 'about':
-      return <AboutPage onNavigate={navigateToSection} />;
+      return (
+        <>
+          <AboutPage onNavigate={navigateToSection} />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
+      );
     
     case 'team':
-      return <TeamPage onNavigate={navigateToSection} />;
+      return (
+        <>
+          <TeamPage onNavigate={navigateToSection} />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
+      );
     
     case 'contact':
-      return <ContactPage onNavigate={navigateToSection} />;
+      return (
+        <>
+          <ContactPage onNavigate={navigateToSection} />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
+      );
     
     case 'faq':
-      return <FAQPage onNavigate={navigateToSection} onContact={showContact} />;
+      return (
+        <>
+          <FAQPage onNavigate={navigateToSection} onContact={showContact} />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
+      );
     
     case 'careers':
-      return <CareersPage onNavigate={navigateToSection} />;
+      return (
+        <>
+          <CareersPage onNavigate={navigateToSection} />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
+      );
     
     case 'privacyPolicy':
       return (
-        <LegalPage 
-          onNavigate={navigateToSection}
-          title="Privacy Policy"
-          content="At Mālama Carbon, we are committed to protecting your privacy and personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you use our platform."
-        />
+        <>
+          <LegalPage 
+            onNavigate={navigateToSection}
+            title="Privacy Policy"
+            content="At Mālama Carbon, we are committed to protecting your privacy and personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you use our platform."
+          />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
       );
       
     case 'termsOfService':
       return (
-        <LegalPage 
-          onNavigate={navigateToSection}
-          title="Terms of Service"
-          content="These Terms of Service govern your use of Mālama Carbon's platform and services. By accessing or using our platform, you agree to be bound by these terms."
-        />
+        <>
+          <LegalPage 
+            onNavigate={navigateToSection}
+            title="Terms of Service"
+            content="These Terms of Service govern your use of Mālama Carbon's platform and services. By accessing or using our platform, you agree to be bound by these terms."
+          />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
       );
       
     case 'cookiePolicy':
       return (
-        <LegalPage 
-          onNavigate={navigateToSection}
-          title="Cookie Policy"
-          content="This Cookie Policy explains how Mālama Carbon uses cookies and similar technologies to enhance your experience on our platform."
-        />
+        <>
+          <LegalPage 
+            onNavigate={navigateToSection}
+            title="Cookie Policy"
+            content="This Cookie Policy explains how Mālama Carbon uses cookies and similar technologies to enhance your experience on our platform."
+          />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
       );
       
     case 'carbonStudio':
       return (
-        <ProductFeaturePage 
-          onNavigate={navigateToSection}
-          onStartProject={showGetStarted}
-          title="Carbon Credit Studio"
-          subtitle="Issue and pre-sell durable credits on-chain"
-          description="Our Carbon Credit Studio enables projects to issue and pre-sell durable LC02/VC02 credits on-chain to jumpstart financing and accelerate project development."
-          features={[
-            "Pre-sell carbon credits before project completion",
-            "On-chain issuance for transparency and trust",
-            "Integration with major certification platforms",
-            "Automated compliance and reporting",
-            "Access to verified carbon credit buyers",
-            "Real-time pricing and market data"
-          ]}
-          icon={Coins}
-        />
+        <>
+          <ProductFeaturePage 
+            onNavigate={navigateToSection}
+            onStartProject={showGetStarted}
+            title="Carbon Credit Studio"
+            subtitle="Issue and pre-sell durable credits on-chain"
+            description="Our Carbon Credit Studio enables projects to issue and pre-sell durable LC02/VC02 credits on-chain to jumpstart financing and accelerate project development."
+            features={[
+              "Pre-sell carbon credits before project completion",
+              "On-chain issuance for transparency and trust",
+              "Integration with major certification platforms",
+              "Automated compliance and reporting",
+              "Access to verified carbon credit buyers",
+              "Real-time pricing and market data"
+            ]}
+            icon={Coins}
+          />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
       );
       
     case 'carbonProtocols':
       return (
-        <ProductFeaturePage 
-          onNavigate={navigateToSection}
-          onStartProject={showGetStarted}
-          title="Durable Carbon Sequestration Protocols"
-          subtitle="Track, verify, and tokenize biochar carbon removal"
-          description="Our protocols provide a comprehensive framework for tracking, verifying, and tokenizing biochar carbon removal with pre-certification pathways."
-          features={[
-            "Pre-certification pathways for faster approval",
-            "Biochar-specific measurement protocols",
-            "Automated verification and monitoring",
-            "Integration with Verra and Gold Standard",
-            "Permanence tracking and verification",
-            "Chain of custody documentation"
-          ]}
-          icon={Flame}
-        />
+        <>
+          <ProductFeaturePage 
+            onNavigate={navigateToSection}
+            onStartProject={showGetStarted}
+            title="Durable Carbon Sequestration Protocols"
+            subtitle="Track, verify, and tokenize biochar carbon removal"
+            description="Our protocols provide a comprehensive framework for tracking, verifying, and tokenizing biochar carbon removal with pre-certification pathways."
+            features={[
+              "Pre-certification pathways for faster approval",
+              "Biochar-specific measurement protocols",
+              "Automated verification and monitoring",
+              "Integration with Verra and Gold Standard",
+              "Permanence tracking and verification",
+              "Chain of custody documentation"
+            ]}
+            icon={Flame}
+          />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
       );
       
     case 'dmrvEngine':
       return (
-        <ProductFeaturePage 
-          onNavigate={navigateToSection}
-          onStartProject={showGetStarted}
-          title="Universal dMRV Engine"
-          subtitle="Automated measurement across any methodology"
-          description="Our Universal dMRV Engine provides automated measurement and monitoring across any carbon methodology, integrated with certification platforms."
-          features={[
-            "Compatible with any carbon methodology",
-            "AI-powered sensor networks",
-            "Real-time data collection and analysis",
-            "Automated reporting to certification bodies",
-            "Blockchain-verified data integrity",
-            "Cross-platform integration capabilities"
-          ]}
-          icon={Cpu}
-        />
+        <>
+          <ProductFeaturePage 
+            onNavigate={navigateToSection}
+            onStartProject={showGetStarted}
+            title="Universal dMRV Engine"
+            subtitle="Automated measurement across any methodology"
+            description="Our Universal dMRV Engine provides automated measurement and monitoring across any carbon methodology, integrated with certification platforms."
+            features={[
+              "Compatible with any carbon methodology",
+              "AI-powered sensor networks",
+              "Real-time data collection and analysis",
+              "Automated reporting to certification bodies",
+              "Blockchain-verified data integrity",
+              "Cross-platform integration capabilities"
+            ]}
+            icon={Cpu}
+          />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+          />
+        </>
       );
     
     case 'home':
