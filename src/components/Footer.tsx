@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { Separator } from './ui/separator';
 import { Twitter, Linkedin, Github, Mail } from 'lucide-react';
-import malamaLogo from '../assets/malama logo new.png';
+import malamaLogo from '../assets/mālama labs (2).png';
 
 interface FooterProps {
   onShowDocumentation?: () => void;
