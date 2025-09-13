@@ -4,6 +4,9 @@ import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import tylerHeadshot from '../assets/tyler headshopt.JPG';
+import dominickHeadshot from '../assets/Dominick.png';
+import jeffreyHeadshot from '../assets/jeffrey.jpeg';
 import { 
   ArrowLeft,
   Users,
@@ -23,58 +26,31 @@ interface TeamPageProps {
 export function TeamPage({ onNavigate }: TeamPageProps) {
   const teamMembers = [
     {
-      name: "Kai Nakamura",
+      name: "Tyler Malin",
       role: "Co-Founder & CEO",
-      bio: "Environmental engineer with 15+ years in carbon markets and traditional Hawaiian land management. Former lead at Carbon Direct.",
-      education: "PhD Environmental Engineering, University of Hawaiʻi",
-      location: "Honolulu, HI",
-      expertise: ["Carbon Markets", "Land Stewardship", "Blockchain"],
-      image: "professional headshot"
+      bio: "Visionary leader with deep expertise in carbon markets and sustainable technology. Passionate about building solutions that bridge traditional land stewardship with cutting-edge climate technology.",
+      education: "Environmental Science & Business",
+      location: "Hawaiʻi",
+      expertise: ["Carbon Markets", "Strategic Leadership", "Climate Technology"],
+      image: tylerHeadshot
     },
     {
-      name: "Dr. Sarah Chen",
+      name: "Dominick Garey",
       role: "Co-Founder & CTO",
-      bio: "Blockchain architect and climate tech pioneer. Built verification systems for major carbon registries.",
-      education: "PhD Computer Science, Stanford University",
-      location: "Palo Alto, CA",
-      expertise: ["Blockchain", "dMRV Systems", "AI/ML"],
-      image: "professional headshot"
+      bio: "Technology innovator specializing in blockchain systems and digital measurement, reporting, and verification (dMRV) platforms. Expert in building scalable solutions for carbon credit verification and trading.",
+      education: "Computer Science & Engineering",
+      location: "Hawaiʻi",
+      expertise: ["Blockchain Technology", "dMRV Systems", "Software Architecture"],
+      image: dominickHeadshot
     },
     {
-      name: "Marcus Johnson",
-      role: "Head of Partnerships",
-      bio: "Former Director at Puro.earth, connecting carbon projects with global buyers and advancing market standards.",
-      education: "MBA Environmental Management, Yale",
-      location: "New York, NY",
-      expertise: ["Carbon Markets", "Business Development", "Partnerships"],
-      image: "professional headshot"
-    },
-    {
-      name: "Leilani Akamu",
-      role: "Director of Community Engagement",
-      bio: "Native Hawaiian advocate connecting traditional knowledge with modern technology for land stewardship.",
-      education: "MS Indigenous Studies, University of Hawaiʻi",
-      location: "Hilo, HI",
-      expertise: ["Community Relations", "Traditional Knowledge", "Sustainability"],
-      image: "professional headshot"
-    },
-    {
-      name: "Dr. James Rodriguez",
-      role: "Lead Scientist",
-      bio: "Soil carbon expert and biochar researcher. Published 40+ papers on carbon sequestration methodologies.",
-      education: "PhD Soil Science, UC Davis",
-      location: "Sacramento, CA",
-      expertise: ["Soil Carbon", "Biochar", "Research"],
-      image: "professional headshot"
-    },
-    {
-      name: "Priya Patel",
-      role: "Head of Product",
-      bio: "Former product lead at Stripe Climate, building user-friendly interfaces for complex environmental data.",
-      education: "MS Product Design, Carnegie Mellon",
-      location: "San Francisco, CA",
-      expertise: ["Product Design", "UX/UI", "Climate Tech"],
-      image: "professional headshot"
+      name: "Jeffrey Wise",
+      role: "Co-Founder & Head of Operations",
+      bio: "Operations specialist with extensive experience in project management and sustainable business development. Focused on creating efficient systems that support carbon project implementation and community engagement.",
+      education: "Business Administration & Environmental Studies",
+      location: "Hawaiʻi",
+      expertise: ["Operations Management", "Project Development", "Community Relations"],
+      image: jeffreyHeadshot
     }
   ];
 
@@ -130,14 +106,12 @@ export function TeamPage({ onNavigate }: TeamPageProps) {
             </Badge>
             
             <h1 className="text-5xl md:text-6xl mb-6 text-primary leading-tight">
-              The People Behind
-              <span className="block text-secondary">Mālama Carbon</span>
+              Meet Our Team
             </h1>
             
             <p className="text-xl text-muted-foreground max-w-4xl mx-auto mb-8 leading-relaxed">
-              Our diverse team combines deep expertise in carbon markets, blockchain technology, 
-              traditional land stewardship, and community engagement to build solutions that work 
-              for people and the planet.
+              Our founding team brings together diverse expertise in carbon markets, blockchain technology, 
+              and sustainable operations to build innovative solutions for climate action and community impact.
             </p>
           </motion.div>
         </div>
@@ -153,9 +127,9 @@ export function TeamPage({ onNavigate }: TeamPageProps) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl mb-6 text-primary">Leadership Team</h2>
+            <h2 className="text-4xl mb-6 text-primary">Founding Team</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Experienced leaders bringing together technology, science, and community impact.
+              Three passionate founders united by a shared vision for climate action and sustainable technology.
             </p>
           </motion.div>
 
@@ -170,8 +144,12 @@ export function TeamPage({ onNavigate }: TeamPageProps) {
               >
                 <Card className="h-full hover:shadow-lg transition-shadow duration-300 border-2">
                   <CardHeader className="text-center pb-4">
-                    <div className="w-24 h-24 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Users className="w-12 h-12 text-primary" />
+                    <div className="w-32 h-32 rounded-full overflow-hidden mx-auto mb-4 border-4 border-primary/20">
+                      <ImageWithFallback
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <CardTitle className="text-xl text-primary">{member.name}</CardTitle>
                     <Badge variant="outline" className="mt-2">{member.role}</Badge>
