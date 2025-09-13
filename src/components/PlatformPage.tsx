@@ -2,7 +2,6 @@ import { motion } from 'motion/react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
-import { Footer } from './Footer';
 import { 
   ArrowRight, 
   Activity, 
@@ -491,8 +490,6 @@ export function PlatformPage({ onNavigate, onStartProject }: PlatformPageProps) 
         </div>
       </section>
 
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }

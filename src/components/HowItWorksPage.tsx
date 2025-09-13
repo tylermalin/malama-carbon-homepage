@@ -2,7 +2,6 @@ import { motion } from 'motion/react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
-import { Footer } from './Footer';
 import { 
   ArrowRight, 
   Clock, 
@@ -404,8 +403,6 @@ export function HowItWorksPage({ onNavigate, onStartProject }: HowItWorksPagePro
         </div>
       </section>
 
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }
