@@ -556,9 +556,10 @@ export function CarbonProjectCard({
             onClick={() => onInvest?.(project.id)}
             className="flex-1 hover:scale-105 transition-transform duration-300"
             size="lg"
+            disabled
           >
             <Heart className="w-5 h-5 mr-2" />
-            Invest in Project
+            COMING SOON
           </Button>
           
           <Button 
@@ -568,7 +569,7 @@ export function CarbonProjectCard({
             size="lg"
           >
             <ExternalLink className="w-5 h-5 mr-2" />
-            Learn More
+            View all projects
           </Button>
         </div>
       </CardContent>
