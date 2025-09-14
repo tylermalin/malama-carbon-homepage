@@ -28,6 +28,9 @@ export function useNavigation() {
   const navigateToPage = (page: PageType, section?: string) => {
     setCurrentPage(page);
     
+    // Scroll to top when navigating to a new page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
     if (section && page === 'home') {
       setTimeout(() => {
         const element = document.getElementById(section);
@@ -44,6 +47,10 @@ export function useNavigation() {
 
   const showPlatformPage = (section?: string) => {
     setCurrentPage('platform');
+    
+    // Scroll to top when navigating to platform page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
     if (section) {
       setTimeout(() => {
         const element = document.getElementById(section);

@@ -57,10 +57,12 @@ export function DashboardRouter() {
 
   const selectDashboard = (type: DashboardType) => {
     setSelectedDashboard(type);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const goBack = () => {
     setSelectedDashboard(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   if (selectedDashboard === 'steward') {

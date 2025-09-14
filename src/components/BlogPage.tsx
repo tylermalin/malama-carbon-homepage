@@ -26,7 +26,10 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
 
   // Handle viewing individual blog posts
   if (viewingPost === 'wef-blockchain-climate') {
-    return <WEFBlockchainBlogPost onNavigate={() => setViewingPost(null)} />;
+    return <WEFBlockchainBlogPost onNavigate={() => {
+      setViewingPost(null);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }} />;
   }
 
   const featuredArticles = [
@@ -224,6 +227,7 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
                         onClick={() => {
                           if (article.internal && article.id) {
                             setViewingPost(article.id);
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
                           } else if (article.url) {
                             window.open(article.url, '_blank');
                           }
