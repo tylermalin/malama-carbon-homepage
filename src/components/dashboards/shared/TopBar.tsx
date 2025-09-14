@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Badge } from '../ui/badge';
+import { Badge } from '../../ui/badge';
 
 export function TopBar() {
   return (

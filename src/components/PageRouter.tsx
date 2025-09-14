@@ -389,33 +389,6 @@ export function PageRouter({
         </>
       );
     
-    case 'privacyPolicy':
-      return (
-        <>
-          <LegalPage 
-            onNavigate={navigateToSection}
-            title="Privacy Policy"
-            content="At Mālama Carbon, we are committed to protecting your privacy and personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you use our platform."
-          />
-          <Footer 
-            onShowDocumentation={showDocumentation} 
-            onShowBlog={showBlog} 
-            onShowPlatform={showPlatform}
-            onShowHowItWorks={showHowItWorks}
-            onShowAbout={showAbout}
-            onShowTeam={showTeam}
-            onShowContact={showContact}
-            onShowCareers={showCareers}
-            onShowFAQ={showFAQ}
-            onShowPrivacyPolicy={showPrivacyPolicy}
-            onShowTermsOfService={showTermsOfService}
-            onShowCookiePolicy={showCookiePolicy}
-            onShowCarbonStudio={showCarbonStudio}
-            onShowCarbonProtocols={showCarbonProtocols}
-            onShowDMRVEngine={showDMRVEngine}
-          />
-        </>
-      );
       
     case 'termsOfService':
       return (
