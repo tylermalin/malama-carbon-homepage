@@ -15,13 +15,33 @@ import {
   Globe,
   Target
 } from 'lucide-react';
+import { WEFBlockchainBlogPost } from './blog/WEFBlockchainBlogPost';
 
 interface BlogPageProps {
   onNavigate: (section?: string) => void;
 }
 
 export function BlogPage({ onNavigate }: BlogPageProps) {
+  const [viewingPost, setViewingPost] = React.useState<string | null>(null);
+
+  // Handle viewing individual blog posts
+  if (viewingPost === 'wef-blockchain-climate') {
+    return <WEFBlockchainBlogPost onNavigate={() => setViewingPost(null)} />;
+  }
+
   const featuredArticles = [
+    {
+      id: 'wef-blockchain-climate',
+      title: "Blockchains and Climate: Lessons from the WEF White Paper",
+      excerpt: "How blockchain infrastructure can accelerate credible climate action—and what barriers remain. An analysis of the World Economic Forum's latest research on scaling climate solutions.",
+      category: "Policy & Standards",
+      readTime: "8 min read",
+      date: "Jan 2025",
+      image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwY2xpbWF0ZSUyMGFjdGlvbnxlbnwxfHx8fDE3NTY5ODc5NTV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      tags: ["Blockchain", "Climate Action", "WEF", "Policy"],
+      featured: true,
+      internal: true
+    },
     {
       title: "Bridging the CDR Gap: Why the SBTi Net Zero Standard Must Expand Beyond Scope 1",
       excerpt: "Exploring how the Science Based Targets initiative (SBTi) can evolve to better address carbon dioxide removal (CDR) in corporate net-zero strategies, moving beyond traditional Scope 1 emissions.",
@@ -201,7 +221,13 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
                       </div>
                       
                       <Button 
-                        onClick={() => window.open(article.url, '_blank')}
+                        onClick={() => {
+                          if (article.internal && article.id) {
+                            setViewingPost(article.id);
+                          } else if (article.url) {
+                            window.open(article.url, '_blank');
+                          }
+                        }}
                         className="group-hover:gap-3 transition-all duration-300"
                       >
                         Read Full Article
