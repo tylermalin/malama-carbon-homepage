@@ -11,19 +11,18 @@ export const supabase = createClient(
 export const authHelpers = {
   async signUp(email: string, password: string, name: string) {
     try {
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-b827df6e/auth/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${publicAnonKey}`
-        },
-        body: JSON.stringify({ email, password, name })
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            name: name
+          }
+        }
       });
 
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.error || 'Sign up failed');
+      if (error) {
+        throw error;
       }
 
       return { data, error: null };

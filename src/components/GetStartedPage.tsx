@@ -46,6 +46,7 @@ interface GetStartedPageProps {
   onNavigate: (section?: string) => void;
   onAccountCreated?: (user: any, userType?: string) => void;
   onShowDashboards?: () => void;
+  user?: any; // Add user prop to check if already logged in
 }
 
 type UserType = 'steward' | 'developer' | 'buyer' | 'partner';
@@ -124,7 +125,15 @@ const userTypes = [
   }
 ];
 
-export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards }: GetStartedPageProps) {
+export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards, user }: GetStartedPageProps) {
+  // If user is already logged in, redirect to dashboards
+  React.useEffect(() => {
+    if (user && onShowDashboards) {
+      console.log('User already logged in, redirecting to dashboards');
+      onShowDashboards();
+    }
+  }, [user, onShowDashboards]);
+
   const [currentStep, setCurrentStep] = useState(0); // 0 = user type selection, 1-4 = steps
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -280,7 +289,7 @@ export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards 
 
     setIsLoading(true);
     try {
-      const { user, error } = await authHelpers.signUp(
+      const { data, error } = await authHelpers.signUp(
         formData.email, 
         formData.password, 
         formData.fullName
@@ -290,15 +299,15 @@ export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards 
         console.error('Sign up error:', error);
         
         // Check if the error is about user already existing
-        if (error.message?.toLowerCase().includes('already been registered') || 
-            error.message?.toLowerCase().includes('already exists')) {
+        if (error.toLowerCase().includes('already been registered') || 
+            error.toLowerCase().includes('already exists')) {
           const confirmSignIn = confirm(
             'An account with this email already exists. Would you like to sign in instead?'
           );
           
           if (confirmSignIn) {
             try {
-              const { user: signInUser, error: signInError } = await authHelpers.signIn(
+              const { data: signInData, error: signInError } = await authHelpers.signIn(
                 formData.email, 
                 formData.password
               );
@@ -311,8 +320,14 @@ export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards 
                 return;
               }
               
-              if (signInUser && onAccountCreated) {
-                onAccountCreated(signInUser, formData.userType || undefined);
+              if (signInData?.session?.access_token && onAccountCreated) {
+                const user = {
+                  id: signInData.user.id,
+                  email: signInData.user.email,
+                  name: signInData.user.user_metadata?.name || formData.fullName,
+                  accessToken: signInData.session.access_token
+                };
+                onAccountCreated(user, formData.userType || undefined);
                 // Navigate to dashboards after successful sign-in
                 if (onShowDashboards) {
                   onShowDashboards();
@@ -339,8 +354,14 @@ export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards 
         return;
       }
 
-      if (user && onAccountCreated) {
+      if (data?.user && onAccountCreated) {
         console.log('Account created successfully, user type:', formData.userType);
+        const user = {
+          id: data.user.id,
+          email: data.user.email,
+          name: data.user.user_metadata?.name || formData.fullName,
+          accessToken: data.session?.access_token || 'temp-token'
+        };
         onAccountCreated(user, formData.userType || undefined);
         // Navigate to dashboards after successful account creation
         if (onShowDashboards) {

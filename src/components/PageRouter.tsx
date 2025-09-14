@@ -158,6 +158,7 @@ export function PageRouter({
             onNavigate={navigateToSection} 
             onAccountCreated={handleAccountCreated} 
             onShowDashboards={showDashboards}
+            user={user}
           />
           <Footer 
             onShowDocumentation={showDocumentation} 
