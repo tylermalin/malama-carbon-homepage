@@ -9,7 +9,6 @@ import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { Checkbox } from './ui/checkbox';
 import { Progress } from './ui/progress';
 import { Badge } from './ui/badge';
-import { Footer } from './Footer';
 import { authHelpers } from '../utils/supabase/client';
 import { 
   ArrowRight, 
@@ -1462,8 +1461,6 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
         </div>
       </section>
 
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }
