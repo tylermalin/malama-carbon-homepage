@@ -127,6 +127,7 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showThankYou, setShowThankYou] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     userType: null,
     email: '',
@@ -259,6 +260,7 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
               
               if (signInUser && onAccountCreated) {
                 onAccountCreated(signInUser);
+                setShowThankYou(true);
               }
               
               console.log('User signed in successfully:', formData);
@@ -277,8 +279,8 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
 
       if (user && onAccountCreated) {
         onAccountCreated(user);
-        // Navigate to dashboards after successful account creation
-        onNavigate('dashboards');
+        // Show thank you message instead of navigating to dashboards
+        setShowThankYou(true);
       }
       
       console.log('Form submitted:', formData);
@@ -1334,6 +1336,75 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
   };
 
   const progress = currentStep === 0 ? 0 : (currentStep / 4) * 100;
+
+  // Show thank you message after successful account creation
+  if (showThankYou) {
+    return (
+      <div className="min-h-screen bg-background">
+        <section className="py-20 px-6 bg-gradient-to-br from-primary/5 via-background to-secondary/5">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-8">
+                <CheckCircle className="w-12 h-12 text-primary" />
+              </div>
+              
+              <h1 className="text-4xl md:text-5xl mb-6 text-primary font-medium">
+                Thank You for Your Interest!
+              </h1>
+              
+              <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
+                We're excited to have you join the Mālama Carbon community. Our team will be in touch soon to discuss your project and next steps.
+              </p>
+              
+              <div className="bg-muted/20 rounded-2xl p-8 mb-8 max-w-2xl mx-auto">
+                <h2 className="text-2xl font-semibold text-primary mb-4">
+                  What's Next?
+                </h2>
+                <div className="space-y-4 text-left">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                    <p className="text-muted-foreground">Our team will review your application and reach out within 2-3 business days</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                    <p className="text-muted-foreground">We'll schedule a call to discuss your specific needs and project goals</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                    <p className="text-muted-foreground">Our live dashboards and full platform features are coming soon!</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button 
+                  size="lg" 
+                  onClick={() => onNavigate()}
+                  className="hover:scale-105 transition-transform duration-300"
+                >
+                  Return to Home
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  onClick={() => onNavigate('about')}
+                  className="hover:scale-105 transition-transform duration-300"
+                >
+                  Learn More About Mālama
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
