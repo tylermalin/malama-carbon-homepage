@@ -1,5 +1,5 @@
-import { Card, CardContent } from '../ui/card';
-import { Progress } from '../ui/progress';
+import { Card, CardContent } from '../../ui/card';
+import { Progress } from '../../ui/progress';
 import { CheckCircle } from 'lucide-react';
 
 interface ProgressBlockProps {
