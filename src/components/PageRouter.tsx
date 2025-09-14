@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AuthUser } from '../types/auth';
 import { PageType } from '../hooks/useNavigation';
 
@@ -69,6 +69,12 @@ export function PageRouter({
   navigationFunctions,
   navigateToSection
 }: PageRouterProps) {
+  const [userType, setUserType] = useState<string | undefined>(undefined);
+
+  const handleAccountCreated = (userData: AuthUser, userType?: string) => {
+    setUserType(userType);
+    onAccountCreated(userData);
+  };
   const {
     showPlatform,
     showHowItWorks,
@@ -146,7 +152,7 @@ export function PageRouter({
     case 'getStarted':
       return (
         <>
-          <GetStartedPage onNavigate={navigateToSection} onAccountCreated={onAccountCreated} />
+          <GetStartedPage onNavigate={navigateToSection} onAccountCreated={handleAccountCreated} />
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
@@ -168,7 +174,7 @@ export function PageRouter({
       );
     
     case 'dashboards':
-      return <DashboardRouter />;
+      return <DashboardRouter userType={userType as any} />;
     
     case 'privacyPolicy':
       return <PrivacyPolicyPage onNavigate={navigateToSection} />;

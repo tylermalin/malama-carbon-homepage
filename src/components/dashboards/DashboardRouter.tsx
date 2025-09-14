@@ -17,6 +17,10 @@ import {
 
 type DashboardType = 'steward' | 'developer' | 'buyer' | 'partner' | null;
 
+interface DashboardRouterProps {
+  userType?: DashboardType;
+}
+
 const roleTypes = [
   {
     id: 'steward' as DashboardType,
@@ -52,8 +56,8 @@ const roleTypes = [
   }
 ];
 
-export function DashboardRouter() {
-  const [selectedDashboard, setSelectedDashboard] = useState<DashboardType>(null);
+export function DashboardRouter({ userType }: DashboardRouterProps) {
+  const [selectedDashboard, setSelectedDashboard] = useState<DashboardType>(userType || null);
 
   const selectDashboard = (type: DashboardType) => {
     setSelectedDashboard(type);

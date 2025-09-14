@@ -44,7 +44,7 @@ import {
 
 interface GetStartedPageProps {
   onNavigate: (section?: string) => void;
-  onAccountCreated?: (user: any) => void;
+  onAccountCreated?: (user: any, userType?: string) => void;
 }
 
 type UserType = 'steward' | 'developer' | 'buyer' | 'partner';
@@ -311,12 +311,9 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
               }
               
               if (signInUser && onAccountCreated) {
-                onAccountCreated(signInUser);
-                if (formData.userType === 'buyer') {
-                  setShowBuyerThankYou(true);
-                } else {
-                  setShowThankYou(true);
-                }
+                onAccountCreated(signInUser, formData.userType || undefined);
+                // Navigate to dashboards after successful sign-in
+                onNavigate('dashboards');
               }
               
               console.log('User signed in successfully:', formData);
@@ -340,13 +337,9 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
       }
 
       if (user && onAccountCreated) {
-        onAccountCreated(user);
-        // Show buyer-specific thank you message for buyers, general thank you for others
-        if (formData.userType === 'buyer') {
-          setShowBuyerThankYou(true);
-        } else {
-          setShowThankYou(true);
-        }
+        onAccountCreated(user, formData.userType || undefined);
+        // Navigate to dashboards after successful account creation
+        onNavigate('dashboards');
       }
       
       console.log('Form submitted:', formData);
