@@ -168,7 +168,7 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
               Featured Articles
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              In-depth analysis and insights from our CEO Tyler Malin on the 
+              In-depth analysis and insights from our Founder Tyler Malin on the 
               evolving landscape of carbon removal technology and policy.
             </p>
           </motion.div>
@@ -260,7 +260,7 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
             </div>
             
             <h2 className="text-4xl mb-6 text-primary">
-              Tyler Malin, CEO & Founder
+              Tyler Malin, Founder
             </h2>
             
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
