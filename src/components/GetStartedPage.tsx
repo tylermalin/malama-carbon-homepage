@@ -1770,16 +1770,28 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
   const renderAccountCreationStep = () => (
     <div className="space-y-6">
       <div>
-        <Label htmlFor="fullName" className="text-lg font-medium text-primary mb-2 block">
+        <Label htmlFor="fullName" className="text-lg font-medium text-primary mb-4 block">
           Full Name
         </Label>
-        <Input 
-          id="fullName"
-          placeholder="Enter your full name"
-          value={formData.fullName}
-          onChange={(e) => updateFormData('fullName', e.target.value)}
-          className="text-lg py-3"
-        />
+        <TooltipProvider>
+          <Tooltip open={showTooltips.fullName}>
+            <TooltipTrigger asChild>
+              <Input
+                id="fullName"
+                type="text"
+                value={formData.fullName}
+                onChange={(e) => updateFormData('fullName', e.target.value)}
+                placeholder="Enter your full name"
+                className={`text-lg ${validationErrors.fullName ? 'border-red-500' : ''}`}
+              />
+            </TooltipTrigger>
+            {validationErrors.fullName && (
+              <TooltipContent>
+                <p>{validationErrors.fullName}</p>
+              </TooltipContent>
+            )}
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       {formData.userType !== 'steward' && (
@@ -1798,78 +1810,153 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
       )}
 
       <div>
-        <Label htmlFor="email" className="text-lg font-medium text-primary mb-2 block">
+        <Label htmlFor="email" className="text-lg font-medium text-primary mb-4 block">
           Email Address
         </Label>
-        <Input 
-          id="email"
-          type="email"
-          placeholder="Enter your email address"
-          value={formData.email}
-          onChange={(e) => updateFormData('email', e.target.value)}
-          className="text-lg py-3"
-        />
+        <TooltipProvider>
+          <Tooltip open={showTooltips.email}>
+            <TooltipTrigger asChild>
+              <Input
+                id="email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => updateFormData('email', e.target.value)}
+                placeholder="Enter your email address"
+                className={`text-lg ${validationErrors.email ? 'border-red-500' : ''}`}
+              />
+            </TooltipTrigger>
+            {validationErrors.email && (
+              <TooltipContent>
+                <p>{validationErrors.email}</p>
+              </TooltipContent>
+            )}
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       <div>
-        <Label htmlFor="password" className="text-lg font-medium text-primary mb-2 block">
+        <Label htmlFor="password" className="text-lg font-medium text-primary mb-4 block">
           Password
         </Label>
-        <div className="relative">
-          <Input 
-            id="password"
-            type={showPassword ? "text" : "password"}
-            placeholder="Create a secure password"
-            value={formData.password}
-            onChange={(e) => updateFormData('password', e.target.value)}
-            className="text-lg py-3 pr-12"
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary"
-          >
-            {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-          </button>
-        </div>
+        <TooltipProvider>
+          <Tooltip open={showTooltips.password}>
+            <TooltipTrigger asChild>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={formData.password}
+                  onChange={(e) => updateFormData('password', e.target.value)}
+                  placeholder="Create a secure password"
+                  className={`text-lg pr-10 ${validationErrors.password ? 'border-red-500' : ''}`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+            </TooltipTrigger>
+            {validationErrors.password && (
+              <TooltipContent>
+                <p>{validationErrors.password}</p>
+              </TooltipContent>
+            )}
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       <div>
-        <Label htmlFor="confirmPassword" className="text-lg font-medium text-primary mb-2 block">
+        <Label htmlFor="confirmPassword" className="text-lg font-medium text-primary mb-4 block">
           Confirm Password
         </Label>
-        <div className="relative">
-          <Input 
-            id="confirmPassword"
-            type={showConfirmPassword ? "text" : "password"}
-            placeholder="Confirm your password"
-            value={formData.confirmPassword}
-            onChange={(e) => updateFormData('confirmPassword', e.target.value)}
-            className="text-lg py-3 pr-12"
-          />
-          <button
-            type="button"
-            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary"
-          >
-            {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-          </button>
-        </div>
-        {formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword && (
-          <p className="text-sm text-destructive mt-1">Passwords do not match</p>
-        )}
+        <TooltipProvider>
+          <Tooltip open={showTooltips.confirmPassword}>
+            <TooltipTrigger asChild>
+              <div className="relative">
+                <Input
+                  id="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={formData.confirmPassword}
+                  onChange={(e) => updateFormData('confirmPassword', e.target.value)}
+                  placeholder="Confirm your password"
+                  className={`text-lg pr-10 ${validationErrors.confirmPassword ? 'border-red-500' : ''}`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary"
+                >
+                  {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+            </TooltipTrigger>
+            {validationErrors.confirmPassword && (
+              <TooltipContent>
+                <p>{validationErrors.confirmPassword}</p>
+              </TooltipContent>
+            )}
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       <div className="flex items-start space-x-3">
-        <Checkbox 
-          id="terms"
-          checked={formData.agreeToTerms}
-          onCheckedChange={(checked) => updateFormData('agreeToTerms', checked)}
-        />
-        <Label htmlFor="terms" className="cursor-pointer text-sm leading-relaxed">
-          I agree to the <button className="text-primary hover:underline">Terms of Service</button> and <button className="text-primary hover:underline">Privacy Policy</button>, and consent to receive updates and communications
-        </Label>
+        <TooltipProvider>
+          <Tooltip open={showTooltips.agreeToTerms}>
+            <TooltipTrigger asChild>
+              <Checkbox
+                id="agreeToTerms"
+                checked={formData.agreeToTerms}
+                onCheckedChange={(checked) => updateFormData('agreeToTerms', checked as boolean)}
+                className={`mt-1 ${validationErrors.agreeToTerms ? 'border-red-500' : ''}`}
+              />
+            </TooltipTrigger>
+            {validationErrors.agreeToTerms && (
+              <TooltipContent>
+                <p>{validationErrors.agreeToTerms}</p>
+              </TooltipContent>
+            )}
+          </Tooltip>
+        </TooltipProvider>
+        <div className="space-y-1">
+          <Label htmlFor="agreeToTerms" className="text-sm text-muted-foreground cursor-pointer">
+            I agree to the{' '}
+            <button
+              type="button"
+              onClick={() => onNavigate('terms')}
+              className="text-primary hover:underline"
+            >
+              Terms of Service
+            </button>
+            {' '}and{' '}
+            <button
+              type="button"
+              onClick={() => onNavigate('privacyPolicy')}
+              className="text-primary hover:underline"
+            >
+              Privacy Policy
+            </button>
+          </Label>
+        </div>
       </div>
+
+      {/* General Error Message */}
+      {validationErrors.general && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-red-800">{validationErrors.general}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="bg-muted/20 rounded-xl p-6">
         <div className="flex items-start gap-3">
