@@ -69,10 +69,11 @@ export function PageRouter({
   navigationFunctions,
   navigateToSection
 }: PageRouterProps) {
-  const [userType, setUserType] = useState<string | undefined>(undefined);
+  const [userType, setUserType] = useState<'steward' | 'developer' | 'buyer' | 'partner' | undefined>(undefined);
 
   const handleAccountCreated = (userData: AuthUser, userType?: string) => {
-    setUserType(userType);
+    console.log('Account created with user type:', userType);
+    setUserType(userType as 'steward' | 'developer' | 'buyer' | 'partner' | undefined);
     onAccountCreated(userData);
   };
   const {
@@ -174,7 +175,7 @@ export function PageRouter({
       );
     
     case 'dashboards':
-      return <DashboardRouter userType={userType as any} />;
+      return <DashboardRouter userType={userType} />;
     
     case 'privacyPolicy':
       return <PrivacyPolicyPage onNavigate={navigateToSection} />;

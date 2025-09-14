@@ -337,6 +337,7 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
       }
 
       if (user && onAccountCreated) {
+        console.log('Account created successfully, user type:', formData.userType);
         onAccountCreated(user, formData.userType || undefined);
         // Navigate to dashboards after successful account creation
         onNavigate('dashboards');

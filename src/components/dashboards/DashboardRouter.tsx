@@ -57,6 +57,7 @@ const roleTypes = [
 ];
 
 export function DashboardRouter({ userType }: DashboardRouterProps) {
+  console.log('DashboardRouter received userType:', userType);
   const [selectedDashboard, setSelectedDashboard] = useState<DashboardType>(userType || null);
 
   const selectDashboard = (type: DashboardType) => {
