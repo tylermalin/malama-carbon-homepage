@@ -3,6 +3,7 @@ import { useState } from 'react';
 export type PageType = 
   | 'home'
   | 'dashboard' 
+  | 'dashboards'
   | 'platform'
   | 'howItWorks'
   | 'getStarted'
@@ -65,6 +66,7 @@ export function useNavigation() {
   const navigationFunctions = {
     showHome: () => navigateToPage('home'),
     showDashboard: () => navigateToPage('dashboard'),
+    showDashboards: () => navigateToPage('dashboards'),
     showPlatform: showPlatformPage,
     showHowItWorks: () => navigateToPage('howItWorks'),
     showGetStarted: () => navigateToPage('getStarted'),

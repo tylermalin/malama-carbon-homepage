@@ -81,6 +81,7 @@ export function PageRouter({
     showHowItWorks,
     showGetStarted,
     showLandSteward,
+    showDashboards,
     showDocumentation,
     showBlog,
     showProjectGallery,
@@ -153,7 +154,11 @@ export function PageRouter({
     case 'getStarted':
       return (
         <>
-          <GetStartedPage onNavigate={navigateToSection} onAccountCreated={handleAccountCreated} />
+          <GetStartedPage 
+            onNavigate={navigateToSection} 
+            onAccountCreated={handleAccountCreated} 
+            onShowDashboards={showDashboards}
+          />
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
@@ -183,7 +188,13 @@ export function PageRouter({
     case 'landSteward':
       return (
         <>
-          <LandStewardPage onNavigate={navigateToSection} onStartProject={showGetStarted} />
+          <LandStewardPage 
+            onNavigate={navigateToSection} 
+            onStartProject={() => {
+              console.log('PageRouter: showGetStarted called');
+              showGetStarted();
+            }} 
+          />
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 

@@ -80,7 +80,11 @@ export function LandStewardPage({ onNavigate, onStartProject }: LandStewardPageP
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 size="lg" 
-                onClick={onStartProject}
+                onClick={() => {
+                  console.log('Get Started as a Steward button clicked');
+                  console.log('onStartProject function:', onStartProject);
+                  onStartProject();
+                }}
                 className="hover:scale-105 transition-transform duration-300"
               >
                 Get Started as a Steward

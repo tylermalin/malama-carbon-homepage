@@ -45,6 +45,7 @@ import {
 interface GetStartedPageProps {
   onNavigate: (section?: string) => void;
   onAccountCreated?: (user: any, userType?: string) => void;
+  onShowDashboards?: () => void;
 }
 
 type UserType = 'steward' | 'developer' | 'buyer' | 'partner';
@@ -123,7 +124,7 @@ const userTypes = [
   }
 ];
 
-export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageProps) {
+export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards }: GetStartedPageProps) {
   const [currentStep, setCurrentStep] = useState(0); // 0 = user type selection, 1-4 = steps
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -313,7 +314,9 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
               if (signInUser && onAccountCreated) {
                 onAccountCreated(signInUser, formData.userType || undefined);
                 // Navigate to dashboards after successful sign-in
-                onNavigate('dashboards');
+                if (onShowDashboards) {
+                  onShowDashboards();
+                }
               }
               
               console.log('User signed in successfully:', formData);
@@ -340,7 +343,9 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
         console.log('Account created successfully, user type:', formData.userType);
         onAccountCreated(user, formData.userType || undefined);
         // Navigate to dashboards after successful account creation
-        onNavigate('dashboards');
+        if (onShowDashboards) {
+          onShowDashboards();
+        }
       }
       
       console.log('Form submitted:', formData);

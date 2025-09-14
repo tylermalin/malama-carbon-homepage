@@ -22,6 +22,7 @@ export default function App() {
     navigateToSection,
     isOnSubPage,
     showDashboard,
+    showDashboards,
     ...navigationFunctions
   } = useNavigation();
 
@@ -35,7 +36,8 @@ export default function App() {
 
   const handleAccountCreated = (userData: AuthUser) => {
     handleAuthSuccess(userData);
-    showDashboard();
+    // Navigate to dashboards instead of dashboard
+    showDashboards();
   };
 
   if (isCheckingAuth) {
