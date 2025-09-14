@@ -12,6 +12,7 @@ import { HowItWorks } from './HowItWorks';
 import { OnboardingFlow } from './OnboardingFlow';
 import { ClosingCTA } from './ClosingCTA';
 import { Footer } from './Footer';
+import { DashboardRouter } from './dashboards/DashboardRouter';
 import { DMRVDashboard } from './dMRVDashboard';
 import { RealTimeDataFeeds } from './RealTimeDataFeeds';
 
@@ -164,6 +165,9 @@ export function PageRouter({
           />
         </>
       );
+    
+    case 'dashboards':
+      return <DashboardRouter />;
     
     case 'landSteward':
       return (
