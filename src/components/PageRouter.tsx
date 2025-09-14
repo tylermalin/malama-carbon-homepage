@@ -585,7 +585,12 @@ export function PageRouter({
           <RealTimeDataFeeds />
           <HowItWorks onShowDetailedProcess={showHowItWorks} onLaunchProject={showGetStarted} />
           <OnboardingFlow />
-          <ClosingCTA onStartProject={showGetStarted} />
+          <ClosingCTA 
+            onStartProject={showGetStarted} 
+            onLandSteward={showLandSteward}
+            onExplorePlatform={showPlatform}
+            onHowItWorks={showHowItWorks}
+          />
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 

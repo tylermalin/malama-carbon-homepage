@@ -3,9 +3,12 @@ import { Button } from './ui/button';
 
 interface ClosingCTAProps {
   onStartProject?: () => void;
+  onLandSteward?: () => void;
+  onExplorePlatform?: () => void;
+  onHowItWorks?: () => void;
 }
 
-export function ClosingCTA({ onStartProject }: ClosingCTAProps) {
+export function ClosingCTA({ onStartProject, onLandSteward, onExplorePlatform, onHowItWorks }: ClosingCTAProps) {
   return (
     <section className="relative py-20 px-6 overflow-hidden">
       {/* Background Image with Blue/Aqua Gradient Overlay */}
@@ -81,7 +84,7 @@ export function ClosingCTA({ onStartProject }: ClosingCTAProps) {
         </motion.p>
         
         <motion.div 
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap"
+          className="flex flex-wrap gap-4 justify-center items-center"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
@@ -89,24 +92,34 @@ export function ClosingCTA({ onStartProject }: ClosingCTAProps) {
         >
           <Button 
             size="lg" 
+            onClick={onStartProject}
             className="bg-white text-primary hover:bg-white/90 hover:shadow-lg transition-all duration-300 hover:scale-105"
           >
-            Purchase Durable Credits
+            Start Your Project
           </Button>
           <Button 
             variant="outline" 
             size="lg"
-            onClick={onStartProject}
+            onClick={onLandSteward}
             className="border-white text-[rgba(0,0,0,1)] hover:bg-white hover:text-primary transition-all duration-300 hover:shadow-lg hover:scale-105"
           >
-            Create Biochar & Earn
+            For Land Stewards
           </Button>
           <Button 
             variant="outline" 
             size="lg"
+            onClick={onExplorePlatform}
             className="border-white text-[rgba(0,0,0,1)] hover:bg-white hover:text-primary transition-all duration-300 hover:shadow-lg hover:scale-105"
           >
-            Partner With Us
+            Explore the Platform
+          </Button>
+          <Button 
+            variant="outline" 
+            size="lg"
+            onClick={onHowItWorks}
+            className="border-white text-[rgba(0,0,0,1)] hover:bg-white hover:text-primary transition-all duration-300 hover:shadow-lg hover:scale-105"
+          >
+            How It Works
           </Button>
         </motion.div>
         
