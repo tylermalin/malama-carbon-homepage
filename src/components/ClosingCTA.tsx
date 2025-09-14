@@ -8,11 +8,11 @@ interface ClosingCTAProps {
 export function ClosingCTA({ onStartProject }: ClosingCTAProps) {
   return (
     <section className="relative py-20 px-6 overflow-hidden">
-      {/* Background Image with Overlay */}
+      {/* Background Image with Blue/Aqua Gradient Overlay */}
       <div 
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: `linear-gradient(rgba(27, 67, 50, 0.8), rgba(10, 61, 63, 0.8)), url('https://images.unsplash.com/photo-1631639685006-46269ce0d5f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2b2xjYW5vJTIwbGFuZHNjYXBlJTIwaGF3YWlpfGVufDF8fHx8MTc1NjI3MjkwMXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral')`,
+          backgroundImage: `linear-gradient(135deg, rgba(59, 130, 246, 0.85) 0%, rgba(16, 185, 129, 0.75) 50%, rgba(6, 182, 212, 0.8) 100%), url('https://images.unsplash.com/photo-1546064125-11154220541f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2b2xjYW5vJTIwbGFuZHNjYXBlJTIwaGF3YWlpfGVufDF8fHx8MTc1NjI3MjkwMXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed'
@@ -22,7 +22,7 @@ export function ClosingCTA({ onStartProject }: ClosingCTAProps) {
       {/* Animated Background Elements */}
       <div className="absolute inset-0 z-1">
         <motion.div 
-          className="absolute top-1/4 left-1/4 w-64 h-64 bg-white/5 rounded-full blur-3xl"
+          className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl"
           animate={{ 
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.5, 0.3]
@@ -34,13 +34,25 @@ export function ClosingCTA({ onStartProject }: ClosingCTAProps) {
           }}
         />
         <motion.div 
-          className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-white/5 rounded-full blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-cyan-400/10 rounded-full blur-3xl"
           animate={{ 
             scale: [1.2, 1, 1.2],
             opacity: [0.5, 0.3, 0.5]
           }}
           transition={{ 
             duration: 6, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute top-1/2 right-1/3 w-32 h-32 bg-emerald-400/8 rounded-full blur-2xl"
+          animate={{ 
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.4, 0.2]
+          }}
+          transition={{ 
+            duration: 10, 
             repeat: Infinity,
             ease: "easeInOut"
           }}
