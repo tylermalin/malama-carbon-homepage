@@ -128,6 +128,7 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
+  const [showBuyerThankYou, setShowBuyerThankYou] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     userType: null,
     email: '',
@@ -260,7 +261,11 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
               
               if (signInUser && onAccountCreated) {
                 onAccountCreated(signInUser);
-                setShowThankYou(true);
+                if (formData.userType === 'buyer') {
+                  setShowBuyerThankYou(true);
+                } else {
+                  setShowThankYou(true);
+                }
               }
               
               console.log('User signed in successfully:', formData);
@@ -279,8 +284,12 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
 
       if (user && onAccountCreated) {
         onAccountCreated(user);
-        // Show thank you message instead of navigating to dashboards
-        setShowThankYou(true);
+        // Show buyer-specific thank you message for buyers, general thank you for others
+        if (formData.userType === 'buyer') {
+          setShowBuyerThankYou(true);
+        } else {
+          setShowThankYou(true);
+        }
       }
       
       console.log('Form submitted:', formData);
@@ -320,8 +329,16 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
         }
         break;
       case 3:
-        return true; // Assessment/preview steps are automatic
+        if (formData.userType === 'buyer') {
+          return formData.email && formData.password && formData.confirmPassword && 
+                 formData.fullName && formData.agreeToTerms && 
+                 formData.password === formData.confirmPassword;
+        }
+        return true; // Assessment/preview steps are automatic for other user types
       case 4:
+        if (formData.userType === 'buyer') {
+          return true; // Dashboard enrollment step for buyers
+        }
         return formData.email && formData.password && formData.confirmPassword && 
                formData.fullName && formData.agreeToTerms && 
                formData.password === formData.confirmPassword;
@@ -348,9 +365,9 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
         "Join Dev Community"
       ],
       buyer: [
-        "Buyer Profile Creation",
+        "Organization Type & Use",
         "Credit Preference Setup",
-        "Marketplace Access",
+        "Buyer Profile Creation",
         "Dashboard Enrollment"
       ],
       partner: [
@@ -383,7 +400,7 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
       buyer: [
         "Set up your organization profile",
         "Define your carbon credit requirements",
-        "Browse and purchase verified credits",
+        "Create your buyer account",
         "Manage your carbon portfolio"
       ],
       partner: [
@@ -970,6 +987,114 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
       case 3:
         return (
           <div className="space-y-6">
+            <div>
+              <Label htmlFor="fullName" className="text-lg font-medium text-primary mb-4 block">
+                Full Name
+              </Label>
+              <Input
+                id="fullName"
+                type="text"
+                value={formData.fullName}
+                onChange={(e) => updateFormData('fullName', e.target.value)}
+                placeholder="Enter your full name"
+                className="text-lg"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="email" className="text-lg font-medium text-primary mb-4 block">
+                Email Address
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => updateFormData('email', e.target.value)}
+                placeholder="Enter your email address"
+                className="text-lg"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="password" className="text-lg font-medium text-primary mb-4 block">
+                Password
+              </Label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={formData.password}
+                  onChange={(e) => updateFormData('password', e.target.value)}
+                  placeholder="Create a secure password"
+                  className="text-lg pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="confirmPassword" className="text-lg font-medium text-primary mb-4 block">
+                Confirm Password
+              </Label>
+              <div className="relative">
+                <Input
+                  id="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={formData.confirmPassword}
+                  onChange={(e) => updateFormData('confirmPassword', e.target.value)}
+                  placeholder="Confirm your password"
+                  className="text-lg pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary"
+                >
+                  {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="flex items-start space-x-3">
+              <Checkbox
+                id="agreeToTerms"
+                checked={formData.agreeToTerms}
+                onCheckedChange={(checked) => updateFormData('agreeToTerms', checked as boolean)}
+                className="mt-1"
+              />
+              <div className="space-y-1">
+                <Label htmlFor="agreeToTerms" className="text-sm text-muted-foreground cursor-pointer">
+                  I agree to the{' '}
+                  <button
+                    type="button"
+                    onClick={() => onNavigate('terms')}
+                    className="text-primary hover:underline"
+                  >
+                    Terms of Service
+                  </button>
+                  {' '}and{' '}
+                  <button
+                    type="button"
+                    onClick={() => onNavigate('privacyPolicy')}
+                    className="text-primary hover:underline"
+                  >
+                    Privacy Policy
+                  </button>
+                </Label>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 4:
+        return (
+          <div className="space-y-6">
             <div className="bg-muted/20 rounded-xl p-6">
               <div className="flex items-start gap-3">
                 <ShoppingCart className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
@@ -1336,6 +1461,75 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
   };
 
   const progress = currentStep === 0 ? 0 : (currentStep / 4) * 100;
+
+  // Show buyer-specific thank you message after successful account creation
+  if (showBuyerThankYou) {
+    return (
+      <div className="min-h-screen bg-background">
+        <section className="py-20 px-6 bg-gradient-to-br from-primary/5 via-background to-secondary/5">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-8">
+                <CheckCircle className="w-12 h-12 text-primary" />
+              </div>
+              
+              <h1 className="text-4xl md:text-5xl mb-6 text-primary font-medium">
+                Thank You for Creating Your Buyer Profile!
+              </h1>
+              
+              <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
+                Your buyer profile has been successfully created. We're excited to help you access high-quality carbon credits through our platform.
+              </p>
+              
+              <div className="bg-muted/20 rounded-2xl p-8 mb-8 max-w-2xl mx-auto">
+                <h2 className="text-2xl font-semibold text-primary mb-4">
+                  What's Next?
+                </h2>
+                <div className="space-y-4 text-left">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                    <p className="text-muted-foreground">Our team will review your buyer profile and reach out within 2-3 business days</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                    <p className="text-muted-foreground">We'll schedule a call to discuss your carbon credit needs and portfolio goals</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                    <p className="text-muted-foreground">Our live marketplace and full platform features are coming soon!</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button 
+                  size="lg" 
+                  onClick={() => onNavigate()}
+                  className="hover:scale-105 transition-transform duration-300"
+                >
+                  Return to Home
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  onClick={() => onNavigate('about')}
+                  className="hover:scale-105 transition-transform duration-300"
+                >
+                  Learn More About Mālama
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      </div>
+    );
+  }
 
   // Show thank you message after successful account creation
   if (showThankYou) {
