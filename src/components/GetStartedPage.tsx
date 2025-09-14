@@ -9,6 +9,7 @@ import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { Checkbox } from './ui/checkbox';
 import { Progress } from './ui/progress';
 import { Badge } from './ui/badge';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 import { authHelpers } from '../utils/supabase/client';
 import { 
   ArrowRight, 
@@ -129,6 +130,8 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
   const [showBuyerThankYou, setShowBuyerThankYou] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
+  const [showTooltips, setShowTooltips] = useState<{[key: string]: boolean}>({});
   const [formData, setFormData] = useState<FormData>({
     userType: null,
     email: '',
@@ -168,6 +171,50 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
 
   const updateFormData = (field: keyof FormData, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    // Clear validation error when user starts typing
+    if (validationErrors[field]) {
+      setValidationErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  const validateForm = () => {
+    const errors: {[key: string]: string} = {};
+
+    if (!formData.fullName?.trim()) {
+      errors.fullName = 'Full name is required';
+    }
+
+    if (!formData.email?.trim()) {
+      errors.email = 'Email address is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+
+    if (!formData.password) {
+      errors.password = 'Password is required';
+    } else if (formData.password.length < 8) {
+      errors.password = 'Password must be at least 8 characters long';
+    }
+
+    if (!formData.confirmPassword) {
+      errors.confirmPassword = 'Please confirm your password';
+    } else if (formData.password !== formData.confirmPassword) {
+      errors.confirmPassword = 'Passwords do not match';
+    }
+
+    if (!formData.agreeToTerms) {
+      errors.agreeToTerms = 'You must agree to the terms and conditions';
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const showTooltip = (field: string) => {
+    setShowTooltips(prev => ({ ...prev, [field]: true }));
+    setTimeout(() => {
+      setShowTooltips(prev => ({ ...prev, [field]: false }));
+    }, 3000);
   };
 
   const handleArrayUpdate = (field: keyof FormData, value: string, checked: boolean) => {
@@ -219,13 +266,14 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
   };
 
   const handleSubmit = async () => {
-    if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match');
-      return;
-    }
-
-    if (!formData.agreeToTerms) {
-      alert('Please agree to the terms and conditions');
+    // Validate form before submission
+    if (!validateForm()) {
+      // Show tooltips for validation errors
+      Object.keys(validationErrors).forEach(field => {
+        if (validationErrors[field]) {
+          showTooltip(field);
+        }
+      });
       return;
     }
 
@@ -255,7 +303,10 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
               );
               
               if (signInError) {
-                alert('Sign in failed. Please check your credentials or try resetting your password.');
+                setValidationErrors({ 
+                  general: 'Sign in failed. Please check your credentials or try resetting your password.' 
+                });
+                showTooltip('general');
                 return;
               }
               
@@ -272,12 +323,18 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
               return;
             } catch (signInError) {
               console.error('Sign in error:', signInError);
-              alert('Sign in failed. Please try again or contact support.');
+              setValidationErrors({ 
+                general: 'Sign in failed. Please try again or contact support.' 
+              });
+              showTooltip('general');
               return;
             }
           }
         } else {
-          alert('Account creation failed. Please try again.');
+          setValidationErrors({ 
+            general: 'Account creation failed. Please try again.' 
+          });
+          showTooltip('general');
         }
         return;
       }
@@ -296,7 +353,10 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
       
     } catch (error) {
       console.error('Submission error:', error);
-      alert('An error occurred. Please try again.');
+      setValidationErrors({ 
+        general: 'An error occurred. Please try again.' 
+      });
+      showTooltip('general');
     } finally {
       setIsLoading(false);
     }
@@ -991,83 +1051,138 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
               <Label htmlFor="fullName" className="text-lg font-medium text-primary mb-4 block">
                 Full Name
               </Label>
-              <Input
-                id="fullName"
-                type="text"
-                value={formData.fullName}
-                onChange={(e) => updateFormData('fullName', e.target.value)}
-                placeholder="Enter your full name"
-                className="text-lg"
-              />
+              <TooltipProvider>
+                <Tooltip open={showTooltips.fullName}>
+                  <TooltipTrigger asChild>
+                    <Input
+                      id="fullName"
+                      type="text"
+                      value={formData.fullName}
+                      onChange={(e) => updateFormData('fullName', e.target.value)}
+                      placeholder="Enter your full name"
+                      className={`text-lg ${validationErrors.fullName ? 'border-red-500' : ''}`}
+                    />
+                  </TooltipTrigger>
+                  {validationErrors.fullName && (
+                    <TooltipContent>
+                      <p>{validationErrors.fullName}</p>
+                    </TooltipContent>
+                  )}
+                </Tooltip>
+              </TooltipProvider>
             </div>
 
             <div>
               <Label htmlFor="email" className="text-lg font-medium text-primary mb-4 block">
                 Email Address
               </Label>
-              <Input
-                id="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) => updateFormData('email', e.target.value)}
-                placeholder="Enter your email address"
-                className="text-lg"
-              />
+              <TooltipProvider>
+                <Tooltip open={showTooltips.email}>
+                  <TooltipTrigger asChild>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => updateFormData('email', e.target.value)}
+                      placeholder="Enter your email address"
+                      className={`text-lg ${validationErrors.email ? 'border-red-500' : ''}`}
+                    />
+                  </TooltipTrigger>
+                  {validationErrors.email && (
+                    <TooltipContent>
+                      <p>{validationErrors.email}</p>
+                    </TooltipContent>
+                  )}
+                </Tooltip>
+              </TooltipProvider>
             </div>
 
             <div>
               <Label htmlFor="password" className="text-lg font-medium text-primary mb-4 block">
                 Password
               </Label>
-              <div className="relative">
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  value={formData.password}
-                  onChange={(e) => updateFormData('password', e.target.value)}
-                  placeholder="Create a secure password"
-                  className="text-lg pr-10"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary"
-                >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                </button>
-              </div>
+              <TooltipProvider>
+                <Tooltip open={showTooltips.password}>
+                  <TooltipTrigger asChild>
+                    <div className="relative">
+                      <Input
+                        id="password"
+                        type={showPassword ? "text" : "password"}
+                        value={formData.password}
+                        onChange={(e) => updateFormData('password', e.target.value)}
+                        placeholder="Create a secure password"
+                        className={`text-lg pr-10 ${validationErrors.password ? 'border-red-500' : ''}`}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary"
+                      >
+                        {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      </button>
+                    </div>
+                  </TooltipTrigger>
+                  {validationErrors.password && (
+                    <TooltipContent>
+                      <p>{validationErrors.password}</p>
+                    </TooltipContent>
+                  )}
+                </Tooltip>
+              </TooltipProvider>
             </div>
 
             <div>
               <Label htmlFor="confirmPassword" className="text-lg font-medium text-primary mb-4 block">
                 Confirm Password
               </Label>
-              <div className="relative">
-                <Input
-                  id="confirmPassword"
-                  type={showConfirmPassword ? "text" : "password"}
-                  value={formData.confirmPassword}
-                  onChange={(e) => updateFormData('confirmPassword', e.target.value)}
-                  placeholder="Confirm your password"
-                  className="text-lg pr-10"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary"
-                >
-                  {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                </button>
-              </div>
+              <TooltipProvider>
+                <Tooltip open={showTooltips.confirmPassword}>
+                  <TooltipTrigger asChild>
+                    <div className="relative">
+                      <Input
+                        id="confirmPassword"
+                        type={showConfirmPassword ? "text" : "password"}
+                        value={formData.confirmPassword}
+                        onChange={(e) => updateFormData('confirmPassword', e.target.value)}
+                        placeholder="Confirm your password"
+                        className={`text-lg pr-10 ${validationErrors.confirmPassword ? 'border-red-500' : ''}`}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary"
+                      >
+                        {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      </button>
+                    </div>
+                  </TooltipTrigger>
+                  {validationErrors.confirmPassword && (
+                    <TooltipContent>
+                      <p>{validationErrors.confirmPassword}</p>
+                    </TooltipContent>
+                  )}
+                </Tooltip>
+              </TooltipProvider>
             </div>
 
             <div className="flex items-start space-x-3">
-              <Checkbox
-                id="agreeToTerms"
-                checked={formData.agreeToTerms}
-                onCheckedChange={(checked) => updateFormData('agreeToTerms', checked as boolean)}
-                className="mt-1"
-              />
+              <TooltipProvider>
+                <Tooltip open={showTooltips.agreeToTerms}>
+                  <TooltipTrigger asChild>
+                    <Checkbox
+                      id="agreeToTerms"
+                      checked={formData.agreeToTerms}
+                      onCheckedChange={(checked) => updateFormData('agreeToTerms', checked as boolean)}
+                      className={`mt-1 ${validationErrors.agreeToTerms ? 'border-red-500' : ''}`}
+                    />
+                  </TooltipTrigger>
+                  {validationErrors.agreeToTerms && (
+                    <TooltipContent>
+                      <p>{validationErrors.agreeToTerms}</p>
+                    </TooltipContent>
+                  )}
+                </Tooltip>
+              </TooltipProvider>
               <div className="space-y-1">
                 <Label htmlFor="agreeToTerms" className="text-sm text-muted-foreground cursor-pointer">
                   I agree to the{' '}
@@ -1089,6 +1204,22 @@ export function GetStartedPage({ onNavigate, onAccountCreated }: GetStartedPageP
                 </Label>
               </div>
             </div>
+
+            {/* General Error Message */}
+            {validationErrors.general && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm text-red-800">{validationErrors.general}</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         );
 
