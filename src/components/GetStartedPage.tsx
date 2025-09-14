@@ -356,16 +356,54 @@ export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards,
 
       if (data?.user && onAccountCreated) {
         console.log('Account created successfully, user type:', formData.userType);
-        const user = {
-          id: data.user.id,
-          email: data.user.email,
-          name: data.user.user_metadata?.name || formData.fullName,
-          accessToken: data.session?.access_token || 'temp-token'
-        };
-        onAccountCreated(user, formData.userType || undefined);
-        // Navigate to dashboards after successful account creation
-        if (onShowDashboards) {
-          onShowDashboards();
+        
+        // If we have a session token, use it; otherwise sign in the user
+        if (data.session?.access_token) {
+          const user = {
+            id: data.user.id,
+            email: data.user.email,
+            name: data.user.user_metadata?.name || formData.fullName,
+            accessToken: data.session.access_token
+          };
+          onAccountCreated(user, formData.userType || undefined);
+          if (onShowDashboards) {
+            onShowDashboards();
+          }
+        } else {
+          // Sign in the user after account creation to get a valid session token
+          try {
+            const { data: signInData, error: signInError } = await authHelpers.signIn(
+              formData.email, 
+              formData.password
+            );
+            
+            if (signInError) {
+              setValidationErrors({ 
+                general: 'Account created but sign-in failed. Please try signing in manually.' 
+              });
+              showTooltip('general');
+              return;
+            }
+            
+            if (signInData?.session?.access_token) {
+              const user = {
+                id: signInData.user.id,
+                email: signInData.user.email,
+                name: signInData.user.user_metadata?.name || formData.fullName,
+                accessToken: signInData.session.access_token
+              };
+              onAccountCreated(user, formData.userType || undefined);
+              if (onShowDashboards) {
+                onShowDashboards();
+              }
+            }
+          } catch (signInError) {
+            console.error('Sign in after signup error:', signInError);
+            setValidationErrors({ 
+              general: 'Account created but sign-in failed. Please try signing in manually.' 
+            });
+            showTooltip('general');
+          }
         }
       }
       

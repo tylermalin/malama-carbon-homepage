@@ -100,19 +100,24 @@ export function ProjectDashboard({ user }: ProjectDashboardProps) {
     setError('');
 
     try {
+      console.log('Creating project with access token:', user.accessToken);
+      console.log('Project data:', newProject);
+      
       const { data, error } = await projectAPI.createProject(newProject, user.accessToken);
       
       if (error) {
+        console.error('Project creation API error:', error);
         setError(error);
         return;
       }
 
+      console.log('Project created successfully:', data);
       setProjects(prev => [data.project, ...prev]);
       setNewProject({ name: '', location: '', projectType: '', description: '' });
       setIsCreateModalOpen(false);
     } catch (error) {
-      setError('Failed to create project');
       console.error('Create project error:', error);
+      setError('Failed to create project');
     } finally {
       setIsCreating(false);
     }

@@ -85,6 +85,9 @@ export const authHelpers = {
 export const projectAPI = {
   async createProject(projectData: any, accessToken: string) {
     try {
+      console.log('ProjectAPI: Creating project with token:', accessToken);
+      console.log('ProjectAPI: Project data:', projectData);
+      
       const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-b827df6e/projects`, {
         method: 'POST',
         headers: {
@@ -94,7 +97,9 @@ export const projectAPI = {
         body: JSON.stringify(projectData)
       });
 
+      console.log('ProjectAPI: Response status:', response.status);
       const data = await response.json();
+      console.log('ProjectAPI: Response data:', data);
       
       if (!response.ok) {
         throw new Error(data.error || 'Failed to create project');
