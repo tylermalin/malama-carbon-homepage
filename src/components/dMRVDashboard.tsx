@@ -175,6 +175,95 @@ export function DMRVDashboard() {
           </p>
         </motion.div>
 
+        {/* Universal MRV™ Section */}
+        <motion.div 
+          className="mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          viewport={{ once: true }}
+        >
+          <div className="text-center mb-12">
+            <h3 className="text-3xl md:text-4xl mb-8 text-primary font-bold">
+              Universal MRV™ — Four Layers of Integrity
+            </h3>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="bg-card/80 backdrop-blur-sm rounded-xl p-6 border border-border/50">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Activity className="w-8 h-8 text-primary" />
+                </div>
+                <h4 className="text-xl font-semibold mb-3 text-primary">1. Sensors & Remote Sensing</h4>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Biomass weight scales, soil probes, pyrolysis monitors, LiDAR, and GPS/RFID create a secure chain of custody.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="bg-card/80 backdrop-blur-sm rounded-xl p-6 border border-border/50">
+                <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap className="w-8 h-8 text-secondary" />
+                </div>
+                <h4 className="text-xl font-semibold mb-3 text-primary">2. AI Validation</h4>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Anomaly detection, mass-balance analysis, and predictive growth models ensure results are physically possible and scientifically sound.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="bg-card/80 backdrop-blur-sm rounded-xl p-6 border border-border/50">
+                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <TrendingUp className="w-8 h-8 text-accent-foreground" />
+                </div>
+                <h4 className="text-xl font-semibold mb-3 text-primary">3. Blockchain Tokenization</h4>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Verified data is immutably recorded on Cardano. Credits are issued as LC02 (pre-finance) and upgraded to VC02 (verified) after full validation.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="bg-card/80 backdrop-blur-sm rounded-xl p-6 border border-border/50">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <MapPin className="w-8 h-8 text-primary" />
+                </div>
+                <h4 className="text-xl font-semibold mb-3 text-primary">4. Compliance Integration</h4>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Registry APIs (Verra, Gold Standard, Puro.earth, Article 6.4) ensure serialization, prevent double-counting, and prepare credits for regulated markets.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+
         {/* Key Metrics */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <motion.div

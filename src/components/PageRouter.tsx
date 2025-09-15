@@ -15,7 +15,7 @@ import { Footer } from './Footer';
 import { DashboardRouter } from './dashboards/DashboardRouter';
 import { PrivacyPolicyPage } from './PrivacyPolicyPage';
 import { DMRVDashboard } from './dMRVDashboard';
-import { RealTimeDataFeeds } from './RealTimeDataFeeds';
+import { TokenomicsOverview } from './TokenomicsOverview';
 
 // Page components
 import { ProjectDashboard } from './ProjectDashboard';
@@ -601,7 +601,7 @@ export function PageRouter({
           <PartnerLogos />
           <ImpactHighlight onShowProjectGallery={showProjectGallery} />
           <DMRVDashboard />
-          <RealTimeDataFeeds />
+          <TokenomicsOverview />
           <HowItWorks onShowDetailedProcess={showHowItWorks} onLaunchProject={showGetStarted} />
           <OnboardingFlow />
           <ClosingCTA 

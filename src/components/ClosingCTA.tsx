@@ -74,7 +74,7 @@ export function ClosingCTA({ onStartProject, onLandSteward, onExplorePlatform, o
         </motion.h2>
         
         <motion.p 
-          className="text-xl md:text-2xl mb-12 text-white/90 max-w-3xl mx-auto"
+          className="text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
@@ -82,6 +82,37 @@ export function ClosingCTA({ onStartProject, onLandSteward, onExplorePlatform, o
         >
           Join us in transforming natural climate solutions with technology that serves the Earth.
         </motion.p>
+
+        {/* Cultural Section */}
+        <motion.div 
+          className="mb-12 max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.3 }}
+          viewport={{ once: true }}
+        >
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+            <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-white">
+              Rooted in Community
+            </h3>
+            
+            <div className="space-y-6 text-white/90">
+              <p className="text-lg leading-relaxed">
+                <strong className="text-white">Mālama</strong> means to care for, protect, and serve. Our system integrates indigenous knowledge and local land stewards, ensuring that benefits flow to the people who protect ecosystems.
+              </p>
+              
+              <div className="bg-white/5 rounded-xl p-6 border-l-4 border-white/30">
+                <blockquote className="text-xl md:text-2xl font-medium italic text-white leading-relaxed">
+                  "We trust the data, and we trust the communities who create it."
+                </blockquote>
+              </div>
+              
+              <p className="text-lg leading-relaxed">
+                By combining traditional Hawaiian land stewardship practices with cutting-edge technology, we create a bridge between ancient wisdom and modern climate solutions.
+              </p>
+            </div>
+          </div>
+        </motion.div>
         
         <motion.div 
           className="flex flex-wrap gap-4 justify-center items-center"
