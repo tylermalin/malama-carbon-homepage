@@ -312,7 +312,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl mb-6 text-primary">Making an Impact</h2>
+            <h2 className="text-4xl mb-6 text-primary">Projected 1 Year Impact</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Building a platform that creates real change for communities and the climate.
             </p>
