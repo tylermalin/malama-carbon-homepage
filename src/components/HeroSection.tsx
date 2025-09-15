@@ -40,7 +40,9 @@ export function HeroSection({ onExplorePlatform, onHowItWorks, onStartProject, o
         <img 
           src={malamaLogo} 
           alt="Mālama Labs" 
-          className="h-24 md:h-32 lg:h-40 xl:h-48 w-auto object-contain hover:scale-105 transition-transform duration-300"
+          width="300"
+          height="300"
+          className="object-contain hover:scale-105 transition-transform duration-300"
         />
       </motion.div>
 
