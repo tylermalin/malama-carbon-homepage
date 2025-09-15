@@ -97,7 +97,7 @@ export function DocumentationPage({ onNavigate }: DocumentationPageProps) {
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <Button 
                 size="lg" 
-                onClick={() => window.open('mailto:hello@malama.co?subject=Documentation Early Access', '_blank')}
+                onClick={() => window.open('mailto:hello@malamalabs.com?subject=Documentation Early Access', '_blank')}
                 className="text-lg px-8 py-4 hover:scale-105 transition-transform duration-300"
               >
                 <Bell className="w-5 h-5 mr-2" />
@@ -306,7 +306,7 @@ export function DocumentationPage({ onNavigate }: DocumentationPageProps) {
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Button 
                 size="lg" 
-                onClick={() => window.open('mailto:hello@malama.co?subject=Documentation Early Access Request', '_blank')}
+                onClick={() => window.open('mailto:hello@malamalabs.com?subject=Documentation Early Access Request', '_blank')}
                 className="text-xl px-10 py-6 hover:scale-105 transition-transform duration-300"
               >
                 <Bell className="w-6 h-6 mr-3" />

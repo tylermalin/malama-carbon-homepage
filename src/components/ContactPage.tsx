@@ -44,8 +44,8 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
       icon: Mail,
       title: "Email Us",
       description: "General inquiries and support",
-      contact: "hello@malama.co",
-      href: "mailto:hello@malama.co"
+      contact: "hello@malamalabs.com",
+      href: "mailto:hello@malamalabs.com"
     },
     {
       icon: Phone,
@@ -377,7 +377,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                   
                   <div className="flex items-center gap-3">
                     <Mail className="w-5 h-5 text-primary" />
-                    <p className="text-muted-foreground">hello@malama.co</p>
+                    <p className="text-muted-foreground">hello@malamalabs.com</p>
                   </div>
                 </div>
                 

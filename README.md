@@ -155,7 +155,7 @@ This is a private project. For collaboration opportunities, please contact the t
 ## 📞 Contact
 
 - **Website**: https://malama-carbon-homepage-4giogl0uw-formlesscreature.vercel.app
-- **Email**: hello@malama.co
+- **Email**: hello@malamalabs.com
 - **Location**: Hawaiʻi
 
 ---

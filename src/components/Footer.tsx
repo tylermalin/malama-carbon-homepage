@@ -23,9 +23,9 @@ interface FooterProps {
 
 const socialLinks = [
   { name: "Twitter", icon: Twitter, href: "https://twitter.com/malamalabs" },
-  { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com/company/malamalabs" },
-  { name: "GitHub", icon: Github, href: "https://github.com/malamalabs" },
-  { name: "Email", icon: Mail, href: "mailto:hello@malama.co" }
+  { name: "LinkedIn", icon: Linkedin, href: "https://www.linkedin.com/company/malama-labs" },
+  { name: "GitHub", icon: Github, href: "https://github.com/MalamaLabs" },
+  { name: "Email", icon: Mail, href: "mailto:hello@malamalabs.com" }
 ];
 
 export function Footer({ 
