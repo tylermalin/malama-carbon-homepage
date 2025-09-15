@@ -39,7 +39,8 @@ import {
   TreePine,
   Factory,
   Globe,
-  TrendingUp
+  TrendingUp,
+  LogIn
 } from 'lucide-react';
 
 interface GetStartedPageProps {
@@ -142,6 +143,7 @@ export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards,
   const [showBuyerThankYou, setShowBuyerThankYou] = useState(false);
   const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
   const [showTooltips, setShowTooltips] = useState<{[key: string]: boolean}>({});
+  const [showManualSignIn, setShowManualSignIn] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     userType: null,
     email: '',
@@ -372,20 +374,31 @@ export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards,
         } else {
           // Sign in the user after account creation to get a valid session token
           try {
+            console.log('Attempting automatic sign-in after account creation...');
+            console.log('Email:', formData.email);
+            
+            // Add a small delay to ensure account is fully created
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
             const { data: signInData, error: signInError } = await authHelpers.signIn(
               formData.email, 
               formData.password
             );
             
+            console.log('Sign-in response:', { data: signInData, error: signInError });
+            
             if (signInError) {
+              console.error('Sign-in error details:', signInError);
               setValidationErrors({ 
-                general: 'Account created but sign-in failed. Please try signing in manually.' 
+                general: 'Account created successfully! Please sign in manually to continue.' 
               });
+              setShowManualSignIn(true);
               showTooltip('general');
               return;
             }
             
             if (signInData?.session?.access_token) {
+              console.log('Automatic sign-in successful');
               const user = {
                 id: signInData.user.id,
                 email: signInData.user.email,
@@ -396,12 +409,20 @@ export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards,
               if (onShowDashboards) {
                 onShowDashboards();
               }
+            } else {
+              console.log('No session token received, showing manual sign-in message');
+              setValidationErrors({ 
+                general: 'Account created successfully! Please sign in manually to continue.' 
+              });
+              setShowManualSignIn(true);
+              showTooltip('general');
             }
           } catch (signInError) {
             console.error('Sign in after signup error:', signInError);
             setValidationErrors({ 
-              general: 'Account created but sign-in failed. Please try signing in manually.' 
+              general: 'Account created successfully! Please sign in manually to continue.' 
             });
+            setShowManualSignIn(true);
             showTooltip('general');
           }
         }
@@ -2341,6 +2362,31 @@ export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards,
                       )}
                     </Button>
                   )}
+                </div>
+              )}
+
+              {/* Manual Sign In Button - show when automatic sign-in fails */}
+              {showManualSignIn && (
+                <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-blue-900 mb-2">
+                      Account Created Successfully!
+                    </h3>
+                    <p className="text-blue-700 mb-4">
+                      Your account has been created. Please sign in to continue to your dashboard.
+                    </p>
+                    <Button
+                      onClick={() => {
+                        // Navigate to sign-in modal or page
+                        onNavigate('home');
+                        // You could also trigger a sign-in modal here
+                      }}
+                      className="bg-blue-600 hover:bg-blue-700 text-white"
+                    >
+                      <LogIn className="w-4 h-4 mr-2" />
+                      Sign In Now
+                    </Button>
+                  </div>
                 </div>
               )}
 
