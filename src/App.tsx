@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AuthModal } from './components/AuthModal';
 import { NavigationBar } from './components/NavigationBar';
 import { PageRouter } from './components/PageRouter';
 import { useAuth } from './hooks/useAuth';
 import { useNavigation } from './hooks/useNavigation';
 import { AuthUser } from './types/auth';
+import { DataProvider } from './context/DataContext';
 
 export default function App() {
   const {
@@ -25,6 +26,18 @@ export default function App() {
     showDashboards,
     ...navigationFunctions
   } = useNavigation();
+
+  // Debug logging
+  console.log('App currentPage:', currentPage);
+  console.log('App navigationFunctions:', navigationFunctions);
+  console.log('App showActI:', navigationFunctions.showActI);
+
+  // Prevent duplicate motion loading
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      (window as any).__MOTION_LOADED__ = true;
+    }
+  }, []);
 
   const toggleDashboard = () => {
     if (!user) {
@@ -52,30 +65,32 @@ export default function App() {
   }
 
   return (
-    <main className="min-h-screen">
-      <NavigationBar
-        user={user}
-        isOnSubPage={isOnSubPage}
-        isDashboardActive={currentPage === 'dashboard'}
-        onSignIn={openAuthModal}
-        onSignOut={handleSignOut}
-        onHome={() => navigateToSection()}
-        onDashboard={toggleDashboard}
-      />
+    <DataProvider>
+      <main className="min-h-screen">
+        <NavigationBar
+          user={user}
+          isOnSubPage={isOnSubPage}
+          isDashboardActive={currentPage === 'dashboard'}
+          onSignIn={openAuthModal}
+          onSignOut={handleSignOut}
+          onHome={() => navigateToSection()}
+          onDashboard={toggleDashboard}
+        />
 
-      <PageRouter
-        currentPage={currentPage}
-        user={user}
-        onAccountCreated={handleAccountCreated}
-        navigationFunctions={navigationFunctions}
-        navigateToSection={navigateToSection}
-      />
+        <PageRouter
+          currentPage={currentPage}
+          user={user}
+          onAccountCreated={handleAccountCreated}
+          navigationFunctions={navigationFunctions}
+          navigateToSection={navigateToSection}
+        />
 
-      <AuthModal
-        isOpen={isAuthModalOpen}
-        onClose={closeAuthModal}
-        onAuthSuccess={handleAuthSuccess}
-      />
-    </main>
+        <AuthModal
+          isOpen={isAuthModalOpen}
+          onClose={closeAuthModal}
+          onAuthSuccess={handleAuthSuccess}
+        />
+      </main>
+    </DataProvider>
   );
 }

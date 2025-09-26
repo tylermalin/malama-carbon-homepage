@@ -16,6 +16,8 @@ import { DashboardRouter } from './dashboards/DashboardRouter';
 import { PrivacyPolicyPage } from './PrivacyPolicyPage';
 import { DMRVDashboard } from './dMRVDashboard';
 import { TokenomicsOverview } from './TokenomicsOverview';
+import { CarbonTimelineLanding } from './CarbonTimelineLanding';
+import { UnifiedCarbonTimeline } from './UnifiedCarbonTimeline';
 
 // Page components
 import { ProjectDashboard } from './ProjectDashboard';
@@ -58,6 +60,7 @@ interface PageRouterProps {
     showCarbonStudio: () => void;
     showCarbonProtocols: () => void;
     showDMRVEngine: () => void;
+    showTimeline: () => void;
   };
   navigateToSection: (section?: string) => void;
 }
@@ -81,7 +84,6 @@ export function PageRouter({
     showHowItWorks,
     showGetStarted,
     showLandSteward,
-    showDashboards,
     showDocumentation,
     showBlog,
     showProjectGallery,
@@ -95,7 +97,8 @@ export function PageRouter({
     showCookiePolicy,
     showCarbonStudio,
     showCarbonProtocols,
-    showDMRVEngine
+    showDMRVEngine,
+    showTimeline
   } = navigationFunctions;
 
   // Render individual pages
@@ -157,7 +160,7 @@ export function PageRouter({
           <GetStartedPage 
             onNavigate={navigateToSection} 
             onAccountCreated={handleAccountCreated} 
-            onShowDashboards={showDashboards}
+            onShowDashboards={() => navigateToPage('dashboard')}
             user={user}
           />
           <Footer 
@@ -582,6 +585,18 @@ export function PageRouter({
         </>
       );
     
+    case 'timeline':
+      return (
+        <UnifiedCarbonTimeline 
+          onBackToHome={() => navigateToSection()}
+          onShowAbout={showAbout}
+          onShowProjects={showProjectGallery}
+          onShowContact={showContact}
+          onShowGetStarted={showGetStarted}
+        />
+      );
+    
+    
     case 'home':
     default:
       // Render full homepage
@@ -595,6 +610,7 @@ export function PageRouter({
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
             onShowProjectGallery={showProjectGallery} 
+            onShowTimeline={showTimeline}
           />
           <ValueProposition onExplorePlatform={showPlatform} />
           <CoreModules onNavigateToPlatform={showPlatform} />

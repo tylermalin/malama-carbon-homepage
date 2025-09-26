@@ -6,6 +6,14 @@
   export default defineConfig({
     plugins: [react()],
     publicDir: 'public',
+    define: {
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+    },
+    optimizeDeps: {
+      include: ['motion/react'],
+      force: true,
+      exclude: ['motion']
+    },
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {
@@ -52,12 +60,25 @@
         '@radix-ui/react-aspect-ratio@1.1.2': '@radix-ui/react-aspect-ratio',
         '@radix-ui/react-alert-dialog@1.1.6': '@radix-ui/react-alert-dialog',
         '@radix-ui/react-accordion@1.2.3': '@radix-ui/react-accordion',
+        'motion/react': 'motion/react',
         '@': path.resolve(__dirname, './src'),
       },
     },
     build: {
       target: 'esnext',
       outDir: 'build',
+      rollupOptions: {
+        output: {
+          manualChunks: (id) => {
+            if (id.includes('motion')) {
+              return 'motion';
+            }
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
+          }
+        }
+      }
     },
     server: {
       port: 3000,

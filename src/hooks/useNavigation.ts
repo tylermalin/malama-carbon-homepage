@@ -21,7 +21,8 @@ export type PageType =
   | 'cookiePolicy'
   | 'carbonStudio'
   | 'carbonProtocols'
-  | 'dmrvEngine';
+  | 'dmrvEngine'
+  | 'timeline';
 
 export function useNavigation() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
@@ -85,6 +86,7 @@ export function useNavigation() {
     showCarbonStudio: () => navigateToPage('carbonStudio'),
     showCarbonProtocols: () => navigateToPage('carbonProtocols'),
     showDMRVEngine: () => navigateToPage('dmrvEngine'),
+    showTimeline: () => navigateToPage('timeline'),
   };
 
   const isOnSubPage = currentPage !== 'home';

@@ -37,16 +37,35 @@ src/
 │   ├── HeroSection.tsx  # Landing page hero
 │   ├── TeamPage.tsx     # Team showcase
 │   ├── ProjectGallery.tsx # Carbon project cards
+│   ├── UnifiedCarbonTimeline.tsx # Interactive timeline
+│   ├── SourcesDrawer.tsx # Citation management
 │   └── ...
 ├── assets/              # Images and static assets
 │   ├── malamalabslogo.png
 │   ├── tyler headshopt.JPG
 │   ├── Dominick.png
 │   └── jeffrey.jpeg
-├── hooks/               # Custom React hooks
+├── context/             # React context providers
+│   └── DataContext.tsx  # Centralized data management
+├── data/                # Data sources
+│   └── market.local.ts  # Authoritative market data
+├── lib/                 # Utility libraries
+│   └── marketSchema.ts  # Data validation schemas
 ├── types/               # TypeScript type definitions
+│   └── market.ts        # Market data types
+├── hooks/               # Custom React hooks
 ├── utils/               # Utility functions
 └── styles/              # Global styles
+
+public/
+└── data/                # Exported data files
+    ├── market.json      # Runtime market data
+    ├── _backups/        # Automatic backups
+    └── _snapshots/      # Production snapshots
+
+scripts/                 # Build and export scripts
+├── export-market.ts     # Export TypeScript to JSON
+└── snapshot-market.ts   # Capture production data
 ```
 
 ## 🏃‍♂️ Getting Started
@@ -125,6 +144,9 @@ The build artifacts will be stored in the `build/` directory.
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build locally
+- `npm run export:market` - Export market data from TypeScript to JSON
+- `npm run snapshot:market` - Capture current market data snapshot
+- `npm run validate:market` - Validate market data structure
 
 ## 📦 Key Dependencies
 
@@ -136,6 +158,75 @@ The build artifacts will be stored in the `build/` directory.
 - `framer-motion` - Animations
 - `lucide-react` - Icons
 - `recharts` - Data visualization
+- `d3` - Data visualization
+- `zod` - Schema validation
+- `tsx` - TypeScript execution
+
+## 📊 Data Management System
+
+### SourcesDrawer & DataContext
+
+The application includes a comprehensive data management system for handling market data, citations, and references:
+
+#### **Components**
+
+- **`SourcesDrawer`** - Accessible citation management component
+- **`DataContext`** - Centralized data store for KPIs, time series, and references
+- **`marketSchema`** - Zod validation for data integrity
+
+#### **Data Flow**
+
+1. **Authoritative Source**: `src/data/market.local.ts` (human-editable TypeScript)
+2. **Export Process**: `npm run export:market` → `public/data/market.json`
+3. **Runtime Access**: Components use `useData()` hook
+4. **Validation**: Automatic schema validation with Zod
+
+#### **Usage Examples**
+
+```typescript
+// Using DataContext in components
+import { useData } from '../context/DataContext';
+
+function MyComponent() {
+  const { kpis, series, refs } = useData();
+  // Access centralized data
+}
+
+// Adding SourcesDrawer to any component
+import SourcesDrawer from './SourcesDrawer';
+
+<SourcesDrawer 
+  citations={refs} 
+  anchorLabel="View Sources"
+  description="References for this section"
+/>
+```
+
+#### **Content Management Workflow**
+
+1. **Edit Data**: Update `src/data/market.local.ts`
+2. **Validate**: `npm run validate:market`
+3. **Export**: `npm run export:market`
+4. **Deploy**: Changes appear automatically
+
+#### **Interactive Timeline Features**
+
+- **60-Year Carbon Markets Timeline** with interactive events
+- **PortraitPopover** for key figures (e.g., Ronald Coase)
+- **QuoteHighlight** for important quotes
+- **EUETSPriceLineChart** for price visualization
+- **MRVCompareSlider** for technology comparisons
+- **HeadlineGallery** for news coverage
+- **CCPChecklist** for Core Carbon Principles
+
+#### **Data Types**
+
+```typescript
+type KPI = { key: string; label: string; value: string; note?: string };
+type SeriesPoint = { t: string; v: number };
+type Series = { key: string; label: string; unit?: string; points: SeriesPoint[] };
+type Citation = { id: string; title: string; publisher?: string; date?: string; url?: string; note?: string };
+```
 
 ## 🌐 Deployment
 

@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion } from '../utils/motion';
 import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import malamaLogo from '../assets/malamalabbs.png';
@@ -11,9 +11,10 @@ interface HeroSectionProps {
   onShowDocumentation?: () => void;
   onShowBlog?: () => void;
   onShowProjectGallery?: () => void;
+  onShowTimeline?: () => void;
 }
 
-export function HeroSection({ onExplorePlatform, onHowItWorks, onStartProject, onLandSteward, onShowDocumentation, onShowBlog, onShowProjectGallery }: HeroSectionProps) {
+export function HeroSection({ onExplorePlatform, onHowItWorks, onStartProject, onLandSteward, onShowDocumentation, onShowBlog, onShowProjectGallery, onShowTimeline }: HeroSectionProps) {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image with Parallax Effect */}
@@ -102,6 +103,14 @@ export function HeroSection({ onExplorePlatform, onHowItWorks, onStartProject, o
             className="border-white text-[rgba(0,0,0,1)] hover:bg-white hover:text-primary transition-all duration-300 hover:shadow-lg hover:scale-105"
           >
             How It Works
+          </Button>
+          <Button 
+            variant="outline" 
+            size="lg"
+            onClick={onShowTimeline}
+            className="border-white text-[rgba(0,0,0,1)] hover:bg-white hover:text-primary transition-all duration-300 hover:shadow-lg hover:scale-105"
+          >
+            Carbon Timeline
           </Button>
         </motion.div>
       </div>
