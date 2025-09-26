@@ -19,14 +19,15 @@ export default function PortraitPopover({ name, imageUrl, subtitle, facts }: Pro
         </div>
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content
-          className="w-80 max-w-[90vw] max-h-[80vh] overflow-y-auto rounded-2xl border bg-white p-4 shadow-xl z-50"
-          sideOffset={8}
-          align="start"
-          side="top"
-          avoidCollisions={true}
-          collisionPadding={16}
-        >
+            <Popover.Content
+              className="w-80 max-w-[90vw] max-h-[80vh] overflow-y-auto rounded-2xl border bg-white p-4 shadow-xl"
+              style={{ zIndex: 9999 }}
+              sideOffset={8}
+              align="start"
+              side="top"
+              avoidCollisions={true}
+              collisionPadding={16}
+            >
           <p className="text-sm mb-2"><span className="font-semibold">{name}</span> — key notes</p>
           <ul className="list-disc ml-5 space-y-1 text-sm">
             {facts.map((f, i) => <li key={i}>{f}</li>)}

@@ -30,9 +30,10 @@ export default function SourcesDrawer({
         {anchorLabel}
       </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-black/30" />
+        <Dialog.Overlay className="fixed inset-0 bg-black/30" style={{ zIndex: 9998 }} />
         <Dialog.Content
-          className="fixed left-1/2 top-1/2 w-[92vw] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-5 shadow-2xl"
+          className="fixed left-1/2 top-1/2 w-[90vw] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-6 shadow-2xl max-h-[85vh] overflow-y-auto"
+          style={{ zIndex: 9999 }}
           aria-describedby="sources-desc"
         >
           <div className="flex items-center justify-between">

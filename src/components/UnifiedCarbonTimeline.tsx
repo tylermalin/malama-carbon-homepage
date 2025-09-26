@@ -310,7 +310,7 @@ export function UnifiedCarbonTimeline({
                 <p className="text-xl md:text-2xl text-slate-700 max-w-4xl mx-auto mb-8" style={{ fontFamily: 'Inter, sans-serif' }}>
                   From Theory to Technology: How Carbon Markets Evolved
                 </p>
-                <div className="flex justify-center">
+                <div className="flex justify-center mt-4">
                   <SourcesDrawer 
                     citations={refs} 
                     anchorLabel="View Sources" 
@@ -415,14 +415,16 @@ export function UnifiedCarbonTimeline({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                  className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
+                  style={{ zIndex: 9998 }}
               onClick={() => setExpandedEvent(null)}
             >
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
-                className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+                    className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+                    style={{ zIndex: 9999 }}
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="p-8">
