@@ -41,9 +41,9 @@ export function PartnerLogos() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h3 className="text-3xl text-primary mb-3 font-medium font-bold">Trusted by Industry Leaders</h3>
+          <h3 className="text-3xl text-primary mb-3 font-medium font-bold">Grounded in Integrity</h3>
           <p className="text-muted-foreground text-lg">
-            Partnering with global organizations to scale durable carbon removal
+            Leveraging globally recognized methodologies and verification frameworks
           </p>
         </motion.div>
         

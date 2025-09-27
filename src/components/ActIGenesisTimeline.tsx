@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { ArrowLeft, ArrowRight, BookOpen, Users, Lightbulb, Globe } from 'lucide-react';
-import malamaLogo from '../assets/malamalabbs.png';
+// Removing malamaLogo import since the file doesn't exist
 
 interface ActIGenesisTimelineProps {
   onBackToLanding?: () => void;
@@ -170,7 +170,7 @@ export function ActIGenesisTimeline({ onBackToLanding, onNextAct }: ActIGenesisT
             whileHover={{ scale: 1.05 }}
           >
             <img 
-              src={malamaLogo} 
+              src="/images/malama-logo.png"
               alt="Mālama Labs" 
               className="h-10 w-auto"
             />

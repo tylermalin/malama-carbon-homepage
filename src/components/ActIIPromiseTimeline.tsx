@@ -4,7 +4,6 @@ import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { ArrowLeft, ArrowRight, TrendingUp, Globe, AlertTriangle, BarChart3 } from 'lucide-react';
-import malamaLogo from '../assets/malamalabbs.png';
 
 interface ActIIPromiseTimelineProps {
   onBackToActI?: () => void;
@@ -158,7 +157,7 @@ export function ActIIPromiseTimeline({ onBackToActI, onNextAct }: ActIIPromiseTi
             whileHover={{ scale: 1.05 }}
           >
             <img 
-              src={malamaLogo} 
+              src="/images/malama-logo.png"
               alt="Mālama Labs" 
               className="h-10 w-auto"
             />

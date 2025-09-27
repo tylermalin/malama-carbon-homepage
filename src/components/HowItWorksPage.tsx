@@ -1,7 +1,10 @@
+import React from 'react';
 import { motion } from 'motion/react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
+import { LifecycleWithMalama } from './LifecycleWithMalama';
+import { MethodologiesExplorer } from './MethodologiesExplorer';
 import { 
   ArrowRight, 
   Clock, 
@@ -221,78 +224,17 @@ export function HowItWorksPage({ onNavigate, onStartProject }: HowItWorksPagePro
         </div>
       </section>
 
-      {/* The Process */}
+      {/* Carbon Project Development Lifecycle */}
       <section id="process-steps" className="py-20 px-6 bg-muted/20">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl mb-6 text-primary font-medium">
-              The Process
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Five simple steps to transform your carbon removal project into a profitable venture
-            </p>
-          </motion.div>
-          
-          <div className="space-y-12">
-            {processSteps.map((step, index) => (
-              <motion.div
-                key={step.number}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Card className="overflow-hidden border-none bg-gradient-to-r from-[rgba(27,67,50,0.03)] via-[rgba(10,61,63,0.02)] to-[rgba(236,230,218,0.05)] backdrop-blur-sm shadow-[0_8px_24px_rgba(27,67,50,0.08)]">
-                  <CardContent className="p-0">
-                    <div className="grid lg:grid-cols-12 gap-0">
-                      {/* Number and Icon */}
-                      <div className="lg:col-span-2 bg-gradient-to-br from-primary/5 to-secondary/5 p-8 flex flex-col items-center justify-center">
-                        <div className="text-6xl font-medium text-primary/20 mb-4">
-                          {step.number}
-                        </div>
-                        <div className={`w-16 h-16 ${step.color} rounded-2xl flex items-center justify-center shadow-lg`}>
-                          <step.icon className="w-8 h-8 text-white" />
-                        </div>
-                      </div>
-                      
-                      {/* Content */}
-                      <div className="lg:col-span-7 p-8">
-                        <h3 className="text-2xl font-medium text-primary mb-2">
-                          {step.title}
-                        </h3>
-                        <p className="text-lg text-muted-foreground mb-6">
-                          {step.subtitle}
-                        </p>
-                        
-                        <div className="space-y-3">
-                          {step.tasks.map((task, taskIndex) => (
-                            <div key={taskIndex} className="flex items-start gap-3">
-                              <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                              <span className="text-foreground/80">{task}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      {/* Timeline */}
-                      <div className="lg:col-span-3 bg-gradient-to-br from-muted/20 to-muted/10 p-8 flex flex-col items-center justify-center border-l border-border/50">
-                        <Clock className="w-8 h-8 text-primary mb-4" />
-                        <Badge variant="outline" className="text-sm font-medium border-primary/20 text-primary bg-primary/5">
-                          {step.timeline}
-                        </Badge>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+          <LifecycleWithMalama />
+        </div>
+      </section>
+
+      {/* Methodologies Explorer */}
+      <section id="methodologies" className="py-20 px-6 bg-background">
+        <div className="max-w-7xl mx-auto">
+          <MethodologiesExplorer />
         </div>
       </section>
 
