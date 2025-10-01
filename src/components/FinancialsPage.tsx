@@ -58,11 +58,11 @@ const revenueData = [
 ];
 
 const projectionData = [
-  { year: 'Year 1', revenue: 0.788, projects: 10, cashflow: -0.737 },
-  { year: 'Year 2', revenue: 2.6, projects: 30, cashflow: 0.076 },
-  { year: 'Year 3', revenue: 6.2, projects: 60, cashflow: 1.5 },
-  { year: 'Year 4', revenue: 12.5, projects: 100, cashflow: 4.8 },
-  { year: 'Year 5', revenue: 22.7, projects: 150, cashflow: 9.1 },
+  { year: 'Year 1', conservative: 0.5, moderate: 0.788, optimistic: 1.2, projects: 10, cashflow: -0.737 },
+  { year: 'Year 2', conservative: 1.8, moderate: 2.6, optimistic: 3.5, projects: 30, cashflow: 0.076 },
+  { year: 'Year 3', conservative: 4.5, moderate: 6.2, optimistic: 8.5, projects: 60, cashflow: 1.5 },
+  { year: 'Year 4', conservative: 9.0, moderate: 12.5, optimistic: 17.0, projects: 100, cashflow: 4.8 },
+  { year: 'Year 5', conservative: 16.0, moderate: 22.7, optimistic: 32.0, projects: 150, cashflow: 9.1 },
 ];
 
 const creditVolumeData = [
@@ -117,7 +117,7 @@ const keyMetrics = [
     icon: TrendingUp,
     color: 'secondary',
     description: 'Customer Acquisition'
-  },
+  }
 ];
 
 const milestones = [
