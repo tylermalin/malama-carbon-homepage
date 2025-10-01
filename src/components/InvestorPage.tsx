@@ -604,7 +604,7 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
                       <div className="text-center mb-6">
                         <div className="w-24 h-24 bg-muted rounded-full mx-auto mb-4 overflow-hidden">
                           <img 
-                            src="/src/assets/tyler headshopt.JPG" 
+                            src="https://www.malamalabs.com/assets/tyler%20headshopt-DZ_QfwmG.JPG" 
                             alt="Tyler Malin"
                             className="w-full h-full object-cover"
                           />
@@ -630,7 +630,7 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
                       <div className="text-center mb-6">
                         <div className="w-24 h-24 bg-muted rounded-full mx-auto mb-4 overflow-hidden">
                           <img 
-                            src="/src/assets/Dominick.png" 
+                            src="https://www.malamalabs.com/assets/Dominick-BASZ3WWg.png" 
                             alt="Dominick Garey"
                             className="w-full h-full object-cover"
                           />
@@ -656,7 +656,7 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
                       <div className="text-center mb-6">
                         <div className="w-24 h-24 bg-muted rounded-full mx-auto mb-4 overflow-hidden">
                           <img 
-                            src="/src/assets/jeffrey.jpeg" 
+                            src="https://www.malamalabs.com/assets/jeffrey-BXTnCr7s.jpeg" 
                             alt="Jeffrey Wise"
                             className="w-full h-full object-cover"
                           />
