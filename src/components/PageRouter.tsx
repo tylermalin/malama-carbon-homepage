@@ -35,6 +35,8 @@ import { FAQPage } from './FAQPage';
 import { CareersPage } from './CareersPage';
 import { LegalPage } from './LegalPage';
 import { ProductFeaturePage } from './ProductFeaturePage';
+import { FinancialsPage } from './FinancialsPage';
+import { InvestorPage } from './InvestorPage';
 import { Cpu, Flame, Coins } from 'lucide-react';
 
 interface PageRouterProps {
@@ -61,6 +63,8 @@ interface PageRouterProps {
     showCarbonProtocols: () => void;
     showDMRVEngine: () => void;
     showTimeline: () => void;
+    showFinancials: () => void;
+    showInvestor: () => void;
   };
   navigateToSection: (section?: string) => void;
 }
@@ -98,7 +102,9 @@ export function PageRouter({
     showCarbonStudio,
     showCarbonProtocols,
     showDMRVEngine,
-    showTimeline
+    showTimeline,
+    showFinancials,
+    showInvestor
   } = navigationFunctions;
 
   // Render individual pages
@@ -126,6 +132,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -150,6 +158,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -179,6 +189,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -215,6 +227,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -239,6 +253,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -263,6 +279,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -287,6 +305,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -311,6 +331,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -335,6 +357,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -359,6 +383,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -383,6 +409,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -407,6 +435,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -436,6 +466,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -464,6 +496,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -503,6 +537,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -542,6 +578,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -581,6 +619,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );
@@ -596,6 +636,42 @@ export function PageRouter({
         />
       );
     
+    case 'financials':
+      return (
+        <>
+          <FinancialsPage 
+            onNavigate={navigateToSection}
+            onContact={showContact}
+          />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
+          />
+        </>
+      );
+    
+    case 'investor':
+      return (
+        <InvestorPage 
+          onNavigate={navigateToSection}
+          onContact={showContact}
+        />
+      );
     
     case 'home':
     default:
@@ -642,6 +718,8 @@ export function PageRouter({
             onShowCarbonStudio={showCarbonStudio}
             onShowCarbonProtocols={showCarbonProtocols}
             onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
           />
         </>
       );

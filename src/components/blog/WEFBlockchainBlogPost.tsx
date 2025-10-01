@@ -68,13 +68,12 @@ export function WEFBlockchainBlogPost({ onNavigate }: WEFBlockchainBlogPostProps
           <article className="prose prose-lg max-w-none">
             
             {/* Hero Image */}
-            <div className="w-full h-72 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl mb-12 flex items-center justify-center border border-border/50">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Tag className="w-8 h-8 text-primary" />
-                </div>
-                <span className="text-muted-foreground font-medium">Blockchain Climate Action Visualization</span>
-              </div>
+            <div className="w-full h-80 rounded-2xl mb-12 overflow-hidden border border-border/50">
+              <img 
+                src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwY2xpbWF0ZSUyMGFjdGlvbnxlbnwxfHx8fDE3NTY5ODc5NTV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                alt="Blockchain and climate action visualization showing renewable energy sources, global network connections, and digital infrastructure"
+                className="w-full h-full object-cover"
+              />
             </div>
 
             {/* Why It Matters */}

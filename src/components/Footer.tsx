@@ -19,6 +19,8 @@ interface FooterProps {
   onShowCarbonStudio?: () => void;
   onShowCarbonProtocols?: () => void;
   onShowDMRVEngine?: () => void;
+  onShowFinancials?: () => void;
+  onShowInvestor?: () => void;
 }
 
 const socialLinks = [
@@ -43,7 +45,9 @@ export function Footer({
   onShowCookiePolicy,
   onShowCarbonStudio,
   onShowCarbonProtocols,
-  onShowDMRVEngine
+  onShowDMRVEngine,
+  onShowFinancials,
+  onShowInvestor
 }: FooterProps) {
   
   const productLinks = [
@@ -63,6 +67,7 @@ export function Footer({
   const companyLinks = [
     { name: "About", action: onShowAbout },
     { name: "Our Team", action: onShowTeam },
+    { name: "Investor Portal", action: onShowInvestor },
     { name: "Contact", action: onShowContact },
     { name: "Careers", action: onShowCareers }
   ];
