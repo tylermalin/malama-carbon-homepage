@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Input } from './ui/input';
+import { AdvisoryApplicationForm } from './AdvisoryApplicationForm';
+import { AdvisoryApplicationSuccess } from './AdvisoryApplicationSuccess';
 import { 
   Users, 
   Target, 
@@ -88,6 +90,9 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showApplicationForm, setShowApplicationForm] = useState(false);
+  const [showSuccessScreen, setShowSuccessScreen] = useState(false);
+  const [submittedEmail, setSubmittedEmail] = useState('');
 
   useEffect(() => {
     // Check if user is already authenticated
@@ -112,6 +117,33 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
     setIsAuthenticated(false);
     sessionStorage.removeItem('advisory_authenticated');
     setPassword('');
+  };
+
+  const handleApplicationSubmit = (formData: any) => {
+    // Store the application data (you can send this to your backend)
+    console.log('Advisory Board Application Submitted:', formData);
+    
+    // Store in localStorage for now (in production, send to your backend)
+    const applications = JSON.parse(localStorage.getItem('advisoryApplications') || '[]');
+    applications.push({
+      ...formData,
+      submittedAt: new Date().toISOString(),
+      id: Date.now().toString()
+    });
+    localStorage.setItem('advisoryApplications', JSON.stringify(applications));
+    
+    // Show success screen
+    setSubmittedEmail(formData.email);
+    setShowApplicationForm(false);
+    setShowSuccessScreen(true);
+  };
+
+  const handleCloseApplication = () => {
+    setShowApplicationForm(false);
+  };
+
+  const handleCloseSuccess = () => {
+    setShowSuccessScreen(false);
   };
 
   if (!isAuthenticated) {
@@ -186,7 +218,7 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
                 Company Website
               </Button>
               <Button
-                onClick={() => window.open('mailto:tyler@malamalabs.com?subject=Advisory Board Application', '_blank')}
+                onClick={() => setShowApplicationForm(true)}
                 className="bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-primary"
               >
                 Apply to Join
@@ -222,7 +254,7 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
-                onClick={() => window.open('mailto:tyler@malamalabs.com?subject=Advisory Board Application', '_blank')}
+                onClick={() => setShowApplicationForm(true)}
                 size="lg"
                 className="bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-primary px-8 py-3"
               >
@@ -492,7 +524,7 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button
-                    onClick={() => window.open('mailto:tyler@malamalabs.com?subject=Advisory Board Application', '_blank')}
+                    onClick={() => setShowApplicationForm(true)}
                     size="lg"
                     className="bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-primary px-8 py-3"
                   >
@@ -517,6 +549,22 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
           </motion.div>
         </div>
       </section>
+
+      {/* Application Form Modal */}
+      {showApplicationForm && (
+        <AdvisoryApplicationForm
+          onClose={handleCloseApplication}
+          onSubmit={handleApplicationSubmit}
+        />
+      )}
+
+      {/* Success Screen Modal */}
+      {showSuccessScreen && (
+        <AdvisoryApplicationSuccess
+          email={submittedEmail}
+          onClose={handleCloseSuccess}
+        />
+      )}
     </div>
   );
 }
