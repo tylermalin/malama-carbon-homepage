@@ -698,7 +698,26 @@ export function AccountCreationForm({ onNavigate, onAccountCreated }: AccountCre
       </section>
 
       {/* Footer */}
-      <Footer />
+      <Footer 
+        onShowDocumentation={() => {}}
+        onShowBlog={() => {}}
+        onShowPlatform={() => {}}
+        onShowHowItWorks={() => {}}
+        onShowAbout={() => {}}
+        onShowTeam={() => {}}
+        onShowContact={() => {}}
+        onShowCareers={() => {}}
+        onShowFAQ={() => {}}
+        onShowPrivacyPolicy={() => {}}
+        onShowTermsOfService={() => {}}
+        onShowCookiePolicy={() => {}}
+        onShowCarbonStudio={() => {}}
+        onShowCarbonProtocols={() => {}}
+        onShowDMRVEngine={() => {}}
+        onShowFinancials={() => {}}
+        onShowInvestor={() => {}}
+        onShowAdvisory={() => {}}
+      />
     </div>
   );
 }

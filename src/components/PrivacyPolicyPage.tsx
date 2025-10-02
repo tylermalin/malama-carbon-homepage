@@ -410,7 +410,26 @@ export function PrivacyPolicyPage({ onNavigate }: PrivacyPolicyPageProps) {
         </div>
       </section>
 
-      <Footer />
+      <Footer 
+        onShowDocumentation={() => {}}
+        onShowBlog={() => {}}
+        onShowPlatform={() => {}}
+        onShowHowItWorks={() => {}}
+        onShowAbout={() => {}}
+        onShowTeam={() => {}}
+        onShowContact={() => {}}
+        onShowCareers={() => {}}
+        onShowFAQ={() => {}}
+        onShowPrivacyPolicy={() => {}}
+        onShowTermsOfService={() => {}}
+        onShowCookiePolicy={() => {}}
+        onShowCarbonStudio={() => {}}
+        onShowCarbonProtocols={() => {}}
+        onShowDMRVEngine={() => {}}
+        onShowFinancials={() => {}}
+        onShowInvestor={() => {}}
+        onShowAdvisory={() => {}}
+      />
     </div>
   );
 }
