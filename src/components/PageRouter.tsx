@@ -67,6 +67,7 @@ interface PageRouterProps {
     showFinancials: () => void;
     showInvestor: () => void;
     showAdvisory: () => void;
+    showDashboards: () => void;
   };
   navigateToSection: (section?: string) => void;
 }
@@ -106,7 +107,9 @@ export function PageRouter({
     showDMRVEngine,
     showTimeline,
     showFinancials,
-    showInvestor
+    showInvestor,
+    showAdvisory,
+    showDashboards
   } = navigationFunctions;
 
   // Render individual pages
@@ -174,7 +177,7 @@ export function PageRouter({
           <GetStartedPage 
             onNavigate={navigateToSection} 
             onAccountCreated={handleAccountCreated} 
-            onShowDashboards={() => navigateToPage('dashboard')}
+            onShowDashboards={showDashboards}
             user={user}
           />
           <Footer 
