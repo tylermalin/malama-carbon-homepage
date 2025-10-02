@@ -48,7 +48,8 @@ export function Footer({
   onShowCarbonProtocols,
   onShowDMRVEngine,
   onShowFinancials,
-  onShowInvestor
+  onShowInvestor,
+  onShowAdvisory
 }: FooterProps) {
   
   const productLinks = [
