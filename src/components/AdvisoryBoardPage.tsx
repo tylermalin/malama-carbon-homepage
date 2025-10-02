@@ -126,10 +126,10 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
           <Card className="border-2 border-slate-700 bg-slate-800/50 backdrop-blur-lg">
             <CardHeader className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <Lock className="w-8 h-8 text-white" />
+                <Lock className="w-8 h-8 text-primary" />
               </div>
-              <CardTitle className="text-2xl text-white">Advisory Board Portal</CardTitle>
-              <CardDescription className="text-slate-300">
+              <CardTitle className="text-2xl text-primary">Advisory Board Portal</CardTitle>
+              <CardDescription className="text-muted-foreground">
                 Enter password to access advisory board information
               </CardDescription>
             </CardHeader>
@@ -141,7 +141,7 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
                     placeholder="Enter password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400"
+                    className="bg-slate-700/50 border-slate-600 text-primary placeholder:text-muted-foreground"
                     required
                   />
                   {error && (
@@ -150,7 +150,7 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
                 </div>
                 <Button 
                   type="submit" 
-                  className="w-full bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white"
+                  className="w-full bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-primary"
                 >
                   Access Portal
                 </Button>
@@ -170,31 +170,31 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-blue-500 rounded-lg flex items-center justify-center">
-                <Users className="w-6 h-6 text-white" />
+                <Users className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white">Advisory Board Portal</h1>
-                <p className="text-sm text-slate-400">Malama Labs</p>
+                <h1 className="text-xl font-bold text-primary">Advisory Board Portal</h1>
+                <p className="text-sm text-muted-foreground">Malama Labs</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
               <Button
                 variant="ghost"
                 onClick={() => onNavigate('home')}
-                className="text-slate-300 hover:text-white hover:bg-slate-700/50"
+                className="text-muted-foreground hover:text-primary hover:bg-slate-700/50"
               >
                 Company Website
               </Button>
               <Button
                 onClick={() => window.open('mailto:tyler@malamalabs.com?subject=Advisory Board Application', '_blank')}
-                className="bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white"
+                className="bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-primary"
               >
                 Apply to Join
               </Button>
               <Button
                 variant="ghost"
                 onClick={handleLogout}
-                className="text-slate-400 hover:text-white"
+                className="text-muted-foreground hover:text-primary"
               >
                 Logout
               </Button>
@@ -216,7 +216,7 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
                 Join Our Advisory Board
               </span>
             </h1>
-            <p className="text-xl text-slate-300 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
               Help us build the capital markets infrastructure for carbon removal. 
               Share your expertise, expand your network, and participate in the upside.
             </p>
@@ -224,7 +224,7 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
               <Button
                 onClick={() => window.open('mailto:tyler@malamalabs.com?subject=Advisory Board Application', '_blank')}
                 size="lg"
-                className="bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white px-8 py-3"
+                className="bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-primary px-8 py-3"
               >
                 Apply Now
                 <ArrowRight className="ml-2 w-5 h-5" />
@@ -233,7 +233,7 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
                 variant="outline"
                 onClick={() => onNavigate('home')}
                 size="lg"
-                className="border-slate-600 text-slate-300 hover:bg-slate-700/50 px-8 py-3"
+                className="border-slate-600 text-muted-foreground hover:bg-slate-700/50 px-8 py-3"
               >
                 Learn More About Malama Labs
                 <ExternalLink className="ml-2 w-5 h-5" />
@@ -254,13 +254,13 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
           >
             <Card className="border-2 border-slate-700 bg-slate-800/50 backdrop-blur-lg">
               <CardHeader>
-                <CardTitle className="text-2xl text-white flex items-center">
+                <CardTitle className="text-2xl text-primary flex items-center">
                   <Target className="w-6 h-6 text-emerald-400 mr-3" />
                   Our Mission
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-slate-300 text-lg leading-relaxed">
+                <p className="text-muted-foreground text-lg leading-relaxed">
                   Enable high-integrity carbon removal projects to access capital in 90 
                   days instead of 24 months by building a risk-adjusted marketplace with an 
                   insurance layer.
@@ -270,13 +270,13 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
 
             <Card className="border-2 border-slate-700 bg-slate-800/50 backdrop-blur-lg">
               <CardHeader>
-                <CardTitle className="text-2xl text-white flex items-center">
+                <CardTitle className="text-2xl text-primary flex items-center">
                   <Globe className="w-6 h-6 text-blue-400 mr-3" />
                   Our Vision
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-slate-300 text-lg leading-relaxed">
+                <p className="text-muted-foreground text-lg leading-relaxed">
                   Become the Bloomberg Terminal for carbon removal—the trusted 
                   infrastructure layer that makes every ton traceable, tradeable, and bankable. 
                   By 2030, we aim to facilitate $10B+ in carbon project financing and help scale 
@@ -294,7 +294,7 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
           >
             <Card className="border-2 border-slate-700 bg-slate-800/50 backdrop-blur-lg">
               <CardContent className="p-8">
-                <p className="text-slate-300 text-lg leading-relaxed text-center">
+                <p className="text-muted-foreground text-lg leading-relaxed text-center">
                   We're not just building technology—we're fixing a broken market. Carbon project 
                   developers currently lose 60% of their value to middlemen and wait 2 years for 
                   payment. Corporate buyers can't access high-quality removal credits. The result: 
@@ -315,8 +315,8 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-white mb-4">What We're Looking For</h2>
-            <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+            <h2 className="text-4xl font-bold text-primary mb-4">What We're Looking For</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               We're seeking exceptional advisors across six key areas to help us build 
               the future of carbon markets.
             </p>
@@ -343,16 +343,16 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
                             ? 'bg-red-500/20 text-red-400 border-red-500/30' 
                             : advisor.priority === 'high'
                             ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
-                            : 'bg-slate-500/20 text-slate-400 border-slate-500/30'
+                            : 'bg-slate-500/20 text-muted-foreground border-slate-500/30'
                         }`}
                       >
                         {advisor.badge}
                       </Badge>
                     </div>
-                    <CardTitle className="text-xl text-white mb-3">{advisor.title}</CardTitle>
+                    <CardTitle className="text-xl text-primary mb-3">{advisor.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-slate-300 leading-relaxed">{advisor.description}</p>
+                    <p className="text-muted-foreground leading-relaxed">{advisor.description}</p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -370,8 +370,8 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-white mb-4">Standard Advisory Board Package</h2>
-            <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+            <h2 className="text-4xl font-bold text-primary mb-4">Standard Advisory Board Package</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               We believe advisors should share in the upside they help create. 
               Our standard package is competitive with top-tier startups and designed to 
               attract exceptional talent.
@@ -396,9 +396,9 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
                     <div className="p-4 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                       <metric.icon className="w-8 h-8 text-emerald-400" />
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-2">{metric.value}</h3>
-                    <p className="text-slate-300 font-medium mb-1">{metric.label}</p>
-                    <p className="text-sm text-slate-400">{metric.subtext}</p>
+                    <h3 className="text-2xl font-bold text-primary mb-2">{metric.value}</h3>
+                    <p className="text-muted-foreground font-medium mb-1">{metric.label}</p>
+                    <p className="text-sm text-muted-foreground">{metric.subtext}</p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -413,26 +413,26 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
           >
             <Card className="border-2 border-slate-700 bg-slate-800/50 backdrop-blur-lg">
               <CardHeader>
-                <CardTitle className="text-xl text-white">Package Details</CardTitle>
+                <CardTitle className="text-xl text-primary">Package Details</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-center text-slate-300">
+                <div className="flex items-center text-muted-foreground">
                   <CheckCircle2 className="w-5 h-5 text-emerald-400 mr-3" />
                   <span>Vesting Schedule: 25% after 6 months, then monthly over remaining 18 months</span>
                 </div>
-                <div className="flex items-center text-slate-300">
+                <div className="flex items-center text-muted-foreground">
                   <CheckCircle2 className="w-5 h-5 text-emerald-400 mr-3" />
                   <span>Equity Type: Stock options (ISOs for US advisors) or restricted stock</span>
                 </div>
-                <div className="flex items-center text-slate-300">
+                <div className="flex items-center text-muted-foreground">
                   <CheckCircle2 className="w-5 h-5 text-emerald-400 mr-3" />
                   <span>Strike Price: Fair market value at grant date</span>
                 </div>
-                <div className="flex items-center text-slate-300">
+                <div className="flex items-center text-muted-foreground">
                   <CheckCircle2 className="w-5 h-5 text-emerald-400 mr-3" />
                   <span>Acceleration: 50% on acquisition or IPO</span>
                 </div>
-                <div className="flex items-center text-slate-300">
+                <div className="flex items-center text-muted-foreground">
                   <CheckCircle2 className="w-5 h-5 text-emerald-400 mr-3" />
                   <span>Board Participation: Observer rights for select advisors</span>
                 </div>
@@ -441,26 +441,26 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
 
             <Card className="border-2 border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-yellow-500/10 backdrop-blur-lg">
               <CardHeader>
-                <CardTitle className="text-xl text-white flex items-center">
+                <CardTitle className="text-xl text-primary flex items-center">
                   <Star className="w-6 h-6 text-amber-400 mr-3" />
                   Executive Advisors
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-slate-300 leading-relaxed mb-4">
+                <p className="text-muted-foreground leading-relaxed mb-4">
                   For advisors providing 10+ hours/month or opening significant doors 
                   (e.g., $1M+ in deals), we offer enhanced packages:
                 </p>
                 <div className="space-y-2">
-                  <div className="flex items-center text-slate-300">
+                  <div className="flex items-center text-muted-foreground">
                     <CheckCircle2 className="w-5 h-5 text-amber-400 mr-3" />
                     <span>0.50-1.00% equity</span>
                   </div>
-                  <div className="flex items-center text-slate-300">
+                  <div className="flex items-center text-muted-foreground">
                     <CheckCircle2 className="w-5 h-5 text-amber-400 mr-3" />
                     <span>$10-25K annual cash</span>
                   </div>
-                  <div className="flex items-center text-slate-300">
+                  <div className="flex items-center text-muted-foreground">
                     <CheckCircle2 className="w-5 h-5 text-amber-400 mr-3" />
                     <span>Potential board seat</span>
                   </div>
@@ -482,10 +482,10 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
           >
             <Card className="border-2 border-slate-700 bg-slate-800/50 backdrop-blur-lg">
               <CardContent className="p-12">
-                <h2 className="text-4xl font-bold text-white mb-6">
+                <h2 className="text-4xl font-bold text-primary mb-6">
                   Ready to Help Build the Future of Carbon Markets?
                 </h2>
-                <p className="text-xl text-slate-300 mb-8 max-w-3xl mx-auto">
+                <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
                   We're looking for 4-6 exceptional advisors to join our board in Q4 2025. 
                   If you have relevant expertise and want to be part of solving one of climate 
                   tech's biggest infrastructure challenges, let's talk.
@@ -494,7 +494,7 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
                   <Button
                     onClick={() => window.open('mailto:tyler@malamalabs.com?subject=Advisory Board Application', '_blank')}
                     size="lg"
-                    className="bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white px-8 py-3"
+                    className="bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-primary px-8 py-3"
                   >
                     <Mail className="mr-2 w-5 h-5" />
                     Apply Now
@@ -503,13 +503,13 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
                     variant="outline"
                     onClick={() => onNavigate('home')}
                     size="lg"
-                    className="border-slate-600 text-slate-300 hover:bg-slate-700/50 px-8 py-3"
+                    className="border-slate-600 text-muted-foreground hover:bg-slate-700/50 px-8 py-3"
                   >
                     Learn More About Malama Labs
                     <ExternalLink className="ml-2 w-5 h-5" />
                   </Button>
                 </div>
-                <p className="text-slate-400 mt-6">
+                <p className="text-muted-foreground mt-6">
                   Questions? Email <a href="mailto:tyler@malamalabs.com" className="text-emerald-400 hover:text-emerald-300">tyler@malamalabs.com</a>
                 </p>
               </CardContent>
