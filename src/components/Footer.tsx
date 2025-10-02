@@ -21,6 +21,7 @@ interface FooterProps {
   onShowDMRVEngine?: () => void;
   onShowFinancials?: () => void;
   onShowInvestor?: () => void;
+  onShowAdvisory?: () => void;
 }
 
 const socialLinks = [
@@ -68,6 +69,7 @@ export function Footer({
     { name: "About", action: onShowAbout },
     { name: "Our Team", action: onShowTeam },
     { name: "Investor Portal", action: onShowInvestor },
+    { name: "Advisory Board", action: onShowAdvisory },
     { name: "Contact", action: onShowContact },
     { name: "Careers", action: onShowCareers }
   ];

@@ -24,7 +24,8 @@ export type PageType =
   | 'dmrvEngine'
   | 'timeline'
   | 'financials'
-  | 'investor';
+  | 'investor'
+  | 'advisory';
 
 export function useNavigation() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
@@ -91,6 +92,7 @@ export function useNavigation() {
     showTimeline: () => navigateToPage('timeline'),
     showFinancials: () => navigateToPage('financials'),
     showInvestor: () => navigateToPage('investor'),
+    showAdvisory: () => navigateToPage('advisory'),
   };
 
   const isOnSubPage = currentPage !== 'home';

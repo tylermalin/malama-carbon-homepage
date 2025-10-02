@@ -37,6 +37,7 @@ import { LegalPage } from './LegalPage';
 import { ProductFeaturePage } from './ProductFeaturePage';
 import { FinancialsPage } from './FinancialsPage';
 import { InvestorPage } from './InvestorPage';
+import { AdvisoryBoardPage } from './AdvisoryBoardPage';
 import { Cpu, Flame, Coins } from 'lucide-react';
 
 interface PageRouterProps {
@@ -65,6 +66,7 @@ interface PageRouterProps {
     showTimeline: () => void;
     showFinancials: () => void;
     showInvestor: () => void;
+    showAdvisory: () => void;
   };
   navigateToSection: (section?: string) => void;
 }
@@ -134,6 +136,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -160,6 +163,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -191,6 +195,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -229,6 +234,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -255,6 +261,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -281,6 +288,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -307,6 +315,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -333,6 +342,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -359,6 +369,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -385,6 +396,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -411,6 +423,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -437,6 +450,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -468,6 +482,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -498,6 +513,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -539,6 +555,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -580,6 +597,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -621,6 +639,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -661,6 +680,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
@@ -668,6 +688,14 @@ export function PageRouter({
     case 'investor':
       return (
         <InvestorPage 
+          onNavigate={navigateToSection}
+          onContact={showContact}
+        />
+      );
+    
+    case 'advisory':
+      return (
+        <AdvisoryBoardPage 
           onNavigate={navigateToSection}
           onContact={showContact}
         />
@@ -720,6 +748,7 @@ export function PageRouter({
             onShowDMRVEngine={showDMRVEngine}
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
           />
         </>
       );
