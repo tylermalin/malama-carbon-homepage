@@ -663,7 +663,7 @@ export function AdvisoryApplicationForm({ onClose, onSubmit }: AdvisoryApplicati
               
               <Button
                 onClick={nextStep}
-                className="bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white"
+                className="border-2 border-gray-900 bg-white text-gray-900 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all duration-200"
               >
                 {currentStep === 5 ? 'Submit Application' : 'Next Step'}
                 {currentStep < 5 && <ArrowRight className="w-4 h-4 ml-2" />}
