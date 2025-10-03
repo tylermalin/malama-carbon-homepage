@@ -24,9 +24,12 @@ import {
 interface PlatformPageProps {
   onNavigate: (section?: string) => void;
   onStartProject?: () => void;
+  onNavigateToDMRV?: () => void;
+  onNavigateToProtocols?: () => void;
+  onNavigateToStudio?: () => void;
 }
 
-export function PlatformPage({ onNavigate, onStartProject }: PlatformPageProps) {
+export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onNavigateToProtocols, onNavigateToStudio }: PlatformPageProps) {
   const scrollToSection = (sectionId: string) => {
     setTimeout(() => {
       const element = document.getElementById(sectionId);
@@ -258,9 +261,19 @@ export function PlatformPage({ onNavigate, onStartProject }: PlatformPageProps) 
                       </div>
                     </div>
                     
-                    <p className="text-lg text-primary font-medium">
+                    <p className="text-lg text-primary font-medium mb-6">
                       Reduce verification costs by 70% while increasing accuracy
                     </p>
+                    
+                    {onNavigateToDMRV && (
+                      <button 
+                        onClick={onNavigateToDMRV}
+                        className="flex items-center gap-2 text-primary hover:text-secondary transition-colors duration-300 font-medium"
+                      >
+                        <span>Learn more about dMRV Engine</span>
+                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      </button>
+                    )}
                   </div>
                   
                   <div className="flex items-center justify-center">
@@ -322,9 +335,19 @@ export function PlatformPage({ onNavigate, onStartProject }: PlatformPageProps) 
                       </div>
                     </div>
                     
-                    <p className="text-lg text-secondary font-medium">
+                    <p className="text-lg text-secondary font-medium mb-6">
                       Support all carbon removal methodologies with verified impact
                     </p>
+                    
+                    {onNavigateToProtocols && (
+                      <button 
+                        onClick={onNavigateToProtocols}
+                        className="flex items-center gap-2 text-secondary hover:text-primary transition-colors duration-300 font-medium"
+                      >
+                        <span>Learn more about Carbon Protocols</span>
+                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      </button>
+                    )}
                   </div>
                 </div>
               </CardContent>
@@ -370,9 +393,19 @@ export function PlatformPage({ onNavigate, onStartProject }: PlatformPageProps) 
                       </div>
                     </div>
                     
-                    <p className="text-lg text-accent-foreground font-medium">
+                    <p className="text-lg text-accent-foreground font-medium mb-6">
                       Access premium markets for durable carbon removal credits
                     </p>
+                    
+                    {onNavigateToStudio && (
+                      <button 
+                        onClick={onNavigateToStudio}
+                        className="flex items-center gap-2 text-accent-foreground hover:text-primary transition-colors duration-300 font-medium"
+                      >
+                        <span>Learn more about Carbon Credit Studio</span>
+                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      </button>
+                    )}
                   </div>
                   
                   <div className="flex items-center justify-center">

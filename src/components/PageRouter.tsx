@@ -38,6 +38,9 @@ import { ProductFeaturePage } from './ProductFeaturePage';
 import { FinancialsPage } from './FinancialsPage';
 import { InvestorPage } from './InvestorPage';
 import { AdvisoryBoardPage } from './AdvisoryBoardPage';
+import { CarbonProtocolsPage } from './CarbonProtocolsPage';
+import { DMRVEnginePage } from './DMRVEnginePage';
+import { CarbonCreditStudioPage } from './CarbonCreditStudioPage';
 import { Cpu, Flame, Coins } from 'lucide-react';
 
 interface PageRouterProps {
@@ -120,7 +123,13 @@ export function PageRouter({
     case 'platform':
       return (
         <>
-          <PlatformPage onNavigate={navigateToSection} onStartProject={showGetStarted} />
+          <PlatformPage 
+            onNavigate={navigateToSection} 
+            onStartProject={showGetStarted}
+            onNavigateToDMRV={showDMRVEngine}
+            onNavigateToProtocols={showCarbonProtocols}
+            onNavigateToStudio={showCarbonStudio}
+          />
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
@@ -524,21 +533,9 @@ export function PageRouter({
     case 'carbonStudio':
       return (
         <>
-          <ProductFeaturePage 
+          <CarbonCreditStudioPage 
             onNavigate={navigateToSection}
             onStartProject={showGetStarted}
-            title="Carbon Credit Studio"
-            subtitle="Issue and pre-sell durable credits on-chain"
-            description="Our Carbon Credit Studio enables projects to issue and pre-sell durable LC02/VC02 credits on-chain to jumpstart financing and accelerate project development."
-            features={[
-              "Pre-sell carbon credits before project completion",
-              "On-chain issuance for transparency and trust",
-              "Integration with major certification platforms",
-              "Automated compliance and reporting",
-              "Access to verified carbon credit buyers",
-              "Real-time pricing and market data"
-            ]}
-            icon={Coins}
           />
           <Footer 
             onShowDocumentation={showDocumentation} 
@@ -566,21 +563,9 @@ export function PageRouter({
     case 'carbonProtocols':
       return (
         <>
-          <ProductFeaturePage 
+          <CarbonProtocolsPage 
             onNavigate={navigateToSection}
             onStartProject={showGetStarted}
-            title="Durable Carbon Sequestration Protocols"
-            subtitle="Track, verify, and tokenize biochar carbon removal"
-            description="Our protocols provide a comprehensive framework for tracking, verifying, and tokenizing biochar carbon removal with pre-certification pathways."
-            features={[
-              "Pre-certification pathways for faster approval",
-              "Biochar-specific measurement protocols",
-              "Automated verification and monitoring",
-              "Integration with Verra and Gold Standard",
-              "Permanence tracking and verification",
-              "Chain of custody documentation"
-            ]}
-            icon={Flame}
           />
           <Footer 
             onShowDocumentation={showDocumentation} 
@@ -608,21 +593,9 @@ export function PageRouter({
     case 'dmrvEngine':
       return (
         <>
-          <ProductFeaturePage 
+          <DMRVEnginePage 
             onNavigate={navigateToSection}
             onStartProject={showGetStarted}
-            title="Universal dMRV Engine"
-            subtitle="Automated measurement across any methodology"
-            description="Our Universal dMRV Engine provides automated measurement and monitoring across any carbon methodology, integrated with certification platforms."
-            features={[
-              "Compatible with any carbon methodology",
-              "AI-powered sensor networks",
-              "Real-time data collection and analysis",
-              "Automated reporting to certification bodies",
-              "Blockchain-verified data integrity",
-              "Cross-platform integration capabilities"
-            ]}
-            icon={Cpu}
           />
           <Footer 
             onShowDocumentation={showDocumentation} 
