@@ -25,7 +25,8 @@ export type PageType =
   | 'timeline'
   | 'financials'
   | 'investor'
-  | 'advisory';
+  | 'advisory'
+  | 'presentation';
 
 export function useNavigation() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
@@ -93,6 +94,7 @@ export function useNavigation() {
     showFinancials: () => navigateToPage('financials'),
     showInvestor: () => navigateToPage('investor'),
     showAdvisory: () => navigateToPage('advisory'),
+    showPresentation: () => navigateToPage('presentation'),
   };
 
   const isOnSubPage = currentPage !== 'home';

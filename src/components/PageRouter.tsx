@@ -41,6 +41,7 @@ import { AdvisoryBoardPage } from './AdvisoryBoardPage';
 import { CarbonProtocolsPage } from './CarbonProtocolsPage';
 import { DMRVEnginePage } from './DMRVEnginePage';
 import { CarbonCreditStudioPage } from './CarbonCreditStudioPage';
+import { PresentationPage } from './PresentationPage';
 import { Cpu, Flame, Coins } from 'lucide-react';
 
 interface PageRouterProps {
@@ -71,6 +72,7 @@ interface PageRouterProps {
     showInvestor: () => void;
     showAdvisory: () => void;
     showDashboards: () => void;
+    showPresentation: () => void;
   };
   navigateToSection: (section?: string) => void;
 }
@@ -112,7 +114,8 @@ export function PageRouter({
     showFinancials,
     showInvestor,
     showAdvisory,
-    showDashboards
+    showDashboards,
+    showPresentation
   } = navigationFunctions;
 
   // Render individual pages
@@ -149,6 +152,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -176,6 +180,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -208,6 +213,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -247,6 +253,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -274,6 +281,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -301,6 +309,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -328,6 +337,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -355,6 +365,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -382,6 +393,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -409,6 +421,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -436,6 +449,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -463,6 +477,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -495,6 +510,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -526,6 +542,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -556,6 +573,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -586,6 +604,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -616,6 +635,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -657,6 +677,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
@@ -674,6 +695,14 @@ export function PageRouter({
         <AdvisoryBoardPage 
           onNavigate={navigateToSection}
           onContact={showContact}
+        />
+      );
+    
+    case 'presentation':
+      return (
+        <PresentationPage
+          onNavigate={navigateToSection}
+          onShowInvestor={showInvestor}
         />
       );
     
@@ -725,6 +754,7 @@ export function PageRouter({
             onShowFinancials={showFinancials}
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
           />
         </>
       );
