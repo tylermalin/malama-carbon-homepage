@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { motion } from 'motion/react';
+import { AnimatedBackground } from './AnimatedBackground';
 
 interface SlideLayoutProps {
   children: ReactNode;
@@ -8,8 +9,9 @@ interface SlideLayoutProps {
 
 export function SlideLayout({ children, className = '' }: SlideLayoutProps) {
   return (
-    <div className={`w-full h-full flex items-center justify-center p-12 md:p-20 ${className}`}>
-      <div className="max-w-6xl w-full">
+    <div className={`w-full h-full flex items-center justify-center p-12 md:p-20 relative ${className}`}>
+      <AnimatedBackground />
+      <div className="max-w-6xl w-full relative z-10">
         {children}
       </div>
     </div>
@@ -27,7 +29,7 @@ export function SlideHeadline({ children, className = '' }: SlideHeadlineProps) 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className={`text-4xl md:text-6xl lg:text-7xl font-bold text-primary mb-6 leading-tight ${className}`}
+      className={`text-4xl md:text-6xl lg:text-7xl font-bold text-primary mb-6 leading-none ${className}`}
     >
       {children}
     </motion.h1>

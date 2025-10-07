@@ -1,39 +1,26 @@
 import { motion } from 'motion/react';
 import { SlideLayout, SlideHeadline, SlideSubtitle } from './SlideLayout';
 import { Button } from '../ui/button';
-import { ArrowRight, Leaf, Mail } from 'lucide-react';
+import { ArrowRight, Leaf, Mail, Download } from 'lucide-react';
 
 interface Slide15ClosingProps {
   onShowInvestor: () => void;
 }
 
 export function Slide15Closing({ onShowInvestor }: Slide15ClosingProps) {
+  const handleDownloadPDF = () => {
+    // Create a link to trigger download
+    const link = document.createElement('a');
+    link.href = '/Malama_Labs_Investor_Presentation_2025.pdf';
+    link.download = 'Malama_Labs_Co2.0_Investor_Presentation.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <SlideLayout className="text-center">
       <div className="relative">
-        {/* Animated particles background */}
-        <div className="absolute inset-0 -z-10">
-          {[...Array(30)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1.5 h-1.5 bg-emerald-500/20 rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [0, -40, 0],
-                opacity: [0.2, 0.5, 0.2],
-                scale: [1, 1.5, 1],
-              }}
-              transition={{
-                duration: 4 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
-        </div>
 
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
@@ -75,7 +62,7 @@ export function Slide15Closing({ onShowInvestor }: Slide15ClosingProps) {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
             <Button
               onClick={onShowInvestor}
               size="lg"
@@ -89,10 +76,22 @@ export function Slide15Closing({ onShowInvestor }: Slide15ClosingProps) {
               onClick={() => window.location.href = 'mailto:tyler@malamalabs.com'}
               variant="outline"
               size="lg"
-              className="bg-white/5 border-white/20 hover:bg-white/10 text-primary text-lg px-8 py-6"
+              className="bg-slate-100 border-slate-300 hover:bg-slate-200 text-primary text-lg px-8 py-6"
             >
               <Mail className="w-5 h-5 mr-2" />
               Contact Us
+            </Button>
+          </div>
+
+          <div className="flex justify-center">
+            <Button
+              onClick={handleDownloadPDF}
+              variant="outline"
+              size="lg"
+              className="bg-slate-50 border-emerald-500/30 hover:bg-emerald-50 text-primary text-base px-6 py-4"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Download Presentation (PDF)
             </Button>
           </div>
 
