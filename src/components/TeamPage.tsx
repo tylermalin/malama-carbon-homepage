@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import tylerHeadshot from '../assets/tyler headshopt.JPG';
+import tylerHeadshot from '../assets/tyler2025headshot.png';
 import dominickHeadshot from '../assets/Dominick.png';
 import jeffreyHeadshot from '../assets/jeffrey.jpeg';
 import { 

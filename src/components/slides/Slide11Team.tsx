@@ -6,7 +6,7 @@ export function Slide11Team() {
     {
       name: 'Tyler Malin',
       role: 'Founder & CEO',
-      image: 'https://www.malamalabs.com/assets/tyler%20headshopt-DZ_QfwmG.JPG',
+      image: '/assets/tyler2025headshot.png',
       icon: Briefcase,
       background: 'Legal, Blockchain, Climate Strategy',
       highlight: 'Serial entrepreneur with 20+ years building marketplaces. 2 successful exits.'

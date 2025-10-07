@@ -6,6 +6,7 @@ import { Badge } from './ui/badge';
 import { Input } from './ui/input';
 import { AdvisoryApplicationForm } from './AdvisoryApplicationForm';
 import { AdvisoryApplicationSuccess } from './AdvisoryApplicationSuccess';
+import { RequestAccessForm } from './RequestAccessForm';
 import { 
   Users, 
   Target, 
@@ -93,6 +94,7 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
   const [showApplicationForm, setShowApplicationForm] = useState(false);
   const [showSuccessScreen, setShowSuccessScreen] = useState(false);
   const [submittedEmail, setSubmittedEmail] = useState('');
+  const [showRequestAccess, setShowRequestAccess] = useState(false);
 
   useEffect(() => {
     // Check if user is already authenticated
@@ -187,9 +189,33 @@ export function AdvisoryBoardPage({ onNavigate, onContact }: AdvisoryBoardPagePr
                   Access Portal
                 </Button>
               </form>
+              
+              <div className="mt-6 text-center">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowRequestAccess(true)}
+                  className="w-full border-emerald-500/30 text-emerald-700 hover:bg-emerald-50"
+                >
+                  Request Access
+                </Button>
+                <p className="text-sm text-slate-500 mt-4">
+                  Or contact us at{' '}
+                  <a href="mailto:tyler@malamalabs.com" className="text-emerald-600 hover:text-emerald-700">
+                    tyler@malamalabs.com
+                  </a>
+                </p>
+              </div>
             </CardContent>
           </Card>
         </motion.div>
+
+        <RequestAccessForm
+          isOpen={showRequestAccess}
+          onClose={() => setShowRequestAccess(false)}
+          onSuccess={() => onNavigate('home')}
+          portalType="advisory"
+        />
       </div>
     );
   }

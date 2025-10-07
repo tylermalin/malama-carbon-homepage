@@ -9,13 +9,8 @@ interface Slide15ClosingProps {
 
 export function Slide15Closing({ onShowInvestor }: Slide15ClosingProps) {
   const handleDownloadPDF = () => {
-    // Create a link to trigger download
-    const link = document.createElement('a');
-    link.href = '/Malama_Labs_Investor_Presentation_2025.pdf';
-    link.download = 'Malama_Labs_Co2.0_Investor_Presentation.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // Open Dropbox PDF link in new tab
+    window.open('https://www.dropbox.com/scl/fi/wv7qk58oyuv9ampmakol4/Investor-Presentation-m-lama-labs-2025.pdf?rlkey=xd5sa85tpgi7siykmlwfcj4s9&st=cfcghlnr&dl=1', '_blank');
   };
 
   return (

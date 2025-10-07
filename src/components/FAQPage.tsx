@@ -293,7 +293,7 @@ export function FAQPage({ onNavigate, onContact }: FAQPageProps) {
                 <Button 
                   variant="outline" 
                   size="lg"
-                  onClick={() => onNavigate()}
+                  onClick={() => window.open('https://calendar.app.google/PjPddjUkZjdxHPqr8', '_blank')}
                   className="text-lg px-8 py-4 hover:scale-105 transition-transform duration-300"
                 >
                   <Users className="w-5 h-5 mr-2" />

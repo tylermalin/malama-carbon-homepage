@@ -20,6 +20,7 @@ import {
   Zap
 } from 'lucide-react';
 import { FinancialsPage } from './FinancialsPage';
+import { RequestAccessForm } from './RequestAccessForm';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -36,6 +37,7 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
   const [error, setError] = useState('');
   const [selectedTab, setSelectedTab] = useState('overview');
   const [financialsTab, setFinancialsTab] = useState('overview');
+  const [showRequestAccess, setShowRequestAccess] = useState(false);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -92,14 +94,29 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-500">
-              Need access? Contact us at{' '}
-              <a href="mailto:investors@malama.earth" className="text-emerald-600 hover:text-emerald-700">
-                investors@malama.earth
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setShowRequestAccess(true)}
+              className="w-full border-emerald-500/30 text-emerald-700 hover:bg-emerald-50"
+            >
+              Request Access
+            </Button>
+            <p className="text-sm text-gray-500 mt-4">
+              Or contact us at{' '}
+              <a href="mailto:tyler@malamalabs.com" className="text-emerald-600 hover:text-emerald-700">
+                tyler@malamalabs.com
               </a>
             </p>
           </div>
         </motion.div>
+
+        <RequestAccessForm
+          isOpen={showRequestAccess}
+          onClose={() => setShowRequestAccess(false)}
+          onSuccess={() => onNavigate('home')}
+          portalType="investor"
+        />
       </div>
     );
   }
@@ -117,8 +134,8 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
                 className="h-12 w-auto object-contain"
               />
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Investor Portal</h1>
-                <p className="text-gray-600 mt-1">Confidential - For Authorized Investors Only</p>
+                <h1 className="text-3xl font-bold text-gray-900">Mālama Labs Investor Portal</h1>
+                <p className="text-gray-600 mt-1">Confidential – For Authorized Investors Only</p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -131,9 +148,27 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
         </div>
       </div>
 
-      {/* Key Metrics */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      {/* Investment Introduction Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="bg-white rounded-xl border-2 border-emerald-500/20 p-8 shadow-lg mb-8">
+            <p className="text-lg text-slate-700 leading-relaxed mb-6">
+              Mālama Labs is building the digital infrastructure for compliance-grade carbon markets. This secure investor portal provides authorized stakeholders with exclusive access to current fundraising details, company performance data, and key strategic materials. Our goal is to align mission-driven investors with the future of verifiable carbon removal—turning nature-based impact into investable, high-integrity climate assets.
+            </p>
+            
+            <div className="border-t border-slate-200 pt-6">
+              <p className="text-base text-slate-600 leading-relaxed">
+                Through a <span className="font-semibold text-primary">$1.2M SAFE round</span> at an <span className="font-semibold text-primary">$8M post-money valuation cap</span>, Mālama Labs is advancing its Universal dMRV platform, certification integrations (Puro.earth, Article 6.4), and Hawai'i-based carbon innovation projects. This portal includes the Executive Summary, Financials, and Data Room materials needed for due diligence and participation in the round.
+              </p>
+            </div>
+          </div>
+
+          {/* Key Investment Metrics */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card className="border-2 border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-xl transition-shadow">
             <CardContent className="pt-6">
               <div className="flex items-start justify-between mb-4">
@@ -195,8 +230,11 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
             </CardContent>
           </Card>
         </div>
+        </motion.div>
+      </div>
 
-        {/* Main Content */}
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
         <Card className="border-2 border-border/50 bg-card/80 backdrop-blur-sm">
           {/* Enhanced Tabs Navigation */}
           <div className="bg-gradient-to-r from-primary/5 via-background to-secondary/5 border-b border-border/50">
@@ -515,6 +553,7 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
             {selectedTab === 'financials' && (
               <div>
                 <FinancialsPage 
+                  onNavigate={onNavigate}
                   selectedTab={financialsTab}
                   onTabChange={setFinancialsTab}
                 />
@@ -604,7 +643,7 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
                       <div className="text-center mb-6">
                         <div className="w-24 h-24 bg-muted rounded-full mx-auto mb-4 overflow-hidden">
                           <img 
-                            src="https://www.malamalabs.com/assets/tyler%20headshopt-DZ_QfwmG.JPG" 
+                            src="/assets/tyler2025headshot.png" 
                             alt="Tyler Malin"
                             className="w-full h-full object-cover"
                           />
@@ -773,7 +812,11 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
                 Join us in building the future of carbon markets. Schedule a call with our team to discuss investment opportunities.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="group" onClick={onContact}>
+                <Button 
+                  size="lg" 
+                  className="group"
+                  onClick={() => window.open('https://calendar.app.google/PjPddjUkZjdxHPqr8', '_blank')}
+                >
                   Schedule Investment Call
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>

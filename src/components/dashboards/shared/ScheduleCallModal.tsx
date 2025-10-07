@@ -13,6 +13,12 @@ interface ScheduleCallModalProps {
 }
 
 export function ScheduleCallModal({ isOpen, onClose }: ScheduleCallModalProps) {
+  // Immediately redirect to Google Calendar booking when modal opens
+  if (isOpen) {
+    window.open('https://calendar.app.google/PjPddjUkZjdxHPqr8', '_blank');
+    setTimeout(() => onClose(), 100);
+  }
+
   const [formData, setFormData] = useState({
     email: '',
     organization: '',
