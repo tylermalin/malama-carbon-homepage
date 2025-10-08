@@ -10,7 +10,7 @@ interface Slide15ClosingProps {
 export function Slide15Closing({ onShowInvestor }: Slide15ClosingProps) {
   const handleDownloadPDF = () => {
     // Open Dropbox PDF link in new tab
-    window.open('https://www.dropbox.com/scl/fi/wv7qk58oyuv9ampmakol4/Investor-Presentation-m-lama-labs-2025.pdf?rlkey=xd5sa85tpgi7siykmlwfcj4s9&st=cfcghlnr&dl=1', '_blank');
+    window.open('https://www.dropbox.com/scl/fi/4y1or93vgap5nkyxggeb3/malama-safe-round-presentation-2025-1.pdf?rlkey=45lufukpxihkt7n21gq3nq6qh&st=jz716620&dl=1', '_blank');
   };
 
   return (
