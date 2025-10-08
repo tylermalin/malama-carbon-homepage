@@ -199,7 +199,7 @@ export function CarbonProjectCard({
             className="w-full group-hover:gap-3 transition-all duration-300"
             size="sm"
           >
-            Learn More
+            Coming Soon
             <ChevronRight className="w-4 h-4 ml-2 group-hover:ml-3 transition-all duration-300" />
           </Button>
         </CardContent>
