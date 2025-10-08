@@ -335,7 +335,7 @@ export function HowItWorksPage({ onNavigate, onStartProject }: HowItWorksPagePro
               <Button 
                 variant="outline" 
                 size="lg"
-                onClick={() => onNavigate()}
+                onClick={() => window.open('https://calendar.app.google/mpPNfQZBixvoCmb18', '_blank')}
                 className="hover:scale-105 transition-transform duration-300"
               >
                 Schedule Demo
