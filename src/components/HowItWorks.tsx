@@ -1,36 +1,36 @@
 import { motion } from 'motion/react';
 import { Button } from './ui/button';
-import { UserPlus, Settings, Flame, CheckCircle, Coins, ArrowRight } from 'lucide-react';
+import { UserPlus, FileText, Wifi, BarChart3, Coins, ArrowRight } from 'lucide-react';
 
 const steps = [
   {
     icon: UserPlus,
     title: "Sign Up",
-    description: "Register your project and connect with our platform",
+    description: "Register your project and connect with the Mālama platform. Gain access to your personalized dashboard, onboarding tools, and support team.",
     step: "01"
   },
   {
-    icon: Settings,
-    title: "Sensor Install",
-    description: "Deploy AI-powered monitoring sensors on your land",
+    icon: FileText,
+    title: "Project Documentation & Planning",
+    description: "Work with our team to design a complete measurement and monitoring plan. Define project boundaries, data sources, and methodology pathways to ensure alignment with recognized carbon accounting standards.",
     step: "02"
   },
   {
-    icon: Flame,
-    title: "Biochar Creation",
-    description: "Convert organic waste into stable biochar using our protocols",
+    icon: Wifi,
+    title: "Sensor Deployment & Testing",
+    description: "Deploy AI-powered environmental sensors and connect to the Mālama dMRV network. Our system integrates field sensors, satellite data, and analytics to monitor carbon flows with precision and transparency.",
     step: "03"
   },
   {
-    icon: CheckCircle,
-    title: "Credit Validation",
-    description: "Automated verification through our dMRV engine",
+    icon: BarChart3,
+    title: "Validate – Automated Reporting & Compliance",
+    description: "Automate reporting and streamline compliance across multiple programs — including tax credit pathways (45Q), compliance markets (LCFS), and voluntary registries (Isometric, Verra, Puro.earth). All outputs are audit-ready, verifiable, and instantly traceable.",
     step: "04"
   },
   {
     icon: Coins,
-    title: "On-chain Issue",
-    description: "Mint and trade verified LC02/VC02 credits on blockchain",
+    title: "On-Chain Issue",
+    description: "Once validated, credits are issued as LCO₂ (Liquid Carbon) and converted to VCO₂ (Verified Carbon) upon certification. Your verified credits are tokenized on-chain, enabling transparent trading, traceable retirement, and integration with global climate markets.",
     step: "05"
   }
 ];
@@ -54,8 +54,11 @@ export function HowItWorks({ onShowDetailedProcess, onLaunchProject }: HowItWork
           <h2 className="text-4xl md:text-5xl mb-6 text-primary font-bold">
             How It Works
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            From setup to credit sales, our streamlined process makes carbon removal accessible and profitable
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-4">
+            Accurately measure, quantify, and report every molecule of CO₂ in your operations — from field to finance — to support project commercialization and regulatory compliance.
+          </p>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Our streamlined process makes carbon removal accessible, auditable, and profitable.
           </p>
         </motion.div>
         
