@@ -737,6 +737,10 @@ export function PageRouter({
       return (
         <PresentationsHubPage
           onNavigate={navigateToSection}
+          onShowPresentation={showPresentation}
+          onShowPresentationBuyers={showPresentationBuyers}
+          onShowPresentationProjects={showPresentationProjects}
+          onShowInvestor={showInvestor}
         />
       );
     

@@ -10,16 +10,20 @@ import { trackPresentationClick } from '../lib/track';
 
 interface PresentationsHubPageProps {
   onNavigate: (page?: string) => void;
+  onShowPresentation: () => void;
+  onShowPresentationBuyers: () => void;
+  onShowPresentationProjects: () => void;
+  onShowInvestor: () => void;
 }
 
-export function PresentationsHubPage({ onNavigate }: PresentationsHubPageProps) {
+export function PresentationsHubPage({ onNavigate, onShowPresentation, onShowPresentationBuyers, onShowPresentationProjects, onShowInvestor }: PresentationsHubPageProps) {
   const [refCode, setRefCode] = useState<string | null>(null);
 
   useEffect(() => {
     setRefCode(getAndPersistReferralCode());
   }, []);
 
-  async function handleCardClick(deckKey: "SAFE_ROUND" | "BUYERS" | "PROJECTS", page: string) {
+  async function handleCardClick(deckKey: "SAFE_ROUND" | "BUYERS" | "PROJECTS", navigationFn: () => void) {
     try {
       await trackPresentationClick({
         deckKey,
@@ -31,8 +35,8 @@ export function PresentationsHubPage({ onNavigate }: PresentationsHubPageProps) 
       console.error('Failed to track click:', error);
     }
     
-    // Navigate to the appropriate presentation page
-    onNavigate(page);
+    // Navigate using the provided navigation function
+    navigationFn();
   }
 
   const PresentationCard = ({
@@ -40,24 +44,24 @@ export function PresentationsHubPage({ onNavigate }: PresentationsHubPageProps) 
     description,
     badge,
     deckKey,
-    page,
+    onClick,
   }: {
     title: string;
     description: string;
     badge?: string;
     deckKey: "SAFE_ROUND" | "BUYERS" | "PROJECTS";
-    page: string;
+    onClick: () => void;
   }) => (
     <Card 
       className="group border-2 border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
-      onClick={() => handleCardClick(deckKey, page)}
+      onClick={() => handleCardClick(deckKey, onClick)}
       tabIndex={0}
       role="button"
       aria-label={`${title} — view presentation`}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          handleCardClick(deckKey, page);
+          handleCardClick(deckKey, onClick);
         }
       }}
     >
@@ -136,7 +140,7 @@ export function PresentationsHubPage({ onNavigate }: PresentationsHubPageProps) 
             >
               <PresentationCard 
                 {...PRESENTATIONS.SAFE_ROUND} 
-                page="presentation"
+                onClick={onShowPresentation}
               />
             </motion.div>
             
@@ -147,7 +151,7 @@ export function PresentationsHubPage({ onNavigate }: PresentationsHubPageProps) 
             >
               <PresentationCard 
                 {...PRESENTATIONS.BUYERS} 
-                page="presentationBuyers"
+                onClick={onShowPresentationBuyers}
               />
             </motion.div>
             
@@ -158,7 +162,7 @@ export function PresentationsHubPage({ onNavigate }: PresentationsHubPageProps) 
             >
               <PresentationCard 
                 {...PRESENTATIONS.PROJECTS} 
-                page="presentationProjects"
+                onClick={onShowPresentationProjects}
               />
             </motion.div>
           </div>
@@ -227,7 +231,7 @@ export function PresentationsHubPage({ onNavigate }: PresentationsHubPageProps) 
                 </p>
                 <Button 
                   variant="outline"
-                  onClick={() => onNavigate('investor')}
+                  onClick={onShowInvestor}
                 >
                   Access Portal
                 </Button>
