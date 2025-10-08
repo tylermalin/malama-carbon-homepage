@@ -42,6 +42,9 @@ import { CarbonProtocolsPage } from './CarbonProtocolsPage';
 import { DMRVEnginePage } from './DMRVEnginePage';
 import { CarbonCreditStudioPage } from './CarbonCreditStudioPage';
 import { PresentationPage } from './PresentationPage';
+import { PresentationsHubPage } from './PresentationsHubPage';
+import { BuyersPresentationPage } from './BuyersPresentationPage';
+import { ProjectsPresentationPage } from './ProjectsPresentationPage';
 import { Cpu, Flame, Coins } from 'lucide-react';
 
 interface PageRouterProps {
@@ -703,6 +706,27 @@ export function PageRouter({
         <PresentationPage
           onNavigate={navigateToSection}
           onShowInvestor={showInvestor}
+        />
+      );
+    
+    case 'presentations':
+      return (
+        <PresentationsHubPage
+          onNavigate={navigateToSection}
+        />
+      );
+    
+    case 'presentationBuyers':
+      return (
+        <BuyersPresentationPage
+          onNavigate={navigateToSection}
+        />
+      );
+    
+    case 'presentationProjects':
+      return (
+        <ProjectsPresentationPage
+          onNavigate={navigateToSection}
         />
       );
     

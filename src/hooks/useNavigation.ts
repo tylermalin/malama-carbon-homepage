@@ -26,7 +26,10 @@ export type PageType =
   | 'financials'
   | 'investor'
   | 'advisory'
-  | 'presentation';
+  | 'presentation'
+  | 'presentations'
+  | 'presentationBuyers'
+  | 'presentationProjects';
 
 // Map URL paths to page types
 const pathToPageMap: Record<string, PageType> = {
@@ -37,6 +40,9 @@ const pathToPageMap: Record<string, PageType> = {
   '/advisoryboard': 'advisory',
   '/advisory-board': 'advisory',
   '/presentation': 'presentation',
+  '/presentations': 'presentations',
+  '/presentations/buyers': 'presentationBuyers',
+  '/presentations/projects': 'presentationProjects',
   '/platform': 'platform',
   '/team': 'team',
   '/about': 'about',
@@ -67,6 +73,9 @@ const pageToPathMap: Record<PageType, string> = {
   investor: '/investors',
   advisory: '/advisory',
   presentation: '/presentation',
+  presentations: '/presentations',
+  presentationBuyers: '/presentations/buyers',
+  presentationProjects: '/presentations/projects',
   platform: '/platform',
   team: '/team',
   about: '/about',
@@ -111,6 +120,9 @@ export function useNavigation() {
         investor: 'Investor Portal | Mālama Labs',
         advisory: 'Advisory Board | Mālama Labs',
         presentation: 'Investor Presentation | Mālama Labs',
+        presentations: 'Presentations | Mālama Labs',
+        presentationBuyers: 'CO₂.0 for Buyers | Mālama Labs',
+        presentationProjects: 'CO₂.0 for Projects | Mālama Labs',
         platform: 'Platform | Mālama Labs',
         team: 'Our Team | Mālama Labs',
         about: 'About | Mālama Labs',
@@ -215,6 +227,9 @@ export function useNavigation() {
     showInvestor: () => navigateToPage('investor'),
     showAdvisory: () => navigateToPage('advisory'),
     showPresentation: () => navigateToPage('presentation'),
+    showPresentations: () => navigateToPage('presentations'),
+    showPresentationBuyers: () => navigateToPage('presentationBuyers'),
+    showPresentationProjects: () => navigateToPage('presentationProjects'),
   };
 
   const isOnSubPage = currentPage !== 'home';
