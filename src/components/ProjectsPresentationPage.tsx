@@ -5,9 +5,15 @@ import { Button } from './ui/button';
 
 // Projects slide components
 import { ProjectsSlide01Problem } from './slides/projects/ProjectsSlide01Problem';
-import { ProjectsSlide02Solution } from './slides/projects/ProjectsSlide02Solution';
-import { ProjectsSlide03HowItWorks } from './slides/projects/ProjectsSlide03HowItWorks';
-import { ProjectsSlide04Closing } from './slides/projects/ProjectsSlide04Closing';
+import { ProjectsSlide02Opportunity } from './slides/projects/ProjectsSlide02Opportunity';
+import { ProjectsSlide03Solution } from './slides/projects/ProjectsSlide03Solution';
+import { ProjectsSlide04HowItWorks } from './slides/projects/ProjectsSlide04HowItWorks';
+import { ProjectsSlide05EarlyLiquidity } from './slides/projects/ProjectsSlide05EarlyLiquidity';
+import { ProjectsSlide06ZeroCost } from './slides/projects/ProjectsSlide06ZeroCost';
+import { ProjectsSlide07ProjectTypes } from './slides/projects/ProjectsSlide07ProjectTypes';
+import { ProjectsSlide08Benefits } from './slides/projects/ProjectsSlide08Benefits';
+import { ProjectsSlide09Community } from './slides/projects/ProjectsSlide09Community';
+import { ProjectsSlide10Closing } from './slides/projects/ProjectsSlide10Closing';
 
 interface ProjectsPresentationPageProps {
   onNavigate: () => void;
@@ -19,9 +25,15 @@ export function ProjectsPresentationPage({ onNavigate }: ProjectsPresentationPag
 
   const slides = [
     { component: ProjectsSlide01Problem, title: 'The Problem' },
-    { component: ProjectsSlide02Solution, title: 'The Solution' },
-    { component: ProjectsSlide03HowItWorks, title: 'How It Works' },
-    { component: ProjectsSlide04Closing, title: 'Join Us' },
+    { component: ProjectsSlide02Opportunity, title: 'The Opportunity' },
+    { component: ProjectsSlide03Solution, title: 'The Solution' },
+    { component: ProjectsSlide04HowItWorks, title: 'How It Works' },
+    { component: ProjectsSlide05EarlyLiquidity, title: 'Early Liquidity' },
+    { component: ProjectsSlide06ZeroCost, title: 'Zero Upfront Costs' },
+    { component: ProjectsSlide07ProjectTypes, title: 'Project Types' },
+    { component: ProjectsSlide08Benefits, title: 'Benefits' },
+    { component: ProjectsSlide09Community, title: 'Empowering Communities' },
+    { component: ProjectsSlide10Closing, title: 'Join Us' },
   ];
 
   const nextSlide = () => {

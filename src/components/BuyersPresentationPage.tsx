@@ -8,7 +8,12 @@ import { BuyersSlide01Problem } from './slides/buyers/BuyersSlide01Problem';
 import { BuyersSlide02BrokenModel } from './slides/buyers/BuyersSlide02BrokenModel';
 import { BuyersSlide03CO2Solution } from './slides/buyers/BuyersSlide03CO2Solution';
 import { BuyersSlide04HowItWorks } from './slides/buyers/BuyersSlide04HowItWorks';
-import { BuyersSlide05Closing } from './slides/buyers/BuyersSlide05Closing';
+import { BuyersSlide05LCO2Advantage } from './slides/buyers/BuyersSlide05LCO2Advantage';
+import { BuyersSlide06Benefits } from './slides/buyers/BuyersSlide06Benefits';
+import { BuyersSlide07MalamaDifference } from './slides/buyers/BuyersSlide07MalamaDifference';
+import { BuyersSlide08CaseStudy } from './slides/buyers/BuyersSlide08CaseStudy';
+import { BuyersSlide09Closing } from './slides/buyers/BuyersSlide09Closing';
+import { BuyersSlide10PartnerNetwork } from './slides/buyers/BuyersSlide10PartnerNetwork';
 
 interface BuyersPresentationPageProps {
   onNavigate: () => void;
@@ -23,7 +28,12 @@ export function BuyersPresentationPage({ onNavigate }: BuyersPresentationPagePro
     { component: BuyersSlide02BrokenModel, title: 'Broken Model' },
     { component: BuyersSlide03CO2Solution, title: 'CO₂.0 Solution' },
     { component: BuyersSlide04HowItWorks, title: 'How It Works' },
-    { component: BuyersSlide05Closing, title: 'Join Us' },
+    { component: BuyersSlide05LCO2Advantage, title: 'LCO₂ Advantage' },
+    { component: BuyersSlide06Benefits, title: 'Benefits' },
+    { component: BuyersSlide07MalamaDifference, title: 'Mālama Difference' },
+    { component: BuyersSlide08CaseStudy, title: 'Case Study' },
+    { component: BuyersSlide09Closing, title: 'Join the Movement' },
+    { component: BuyersSlide10PartnerNetwork, title: 'Partner Network' },
   ];
 
   const nextSlide = () => {

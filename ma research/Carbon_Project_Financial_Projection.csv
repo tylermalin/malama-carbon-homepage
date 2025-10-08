@@ -1,0 +1,6 @@
+Year,New Projects,Cumulative Projects,Tons/Project/Year,Avg Years/Project,Annual Tons,Lifetime Tons,Credit Price ($/t),Annual GMV ($M),Lifetime GMV ($M),Annual Fee Revenue ($M),Lifetime Fee Pool ($M)
+1,10,10,1000,10,10000,100000,100,1.0,10.0,0.05,0.5
+2,30,40,1200,10,48000,480000,110,5.28,52.8,0.26,2.64
+3,60,100,1500,10,150000,1500000,125,18.75,187.5,1.31,13.13
+4,100,200,2000,11,400000,4400000,140,56.0,616.0,3.92,43.12
+5,150,350,2500,12,875000,10500000,150,131.25,1575.0,9.19,110.25

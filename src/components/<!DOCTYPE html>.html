@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mālama Labs - Financial Model</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .tab { cursor: pointer; }
+        .tab-active { border-bottom: 2px solid #10B981; color: #10B981; font-weight: 600; }
+        .table-container { display: none; }
+        .table-container-active { display: block; }
+        th, td { text-align: left; padding: 8px 12px; border: 1px solid #e5e7eb; }
+        th { background-color: #f9fafb; font-weight: 600; }
+        .input-cell { background-color: #e0f2fe; }
+        .negative { color: #ef4444; }
+        .positive { color: #10b981; }
+        .summary-card { background-color: white; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); }
+        .chart-container { height: 250px; }
+        @import url('https://rsms.me/inter/inter.css');
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 sm:p-6 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <header class="mb-6">
+            <h1 class="text-3xl font-bold text-gray-900">Mālama Labs - Investor Financial Model</h1>
+            <p class="text-gray-600 mt-1">Version: Pitch Model (SAFE Round - October 2025)</p>
+        </header>
+
+        <!-- Tabs -->
+        <div class="mb-4 border-b border-gray-200">
+            <nav class="flex space-x-4" id="tabs">
+                <button data-tab="dashboard" class="py-2 px-1 tab tab-active">📈 Summary & Dashboard</button>
+                <button data-tab="assumptions" class="py-2 px-1 tab">⚙️ Assumptions</button>
+                <button data-tab="monthly" class="py-2 px-1 tab">🗓️ Monthly Projections (24 Months)</button>
+                <button data-tab="annual" class="py-2 px-1 tab">📊 Annual Projections (5-Year)</button>
+            </nav>
+        </div>
+
+        <!-- Content -->
+        <div id="tab-content">
+            <!-- Dashboard -->
+            <div id="dashboard" class="table-container table-container-active">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <div class="summary-card">
+                        <h3 class="text-sm font-medium text-gray-500">The Ask (SAFE)</h3>
+                        <p class="mt-1 text-3xl font-semibold text-gray-900">$1.0M</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3 class="text-sm font-medium text-gray-500">Valuation Cap</h3>
+                        <p class="mt-1 text-3xl font-semibold text-gray-900">$7.0M</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3 class="text-sm font-medium text-gray-500">Year 1 Revenue</h3>
+                        <p class="mt-1 text-3xl font-semibold text-gray-900">$383K</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3 class="text-sm font-medium text-gray-500">Post-Raise Runway</h3>
+                        <p class="mt-1 text-3xl font-semibold text-gray-900">~13 Months</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <div class="lg:col-span-1 summary-card">
+                        <h3 class="font-semibold text-lg mb-2">Use of Funds</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li><strong>40% - Team ($400k):</strong> Hire 2 Engineers & 1 BD Lead to service new projects.</li>
+                            <li><strong>30% - Tech & Ops ($300k):</strong> Deploy IoT/Satellite systems for 10+ projects.</li>
+                            <li><strong>20% - Sales & BD ($200k):</strong> Close initial 10-project pipeline.</li>
+                            <li><strong>10% - Working Capital ($100k):</strong> Legal, operations, and reserves.</li>
+                        </ul>
+                         <h3 class="font-semibold text-lg mt-4 mb-2">Key 12-Month Milestones</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li>✅ Close 10+ projects at $50k fee.</li>
+                            <li>✅ Achieve $400k+ in revenue.</li>
+                            <li>✅ Issue first LCO₂ & VCO₂ credits.</li>
+                            <li>✅ Position for $2M priced Seed round.</li>
+                        </ul>
+                    </div>
+                    <div class="lg:col-span-2 summary-card">
+                        <h3 class="font-semibold text-lg mb-2">Key Metrics</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Year 1</th>
+                                        <th>Year 2</th>
+                                        <th>Year 3 (Target)</th>
+                                        <th>Venture Target</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>LTV (3-Year)</td><td>$65K</td><td>$80K</td><td>$100K</td><td>> $100K</td></tr>
+                                    <tr><td>CAC</td><td>$8K</td><td>$7K</td><td>$6K</td><td>< LTV/3</td></tr>
+                                    <tr class="font-semibold"><td>LTV / CAC Ratio</td><td class="positive">8.1x</td><td class="positive">11.4x</td><td class="positive">16.7x</td><td class="positive">> 3x</td></tr>
+                                    <tr><td>CAC Payback (Months)</td><td class="positive">1.6 mo</td><td class="positive">1.7 mo</td><td class="positive">1.4 mo</td><td class="positive">< 12 mo</td></tr>
+                                    <tr><td>Gross Margin %</td><td class="positive">88%</td><td class="positive">90%</td><td class="positive">93%</td><td class="positive">> 70%</td></tr>
+                                    <tr><td>EBITDA Margin %</td><td class="negative">(156%)</td><td class="negative">(18%)</td><td class="positive">14%</td><td>> 20% (at scale)</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="summary-card">
+                        <h3 class="font-semibold text-lg">Revenue Growth by Stream</h3>
+                        <div class="chart-container"><canvas id="revenueChart"></canvas></div>
+                    </div>
+                    <div class="summary-card">
+                        <h3 class="font-semibold text-lg">Cash Flow & Runway</h3>
+                         <div class="chart-container"><canvas id="cashChart"></canvas></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Assumptions -->
+            <div id="assumptions" class="table-container overflow-x-auto">
+                 <div class="summary-card">
+                    <h2 class="text-xl font-bold mb-4">Core Assumptions</h2>
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr><th colspan="6">Project Acquisition & Pipeline</th></tr>
+                            <tr><th>Metric</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>Year 4</th><th>Year 5</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr class="input-cell"><td>New Projects Closed (Annual)</td><td>10</td><td>30</td><td>60</td><td>100</td><td>150</td></tr>
+                            <tr><td>Cumulative Projects</td><td>10</td><td>40</td><td>100</td><td>200</td><td>350</td></tr>
+                            <tr class="input-cell"><td>Avg. Tons per Project / Year</td><td>1,000</td><td>1,200</td><td>1,500</td><td>2,000</td><td>2,500</td></tr>
+                        </tbody>
+                         <thead>
+                            <tr><th colspan="6" class="pt-4">Revenue Model</th></tr>
+                            <tr><th>Metric</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>Year 4</th><th>Year 5</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Rev-Share Deal (Annual Rev)</td><td>$23K</td><td>$30K</td><td>$30K</td><td>$30K</td><td>$30K</td></tr>
+                            <tr class="input-cell"><td>Upfront Fee per Project</td><td>$50,000</td><td>$50,000</td><td>$50,000</td><td>$50,000</td><td>$50,000</td></tr>
+                            <tr><td>% of Projects with LCO₂ Sale (Upfront Fee Paid)</td><td>70%</td><td>83%</td><td>83%</td><td>80%</td><td>80%</td></tr>
+                            <tr class="input-cell"><td>Platform Take Rate (%)</td><td>5.0%</td><td>5.0%</td><td>7.0%</td><td>7.0%</td><td>7.0%</td></tr>
+                            <tr class="input-cell"><td>Avg. Credit Price ($/ton)</td><td>$100</td><td>$110</td><td>$125</td><td>$140</td><td>$150</td></tr>
+                            <tr><td>Time to First VCO₂ Sale</td><td colspan="5">18 Months from project start</td></tr>
+                        </tbody>
+                        <thead>
+                            <tr><th colspan="6" class="pt-4">Headcount & Operating Expenses</th></tr>
+                             <tr><th>Metric</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>Year 4</th><th>Year 5</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Founder Team (FTEs)</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td></tr>
+                            <tr><td>New Hires (FTEs)</td><td>3</td><td>2</td><td>5</td><td>10</td><td>15</td></tr>
+                            <tr><td>Total Headcount</td><td>6</td><td>8</td><td>13</td><td>23</td><td>38</td></tr>
+                             <tr class="input-cell"><td>Avg. Loaded Cost / FTE</td><td>$112,500</td><td>$120,000</td><td>$130,000</td><td>$140,000</td><td>$150,000</td></tr>
+                             <tr class="input-cell"><td>Tech & Ops cost per new project</td><td>$12,500</td><td>$10,667</td><td>$11,750</td><td>$13,400</td><td>$15,400</td></tr>
+                              <tr class="input-cell"><td>S&M cost as % of New Upfront Rev</td><td>23%</td><td>14%</td><td>14%</td><td>18%</td><td>23%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Monthly Projections -->
+            <div id="monthly" class="table-container overflow-x-auto">
+                 <div class="summary-card">
+                    <h2 class="text-xl font-bold mb-4">Monthly Projections (First 24 Months)</h2>
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Oct-25</th><th>Nov-25</th><th>Dec-25</th><th>Jan-26</th><th>Feb-26</th><th>Mar-26</th><th>...</th><th>Sep-27</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="font-bold bg-gray-50"><td colspan="9">Revenue</td></tr>
+                            <tr><td>Upfront Fees</td><td>$0</td><td>$0</td><td>$50K</td><td>$50K</td><td>$50K</td><td>$50K</td><td>...</td><td>$100K</td></tr>
+                            <tr><td>Rev-Share Deal</td><td>$2K</td><td>$2K</td><td>$2K</td><td>$2K</td><td>$2K</td><td>$2K</td><td>...</td><td>$3K</td></tr>
+                            <tr class="font-bold"><td>Total Revenue</td><td>$2K</td><td>$2K</td><td>$52K</td><td>$52K</td><td>$52K</td><td>$52K</td><td>...</td><td>$103K</td></tr>
+                            
+                            <tr class="font-bold bg-gray-50"><td colspan="9" class="pt-4">Operating Expenses</td></tr>
+                            <tr><td>Payroll</td><td class="negative">($30K)</td><td class="negative">($53K)</td><td class="negative">($53K)</td><td class="negative">($53K)</td><td class="negative">($64K)</td><td class="negative">($64K)</td><td>...</td><td class="negative">($80K)</td></tr>
+                            <tr><td>Tech & Ops</td><td class="negative">($5K)</td><td class="negative">($5K)</td><td class="negative">($10K)</td><td class="negative">($10K)</td><td class="negative">($12K)</td><td class="negative">($12K)</td><td>...</td><td class="negative">($21K)</td></tr>
+                            <tr><td>Sales & Marketing</td><td class="negative">($2K)</td><td class="negative">($2K)</td><td class="negative">($4K)</td><td class="negative">($4K)</td><td class="negative">($5K)</td><td class="negative">($5K)</td><td>...</td><td class="negative">($15K)</td></tr>
+                            <tr><td>General & Admin</td><td class="negative">($8K)</td><td class="negative">($8K)</td><td class="negative">($8K)</td><td class="negative">($8K)</td><td class="negative">($8K)</td><td class="negative">($8K)</td><td>...</td><td class="negative">($12K)</td></tr>
+                            <tr class="font-bold"><td>Total OpEx</td><td class="negative">($45K)</td><td class="negative">($68K)</td><td class="negative">($75K)</td><td class="negative">($75K)</td><td class="negative">($89K)</td><td class="negative">($89K)</td><td>...</td><td class="negative">($128K)</td></tr>
+                            
+                            <tr class="font-bold bg-gray-50"><td colspan="9" class="pt-4">Profitability</td></tr>
+                            <tr><td>EBITDA</td><td class="negative">($43K)</td><td class="negative">($66K)</td><td class="negative">($23K)</td><td class="negative">($23K)</td><td class="negative">($37K)</td><td class="negative">($37K)</td><td>...</td><td class="negative">($25K)</td></tr>
+                           
+                            <tr class="font-bold bg-gray-50"><td colspan="9" class="pt-4">Cash Flow</td></tr>
+                            <tr><td>Beginning Cash</td><td>$30K</td><td class="positive">$1.03M</td><td class="positive">$962K</td><td class="positive">$887K</td><td class="positive">$812K</td><td class="positive">$723K</td><td>...</td><td class="positive">$218K</td></tr>
+                            <tr><td>Net Operating Cash Flow</td><td class="negative">($45K)</td><td class="negative">($68K)</td><td class="negative">($75K)</td><td class="negative">($75K)</td><td class="negative">($89K)</td><td class="negative">($89K)</td><td>...</td><td class="negative">($25K)</td></tr>
+                            <tr><td>Financing (SAFE Raise)</td><td class="positive">$1.00M</td><td>$0</td><td>$0</td><td>$0</td><td>$0</td><td>$0</td><td>...</td><td>$0</td></tr>
+                            <tr class="font-bold"><td>Ending Cash</td><td class="positive">$1.03M</td><td class="positive">$962K</td><td class="positive">$887K</td><td class="positive">$812K</td><td class="positive">$723K</td><td class="positive">$634K</td><td>...</td><td class="positive">$193K</td></tr>
+                             <tr class="font-bold"><td>Monthly Burn</td><td class="negative">($45K)</td><td class="negative">($68K)</td><td class="negative">($23K)</td><td class="negative">($23K)</td><td class="negative">($37K)</td><td class="negative">($37K)</td><td>...</td><td class="negative">($25K)</td></tr>
+                             <tr class="font-bold"><td>Months of Runway</td><td>0.7</td><td class="positive">14.1</td><td class="positive">11.8</td><td class="positive">10.8</td><td class="positive">8.1</td><td class="positive">7.1</td><td>...</td><td class="positive">7.7</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Annual Projections -->
+            <div id="annual" class="table-container overflow-x-auto">
+                <div class="summary-card">
+                    <h2 class="text-xl font-bold mb-4">Annual Projections (5-Year)</h2>
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr><th>Metric</th><th>Year 1 (FY26)</th><th>Year 2 (FY27)</th><th>Year 3 (FY28)</th><th>Year 4 (FY29)</th><th>Year 5 (FY30)</th></tr>
+                        </thead>
+                         <tbody>
+                            <tr class="font-bold bg-gray-50"><td colspan="6">Project & Volume Summary</td></tr>
+                            <tr><td>New Projects Closed</td><td>10</td><td>30</td><td>60</td><td>100</td><td>150</td></tr>
+                            <tr><td>Cumulative Active Projects</td><td>10</td><td>40</td><td>100</td><td>200</td><td>350</td></tr>
+                            <tr><td>Total Tons Verified (Annual Potential)</td><td>10K</td><td>48K</td><td>150K</td><td>400K</td><td>875K</td></tr>
+                            
+                            <tr class="font-bold bg-gray-50"><td colspan="6" class="pt-4">Revenue Streams</td></tr>
+                            <tr><td>1. Upfront Fees ($50k/project)</td><td>$350K</td><td>$1.25M</td><td>$2.50M</td><td>$4.00M</td><td>$6.00M</td></tr>
+                            <tr><td>2. Rev-Share Deal (Legacy)</td><td>$23K</td><td>$30K</td><td>$30K</td><td>$30K</td><td>$30K</td></tr>
+                            <tr><td>3. Platform Fees (% of credit sales)</td><td>$10K</td><td>$83K</td><td>$525K</td><td>$1.76M</td><td>$4.20M</td></tr>
+                            <tr class="font-bold border-t"><td>Total Revenue</td><td class="positive">$383K</td><td class="positive">$1.36M</td><td class="positive">$3.06M</td><td class="positive">$5.79M</td><td class="positive">$10.23M</td></tr>
+                            <tr><td>YoY Growth</td><td>-</td><td class="positive">256%</td><td class="positive">125%</td><td class="positive">89%</td><td class="positive">76%</td></tr>
+                            
+                            <tr class="font-bold bg-gray-50"><td colspan="6" class="pt-4">Cost of Revenue & Margins</td></tr>
+                             <tr><td>COGS (Tech & Ops)</td><td class="negative">($125K)</td><td class="negative">($320K)</td><td class="negative">($705K)</td><td class="negative">($1.34M)</td><td class="negative">($2.31M)</td></tr>
+                             <tr class="font-bold"><td>Gross Profit</td><td class="positive">$258K</td><td class="positive">$1.04M</td><td class="positive">$2.35M</td><td class="positive">$4.45M</td><td class="positive">$7.92M</td></tr>
+                             <tr class="font-bold"><td>Gross Margin %</td><td class="positive">67%</td><td class="positive">77%</td><td class="positive">77%</td><td class="positive">77%</td><td class="positive">77%</td></tr>
+
+                            <tr class="font-bold bg-gray-50"><td colspan="6" class="pt-4">Operating Expenses</td></tr>
+                            <tr><td>Payroll</td><td class="negative">($675K)</td><td class="negative">($960K)</td><td class="negative">($1.39M)</td><td class="negative">($2.52M)</td><td class="negative">($3.88M)</td></tr>
+                            <tr><td>Sales & Marketing</td><td class="negative">($80K)</td><td class="negative">($180K)</td><td class="negative">($350K)</td><td class="negative">($700K)</td><td class="negative">($1.40M)</td></tr>
+                            <tr><td>General & Admin</td><td class="negative">($100K)</td><td class="negative">($140K)</td><td class="negative">($200K)</td><td class="negative">($300K)</td><td class="negative">($430K)</td></tr>
+                            <tr class="font-bold border-t"><td>Total OpEx</td><td class="negative">($855K)</td><td class="negative">($1.28M)</td><td class="negative">($1.94M)</td><td class="negative">($3.52M)</td><td class="negative">($5.71M)</td></tr>
+
+                            <tr class="font-bold bg-gray-50"><td colspan="6" class="pt-4">Profitability</td></tr>
+                            <tr class="font-bold"><td>EBITDA</td><td class="negative">($597K)</td><td class="negative">($240K)</td><td class="positive">$420K</td><td class="positive">$930K</td><td class="positive">$2.18M</td></tr>
+                            <tr class="font-bold"><td>EBITDA Margin %</td><td class="negative">(156%)</td><td class="negative">(18%)</td><td class="positive">14%</td><td class="positive">16%</td><td class="positive">21%</td></tr>
+                            
+                             <tr class="font-bold bg-gray-50"><td colspan="6" class="pt-4">Cash Flow Summary</td></tr>
+                             <tr><td>Net Operating Cash Flow</td><td class="negative">($647K)</td><td class="negative">($340K)</td><td class="positive">$270K</td><td class="positive">$730K</td><td class="positive">$1.98M</td></tr>
+                             <tr><td>Financing Needed</td><td class="positive">$1.0M (SAFE)</td><td>$100k (Bridge)</td><td class="positive">$2.0M (Seed)</td><td>-</td><td>-</td></tr>
+                             <tr class="font-bold"><td>Ending Cash Balance</td><td class="positive">$433K</td><td class="positive">$193K</td><td class="positive">$613K</td><td class="positive">$1.34M</td><td class="positive">$3.32M</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContent = document.querySelectorAll('.table-container');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('tab-active'));
+                    tab.classList.add('tab-active');
+
+                    tabContent.forEach(content => {
+                        content.classList.remove('table-container-active');
+                        if (content.id === tab.dataset.tab) {
+                            content.classList.add('table-container-active');
+                        }
+                    });
+                });
+            });
+
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(revenueCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                    datasets: [
+                        { label: 'Upfront Fees', data: [350, 1250, 2500, 4000, 6000], backgroundColor: '#3b82f6' },
+                        { label: 'Platform Fees', data: [10, 83, 525, 1760, 4200], backgroundColor: '#10b981' },
+                        { label: 'Rev-Share Deal', data: [23, 30, 30, 30, 30], backgroundColor: '#f97316' }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    scales: { x: { stacked: true }, y: { stacked: true, ticks: { callback: value => `$${value/1000}k` } } },
+                    plugins: { tooltip: { callbacks: { label: (context) => `${context.dataset.label}: $${context.raw/1000}k` } } }
+                }
+            });
+
+            // Cash Chart
+            const cashCtx = document.getElementById('cashChart').getContext('2d');
+            new Chart(cashCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Start', 'Oct-25', 'Dec-25', 'Mar-26', 'Jun-26', 'Sep-26', 'Dec-26', 'Mar-27', 'Jun-27', 'Sep-27'],
+                    datasets: [{
+                        label: 'Ending Cash ($k)',
+                        data: [30, 1030, 887, 634, 431, 278, 433, 400, 310, 193], // Simplified from monthly for charting
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        fill: true,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    scales: { y: { ticks: { callback: value => `$${value}k` } } },
+                    plugins: { tooltip: { callbacks: { label: (context) => `Cash: $${context.raw}k` } } }
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
