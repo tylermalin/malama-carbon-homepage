@@ -2,7 +2,7 @@ import { SlideLayout } from '../SlideLayout';
 import { motion } from 'motion/react';
 import { CheckCircle, X } from 'lucide-react';
 
-export function BuyersSlide06MalamaDifference() {
+export function BuyersSlide07MalamaDifference() {
   const comparisons = [
     { 
       feature: 'Transparency',

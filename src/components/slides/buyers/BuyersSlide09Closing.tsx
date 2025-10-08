@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { ExternalLink, Video, Calendar, Lock, Users } from 'lucide-react';
 import { Button } from '../../ui/button';
 
-export function BuyersSlide08Closing() {
+export function BuyersSlide09Closing() {
   return (
     <SlideLayout
       title="Join the CO₂.0 Movement"

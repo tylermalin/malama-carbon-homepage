@@ -1,8 +1,8 @@
 import { SlideLayout } from '../SlideLayout';
 import { motion } from 'motion/react';
-import { CheckCircle, TrendingDown, Shield, Activity, Globe, Zap } from 'lucide-react';
+import { CheckCircle, TrendingDown, Shield, Activity, Globe } from 'lucide-react';
 
-export function BuyersSlide05Benefits() {
+export function BuyersSlide06Benefits() {
   const benefits = [
     { icon: CheckCircle, text: 'Early access to verified projects' },
     { icon: Shield, text: 'Transparent, real-time data and risk scoring' },

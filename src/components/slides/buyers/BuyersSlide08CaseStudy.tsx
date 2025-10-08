@@ -2,7 +2,7 @@ import { SlideLayout } from '../SlideLayout';
 import { motion } from 'motion/react';
 import { TrendingDown, DollarSign, CheckCircle } from 'lucide-react';
 
-export function BuyersSlide07CaseStudy() {
+export function BuyersSlide08CaseStudy() {
   return (
     <SlideLayout
       title="Case Study"

@@ -2,7 +2,7 @@ import { SlideLayout } from '../SlideLayout';
 import { motion } from 'motion/react';
 import { ArrowRight, CheckCircle, DollarSign, Shield } from 'lucide-react';
 
-export function BuyersSlide04LCO2Advantage() {
+export function BuyersSlide05LCO2Advantage() {
   return (
     <SlideLayout
       title="The LCO₂ Advantage"
