@@ -567,65 +567,210 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
                   <p className="text-muted-foreground mb-8">Download confidential documents and materials</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {[
-                    { name: 'Executive Summary', type: 'PDF', size: '2.4 MB', updated: 'Dec 2024', category: 'Overview' },
-                    { name: 'Business Plan', type: 'PDF', size: '3.2 MB', updated: 'Dec 2024', category: 'Overview' },
-                    { name: 'Financial Statements', type: 'PDF', size: '1.8 MB', updated: 'Dec 2024', category: 'Financial' },
-                    { name: 'Pitch Deck', type: 'PDF', size: '8.2 MB', updated: 'Dec 2024', category: 'Overview' },
-                    { name: 'Term Sheet', type: 'PDF', size: '0.5 MB', updated: 'Dec 2024', category: 'Legal' },
-                    { name: 'Due Diligence Questionnaire', type: 'PDF', size: '1.2 MB', updated: 'Dec 2024', category: 'Legal' },
-                    { name: 'Media Coverage', type: 'PDF', size: '2.1 MB', updated: 'Dec 2024', category: 'Marketing' },
-                    { name: 'Social Media & Website', type: 'PDF', size: '1.5 MB', updated: 'Dec 2024', category: 'Marketing' },
-                    { name: 'Litepaper', type: 'PDF', size: '3.1 MB', updated: 'Dec 2024', category: 'Technical' },
-                    { name: 'Malama Co-Founder Agreements', type: 'PDF', size: '0.8 MB', updated: 'Dec 2024', category: 'Legal' },
-                    { name: 'Articles of Incorporation', type: 'PDF', size: '0.6 MB', updated: 'Dec 2024', category: 'Legal' },
-                    { name: 'Voting Agreements/Company Bylaws', type: 'PDF', size: '0.9 MB', updated: 'Dec 2024', category: 'Legal' },
-                    { name: 'Stock Purchase Agreements', type: 'PDF', size: '1.1 MB', updated: 'Dec 2024', category: 'Legal' },
-                    { name: 'Capitalization Table', type: 'Excel', size: '0.4 MB', updated: 'Dec 2024', category: 'Financial' },
-                    { name: 'Board Consents and Actions', type: 'PDF', size: '0.7 MB', updated: 'Dec 2024', category: 'Legal' },
-                    { name: 'Profit and Loss Statements', type: 'PDF', size: '1.3 MB', updated: 'Dec 2024', category: 'Financial' },
-                    { name: 'Balance Sheet', type: 'PDF', size: '0.8 MB', updated: 'Dec 2024', category: 'Financial' },
-                    { name: 'Financial Model', type: 'Excel', size: '2.1 MB', updated: 'Dec 2024', category: 'Financial' },
-                    { name: 'IP Planning and Strategy Document', type: 'PDF', size: '1.9 MB', updated: 'Dec 2024', category: 'Technical' },
-                    { name: 'Logo and Brand Assets', type: 'ZIP', size: '15.2 MB', updated: 'Dec 2024', category: 'Marketing' },
-                    { name: 'Brand Book/Design Guide', type: 'PDF', size: '4.3 MB', updated: 'Dec 2024', category: 'Marketing' },
-                    { name: 'Org Chart', type: 'PDF', size: '0.3 MB', updated: 'Dec 2024', category: 'Operations' },
-                    { name: 'Employee List & Salaries', type: 'Excel', size: '0.2 MB', updated: 'Dec 2024', category: 'Operations' },
-                    { name: 'Contract Workers List', type: 'PDF', size: '0.4 MB', updated: 'Dec 2024', category: 'Operations' },
-                    { name: 'Employee Agreements', type: 'PDF', size: '2.8 MB', updated: 'Dec 2024', category: 'Legal' },
-                    { name: 'Sales Plan', type: 'PDF', size: '1.7 MB', updated: 'Dec 2024', category: 'Operations' },
-                    { name: 'Company Objectives & KPIs', type: 'PDF', size: '0.9 MB', updated: 'Dec 2024', category: 'Operations' },
-                    { name: 'SaaS Metrics', type: 'Excel', size: '0.6 MB', updated: 'Dec 2024', category: 'Financial' },
-                    { name: 'System Architecture Diagram', type: 'PDF', size: '1.4 MB', updated: 'Dec 2024', category: 'Technical' },
-                    { name: 'API Documentation', type: 'PDF', size: '2.7 MB', updated: 'Dec 2024', category: 'Technical' },
-                    { name: 'Tokenomics', type: 'PDF', size: '1.6 MB', updated: 'Dec 2024', category: 'Technical' },
-                  ].map((doc, index) => (
-                    <Card key={index} className="border-2 border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-xl transition-all hover:-translate-y-1">
-                      <CardContent className="p-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center space-x-3">
-                            <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                              <FileText className="w-5 h-5 text-primary" />
+                {/* Company Overview & Strategy */}
+                <div>
+                  <h4 className="text-xl font-semibold text-primary mb-4 flex items-center">
+                    <Building2 className="w-5 h-5 mr-2" />
+                    Company Overview & Strategy
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {[
+                      { name: 'Executive Summary', department: 'Management', type: 'Document', size: '302.82 KB', updated: 'Oct 8, 2025', pages: 7, downloadUrl: 'https://www.dropbox.com/scl/fi/gdfkcq9rdxqnw5yqzf6hk/MLSR25_ExecutiveSummary.pdf?rlkey=z5svhx6axyermatcg2mfmgwtf&st=l5cy8uhk&dl=0' },
+                      { name: 'Business Plan', department: 'Management', type: 'Document', size: '2.32 MB', updated: 'Oct 8, 2025', pages: 165, downloadUrl: 'https://www.dropbox.com/scl/fi/gzqkwmd1qs7q7wfvxy06g/MLSR25_BusinessPlanv2.5.pdf?rlkey=3y0vjbxv8hrs53pktd39qs7nr&st=muwjxwzo&dl=0' },
+                      { name: 'Pitch Deck', department: 'Management', type: 'File', size: '45.96 MB', updated: 'Oct 8, 2025', pages: 15, downloadUrl: 'https://www.dropbox.com/scl/fi/78gbg6jb3s41u3pt9qkpl/MLSR25_InvestorDeck?rlkey=kjix6j76rs2uzztyt6y5ppf2w&st=hv3adzb0&dl=0' },
+                      { name: 'Greenpaper', department: 'Management', type: 'Document', size: '1.06 MB', updated: 'Oct 8, 2025', pages: 44, downloadUrl: 'https://www.dropbox.com/scl/fi/jqfbmjm8v76sjndjfd0yn/MLSR25_GREEN-PAPERv25.pdf?rlkey=r1wgn6lvu0yvx8grctdljcwam&st=b370tx9e&dl=0' },
+                      { name: 'Social Media & Brand Guidelines', department: 'Marketing', type: 'PDF', size: '3.7 MB', updated: 'Oct 2025', pages: 45, downloadUrl: 'https://www.dropbox.com/scl/fi/8fkv1urc9u6kntcrx9a97/MLSR25_SocialsBrandGuide.pdf?rlkey=sx5yz2kvvthkamthmwf5qg84n&st=30pqd1rx&dl=0' },
+                      { name: 'Brand Book/Design Guide', department: 'Marketing', type: 'PDF', size: '4.3 MB', updated: 'Oct 2025', pages: 11, downloadUrl: 'https://www.dropbox.com/scl/fi/8fkv1urc9u6kntcrx9a97/MLSR25_SocialsBrandGuide.pdf?rlkey=sx5yz2kvvthkamthmwf5qg84n&st=6n4ee0x&dl=0' },
+                    ].map((doc, index) => (
+                      <Card key={index} className="border-2 border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-xl transition-all hover:-translate-y-1">
+                        <CardContent className="p-6">
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center space-x-3 flex-1 min-w-0">
+                              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <FileText className="w-5 h-5 text-primary" />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <h4 className="font-medium text-primary truncate">{doc.name}</h4>
+                                <p className="text-sm text-muted-foreground">{doc.type} • {doc.size} {doc.pages && `• ${doc.pages} pages`}</p>
+                              </div>
                             </div>
-                            <div>
-                              <h4 className="font-medium text-primary">{doc.name}</h4>
-                              <p className="text-sm text-muted-foreground">{doc.type} • {doc.size}</p>
-                            </div>
+                            <Button 
+                              size="sm" 
+                              variant="outline" 
+                              className="p-2 flex-shrink-0"
+                              onClick={() => window.open(doc.downloadUrl, '_blank')}
+                            >
+                              <Download className="w-4 h-4" />
+                            </Button>
                           </div>
-                          <Button size="sm" variant="outline" className="p-2">
-                            <Download className="w-4 h-4" />
-                          </Button>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <Badge className="bg-secondary/10 text-secondary border-secondary/20">
-                            {doc.category}
-                          </Badge>
-                          <span className="text-sm text-muted-foreground">Updated {doc.updated}</span>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                          <div className="flex items-center justify-between">
+                            <Badge className="bg-secondary/10 text-secondary border-secondary/20">
+                              {doc.department}
+                            </Badge>
+                            <span className="text-sm text-muted-foreground">Updated {doc.updated}</span>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Legal & Corporate Documents */}
+                <div>
+                  <h4 className="text-xl font-semibold text-primary mb-4 flex items-center">
+                    <Shield className="w-5 h-5 mr-2" />
+                    Legal & Corporate Documents
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {[
+                      { name: 'Articles of Incorporation', department: 'Legal', type: 'PDF', size: '106 KB', updated: 'Dec 2024', pages: 4, downloadUrl: 'https://www.dropbox.com/scl/fi/oh1aze9a6d9fgj5qpilsp/MLSR25_CertOfInc?rlkey=2j2z8js883iakt6dihjp103gq&st=1zrraawt&dl=0' },
+                      { name: 'Board Consents and Actions', department: 'Legal', type: 'PDF', size: '0.7 MB', updated: 'Oct 2025', pages: null, downloadUrl: 'https://www.dropbox.com/scl/fi/fymrp25fgvzpe24ubwjic/11_16_24_BoardMinutes.pdf?rlkey=b72h91ox4dd5rrb08z1vzrh9u&st=l4rbo3z1&dl=0' },
+                      { name: 'Due Diligence Questionnaire', department: 'Legal', type: 'PDF', size: '126.81 KB', updated: 'Dec 2024', pages: null, downloadUrl: 'https://www.dropbox.com/scl/fi/9d1ovh65eabfyx2m49s0m/_MLSR25_LegalTemplate_InvestorSuitability.docx.pdf?rlkey=hfibofkuhp830bnxmamcp6fs8&st=dme2rxlt&dl=0' },
+                      { name: 'Malama Co-Founder Agreements', department: 'Legal', type: 'PDF', size: '123.2 KB', updated: 'Dec 2024', pages: 11, downloadUrl: 'https://www.dropbox.com/scl/fi/1zldmqr91qc169bfv03mg/MLSR25_OriginalFoundersAgreement?rlkey=6c4c4rz5nvrh6dfnjw4ud2n9p&st=mzsca22h&dl=0' },
+                      { name: 'Stock Purchase Agreements', department: 'Legal', type: 'PDF', size: '1.1 MB', updated: 'Dec 2024', pages: null, downloadUrl: null },
+                      { name: 'Term Sheet', department: 'Legal', type: 'Document', size: '309.34 KB', updated: 'Oct 8, 2025', pages: 7, downloadUrl: 'https://www.dropbox.com/scl/fi/rysidie9jn36q6zon3jz4/MLSR25_TermSheet.pdf?rlkey=0gsqa1ycagl5fmlab45ygzkln&st=9pzzww28&dl=0' },
+                      { name: 'Voting Agreements/Company Bylaws', department: 'Legal', type: 'PDF', size: '500 KB', updated: 'Dec 2024', pages: 25, downloadUrl: 'https://www.dropbox.com/scl/fi/6tj1bib32s0y1ts6kh07u/MLSR25_Bylaws?rlkey=khe4mvmcehd2whexhuix47mlk&st=y7l06har&dl=0' },
+                    ].map((doc, index) => (
+                      <Card key={index} className="border-2 border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-xl transition-all hover:-translate-y-1">
+                        <CardContent className="p-6">
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center space-x-3 flex-1 min-w-0">
+                              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <FileText className="w-5 h-5 text-primary" />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <h4 className="font-medium text-primary truncate">{doc.name}</h4>
+                                <p className="text-sm text-muted-foreground">{doc.type} • {doc.size} {doc.pages && `• ${doc.pages} pages`}</p>
+                              </div>
+                            </div>
+                            {doc.downloadUrl ? (
+                              <Button 
+                                size="sm" 
+                                variant="outline" 
+                                className="p-2 flex-shrink-0"
+                                onClick={() => window.open(doc.downloadUrl, '_blank')}
+                              >
+                                <Download className="w-4 h-4" />
+                              </Button>
+                            ) : (
+                              <div className="text-xs text-muted-foreground italic px-2 py-1 border border-border/50 rounded flex-shrink-0">
+                                Available Upon Request
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <Badge className="bg-secondary/10 text-secondary border-secondary/20">
+                              {doc.department}
+                            </Badge>
+                            <span className="text-sm text-muted-foreground">Updated {doc.updated}</span>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Financial & Operational Data */}
+                <div>
+                  <h4 className="text-xl font-semibold text-primary mb-4 flex items-center">
+                    <BarChart3 className="w-5 h-5 mr-2" />
+                    Financial & Operational Data
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {[
+                      { name: 'Balance Sheet', department: 'Financial', type: 'PDF', size: '36 KB', updated: 'Oct 2025', pages: 1, downloadUrl: 'https://www.dropbox.com/scl/fi/kfriit7kx330jih8h4824/MLSR25_ProFormaBalanceSheet?rlkey=oc7h3xu8ihyb49uwfzss0ypli&st=rib64y5w&dl=0' },
+                      { name: 'Capitalization Table', department: 'Financial', type: 'Excel', size: '0.4 MB', updated: 'Dec 2024', pages: null, downloadUrl: null },
+                      { name: 'Company Objectives & KPIs', department: 'Operations', type: 'PDF', size: '0.9 MB', updated: 'Dec 2024', pages: 12, downloadUrl: 'https://www.dropbox.com/scl/fi/qv01lmg90kmogpa68owq8/MLSR25_Objectives-KPI-Report.pdf?rlkey=62zyetwm0lch80bdlfe6e7sou&st=ipz9tvti&dl=0' },
+                      { name: 'Employee List & Salaries', department: 'Operations', type: 'PDF', size: '0.2 MB', updated: 'Oct 2025', pages: 3, downloadUrl: 'https://www.dropbox.com/scl/fi/o8mag194blhlfqccwvid8/MLSR25_EmployeeCompensationTable-as-of-Q4-2025?rlkey=u20y3mihezfcbkpydl57tlxdr&st=7hpxbfpydl57tlxdr&dl=0' },
+                      { name: 'Financial Model', department: 'Financial', type: 'Excel', size: '250 KB', updated: 'Oct 2025', pages: 7, downloadUrl: 'https://www.dropbox.com/scl/fi/lpdh0uizapugq6y0cxawn/MLSR25_BusinessModel-1.xlsx?rlkey=utlixpenuifp6jfc8drxvtz18&st=z8idxeet&dl=0' },
+                      { name: 'Org Chart', department: 'Operations', type: 'PDF', size: '0.3 MB', updated: 'Oct 2025', pages: 14, downloadUrl: 'https://www.dropbox.com/scl/fi/mxgtwfg0klajgzjmgenjt/MLSR25_OrgChart?rlkey=qfcdwgm5lwtxe3yi7t59e3h4z&st=a20wxyah&dl=0' },
+                      { name: 'Profit and Loss Statements', department: 'Financial', type: 'PDF', size: '36 KB', updated: 'Oct 2025', pages: 1, downloadUrl: 'https://www.dropbox.com/scl/fi/66mjkalsvky28xrlkxt36/MLSR25_ProForma_Profit_Loss-P-L-Statement?rlkey=bqrp0kfkp434h5untocs9n152&st=t0s32zna&dl=0' },
+                      { name: 'SaaS Metrics', department: 'Financial', type: 'PDF', size: '0.6 MB', updated: 'Dec 2024', pages: 9, downloadUrl: 'https://www.dropbox.com/scl/fi/v88d0v68muvdig5xdr30n/MLSR25_SaaSREPORT_Q4-2025.pdf?rlkey=mzbtaebshm330ydc4mprzvqpl&st=roqmdpay&dl=0' },
+                      { name: 'Sales Plan', department: 'Sales', type: 'PDF', size: '215.12 KB', updated: 'Dec 2024', pages: 9, downloadUrl: 'https://www.dropbox.com/scl/fi/g68z58830nxn8sfe064iw/MLSR25_SalesPlan_Pipeline?rlkey=4mzug6sky15fk5rudultzkcn4&st=eus5sjpe&dl=0' },
+                    ].map((doc, index) => (
+                      <Card key={index} className="border-2 border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-xl transition-all hover:-translate-y-1">
+                        <CardContent className="p-6">
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center space-x-3 flex-1 min-w-0">
+                              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <FileText className="w-5 h-5 text-primary" />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <h4 className="font-medium text-primary truncate">{doc.name}</h4>
+                                <p className="text-sm text-muted-foreground">{doc.type} • {doc.size} {doc.pages && `• ${doc.pages} pages`}</p>
+                              </div>
+                            </div>
+                            {doc.downloadUrl ? (
+                              <Button 
+                                size="sm" 
+                                variant="outline" 
+                                className="p-2 flex-shrink-0"
+                                onClick={() => window.open(doc.downloadUrl, '_blank')}
+                              >
+                                <Download className="w-4 h-4" />
+                              </Button>
+                            ) : (
+                              <div className="text-xs text-muted-foreground italic px-2 py-1 border border-border/50 rounded flex-shrink-0">
+                                Available Upon Request
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <Badge className="bg-secondary/10 text-secondary border-secondary/20">
+                              {doc.department}
+                            </Badge>
+                            <span className="text-sm text-muted-foreground">Updated {doc.updated}</span>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Product & Technical Documentation */}
+                <div>
+                  <h4 className="text-xl font-semibold text-primary mb-4 flex items-center">
+                    <Zap className="w-5 h-5 mr-2" />
+                    Product & Technical Documentation
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {[
+                      { name: 'API Documentation', department: 'Technical', type: 'PDF', size: '2.7 MB', updated: 'Oct 2025', pages: 15, downloadUrl: 'https://www.dropbox.com/scl/fi/jmzwzq9v3v76zq2b3owys/MLSR25_APIIntegrations.pdf?rlkey=pfrjx7prg0fqwlod50ss2k4xf&st=0sh8yp5m&dl=0' },
+                      { name: 'IP Planning and Strategy Document', department: 'Technical', type: 'PDF', size: '1.9 MB', updated: 'Oct 2025', pages: null, downloadUrl: 'https://www.dropbox.com/scl/fi/kq4l8foe20nqgodx7hzxg/MLSR25_IPStrategyMemo?rlkey=9kc3lj7r9bqwd7vo3a3vq18o9&st=pe8vh8fp&dl=0' },
+                      { name: 'System Architecture Diagram', department: 'Technical', type: 'PDF', size: '1.4 MB', updated: 'Oct 2025', pages: 7, downloadUrl: 'https://www.dropbox.com/scl/fi/k4b109do5s36pasisz22j/MLSR25_SystemArchitecture.pdf?rlkey=aqagd02ypd1rx8sn6v88wanx9&st=fpz3bjc2&dl=0' },
+                      { name: 'Tokenomics', department: 'Technical', type: 'PDF', size: '2.7 MB', updated: 'Oct 2025', pages: 58, downloadUrl: 'https://www.dropbox.com/scl/fi/hm53tump9a5omghamoscb/MLSR25_TokenomicsLitepaper_v1.3.pdf?rlkey=215tm72r9org8q2wr93gvn1jw&st=kne2f26t&dl=0' },
+                    ].map((doc, index) => (
+                      <Card key={index} className="border-2 border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-xl transition-all hover:-translate-y-1">
+                        <CardContent className="p-6">
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center space-x-3 flex-1 min-w-0">
+                              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <FileText className="w-5 h-5 text-primary" />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <h4 className="font-medium text-primary truncate">{doc.name}</h4>
+                                <p className="text-sm text-muted-foreground">{doc.type} • {doc.size} {doc.pages && `• ${doc.pages} pages`}</p>
+                              </div>
+                            </div>
+                            <Button 
+                              size="sm" 
+                              variant="outline" 
+                              className="p-2 flex-shrink-0"
+                              onClick={() => window.open(doc.downloadUrl, '_blank')}
+                            >
+                              <Download className="w-4 h-4" />
+                            </Button>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <Badge className="bg-secondary/10 text-secondary border-secondary/20">
+                              {doc.department}
+                            </Badge>
+                            <span className="text-sm text-muted-foreground">Updated {doc.updated}</span>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
