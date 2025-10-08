@@ -23,6 +23,7 @@ interface FooterProps {
   onShowInvestor?: () => void;
   onShowAdvisory?: () => void;
   onShowPresentation?: () => void;
+  onShowPresentations?: () => void;
   onShowProjectGallery?: () => void;
 }
 
@@ -53,6 +54,7 @@ export function Footer({
   onShowInvestor,
   onShowAdvisory,
   onShowPresentation,
+  onShowPresentations,
   onShowProjectGallery
 }: FooterProps) {
   
@@ -67,7 +69,7 @@ export function Footer({
   const investorLinks = [
     { name: "Advisory Board Portal", action: onShowAdvisory, description: "Secure materials for advisory members" },
     { name: "Investor Portal", action: onShowInvestor, description: "Secure investor access" },
-    { name: "Mālama 2025 Presentation", action: onShowPresentation, description: "Investor deck and materials" },
+    { name: "Presentations", action: onShowPresentations, description: "View investor, buyer, and developer decks" },
     { name: "Schedule a Call", action: () => window.open('https://calendar.app.google/PjPddjUkZjdxHPqr8', '_blank'), description: "Connect with leadership" }
   ];
 

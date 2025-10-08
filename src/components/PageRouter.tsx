@@ -76,6 +76,9 @@ interface PageRouterProps {
     showAdvisory: () => void;
     showDashboards: () => void;
     showPresentation: () => void;
+    showPresentations: () => void;
+    showPresentationBuyers: () => void;
+    showPresentationProjects: () => void;
   };
   navigateToSection: (section?: string) => void;
 }
@@ -118,7 +121,10 @@ export function PageRouter({
     showInvestor,
     showAdvisory,
     showDashboards,
-    showPresentation
+    showPresentation,
+    showPresentations,
+    showPresentationBuyers,
+    showPresentationProjects
   } = navigationFunctions;
 
   // Render individual pages
@@ -156,6 +162,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -184,6 +191,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -217,6 +225,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -257,6 +266,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -285,6 +295,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -313,6 +324,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -341,6 +353,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -369,6 +382,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -397,6 +411,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -425,6 +440,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -453,6 +469,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -481,6 +498,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -514,6 +532,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -546,6 +565,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -577,6 +597,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -608,6 +629,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -639,6 +661,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -681,6 +704,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
@@ -779,6 +803,7 @@ export function PageRouter({
             onShowInvestor={showInvestor}
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
           />
         </>
       );
