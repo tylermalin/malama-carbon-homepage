@@ -154,9 +154,9 @@ ${formData.message}
                 <Button
                   type="submit"
                   disabled={!formData.name || !formData.title || !formData.company || !formData.message}
-                  className="flex-1 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white"
+                  className="flex-1 bg-primary hover:bg-primary/90 text-white border-2 border-primary disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Send className="w-4 h-4 mr-2" />
+                  <Send className="w-4 h-4 mr-2 text-white" />
                   Submit Request
                 </Button>
               </div>
