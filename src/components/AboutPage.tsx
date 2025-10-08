@@ -87,15 +87,15 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="relative"
+            className="relative z-10"
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-primary/20 bg-black">
-              <div className="relative pb-[56.25%] h-0">
+              <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                 <iframe 
                   className="absolute top-0 left-0 w-full h-full"
                   src="https://www.youtube.com/embed/nAYsgyyh7cc?si=VdeTGcOkYCdpvOjO" 
                   title="Mālama Labs Introduction Video" 
-                  frameBorder="0" 
+                  style={{ border: 0 }}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                   referrerPolicy="strict-origin-when-cross-origin" 
                   allowFullScreen
@@ -104,8 +104,8 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             </div>
             
             {/* Decorative elements */}
-            <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary/20 rounded-full blur-2xl -z-10"></div>
-            <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-secondary/20 rounded-full blur-2xl -z-10"></div>
+            <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary/20 rounded-full blur-2xl -z-10 pointer-events-none"></div>
+            <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-secondary/20 rounded-full blur-2xl -z-10 pointer-events-none"></div>
           </motion.div>
         </div>
       </section>
