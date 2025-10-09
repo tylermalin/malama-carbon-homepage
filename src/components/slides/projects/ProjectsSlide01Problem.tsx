@@ -1,61 +1,66 @@
-import { SlideLayout } from '../SlideLayout';
-import { motion } from 'motion/react';
-import { Clock, DollarSign, Lock } from 'lucide-react';
+import { SlideLayout, SlideHeadline, SlideBody, SlideVisual } from '../SlideLayout';
+import { Clock, AlertCircle } from 'lucide-react';
 
 export function ProjectsSlide01Problem() {
   return (
-    <SlideLayout
-      title="The Problem: Projects Locked Out of Liquidity"
-      subtitle="High-impact carbon projects face long verification delays and limited financing"
-    >
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="text-xl text-center text-muted-foreground mb-12 max-w-3xl mx-auto"
-      >
-        It can take 12–36 months before a project can issue and sell credits
-      </motion.p>
+    <SlideLayout>
+      <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <SlideHeadline className="text-red-400">
+            Projects Locked Out of Liquidity
+          </SlideHeadline>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="bg-gradient-to-br from-red-50 to-red-100 border-2 border-red-200 rounded-xl p-8 text-center"
-        >
-          <Clock className="w-12 h-12 text-red-500 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-red-700 mb-2">Verification Delays</h3>
-          <p className="text-muted-foreground">
-            Slow and expensive verification processes can take years
-          </p>
-        </motion.div>
+          <SlideBody>
+            <p className="mb-6">
+              High-impact carbon projects face long verification delays and limited financing.
+            </p>
+            <p className="mb-6 text-xl font-semibold text-slate-300">
+              It can take 12–36 months before a project can issue and sell credits.
+            </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="bg-gradient-to-br from-orange-50 to-orange-100 border-2 border-orange-200 rounded-xl p-8 text-center"
-        >
-          <DollarSign className="w-12 h-12 text-orange-500 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-orange-700 mb-2">Cash Flow Gap</h3>
-          <p className="text-muted-foreground">
-            Developers face months or years of zero cash flow before credits issue
-          </p>
-        </motion.div>
+            <div className="mt-8 space-y-4">
+              <div className="flex items-start gap-3">
+                <AlertCircle className="w-6 h-6 text-red-400 flex-shrink-0 mt-1" />
+                <div>
+                  <p className="text-primary font-semibold">Verification Delays</p>
+                  <p className="text-slate-400 text-base">Slow and expensive verification processes can take years</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <AlertCircle className="w-6 h-6 text-red-400 flex-shrink-0 mt-1" />
+                <div>
+                  <p className="text-primary font-semibold">Cash Flow Gap</p>
+                  <p className="text-slate-400 text-base">Developers face months or years of zero cash flow before credits issue</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <AlertCircle className="w-6 h-6 text-red-400 flex-shrink-0 mt-1" />
+                <div>
+                  <p className="text-primary font-semibold">Limited Financing</p>
+                  <p className="text-slate-400 text-base">Options limited to elite developers or complex offtake agreements</p>
+                </div>
+              </div>
+            </div>
+          </SlideBody>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="bg-gradient-to-br from-red-50 to-red-100 border-2 border-red-200 rounded-xl p-8 text-center"
-        >
-          <Lock className="w-12 h-12 text-red-500 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-red-700 mb-2">Limited Financing</h3>
-          <p className="text-muted-foreground">
-            Options limited to elite developers or complex offtake agreements
-          </p>
-        </motion.div>
+        <SlideVisual>
+          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700">
+            <div className="flex items-center gap-3 mb-6">
+              <Clock className="w-8 h-8 text-red-400" />
+              <h3 className="text-2xl font-bold text-primary">Time to Revenue</h3>
+            </div>
+            <div className="space-y-4 text-center">
+              <div className="bg-red-500/20 border border-red-500/30 rounded-xl p-6">
+                <div className="text-5xl font-bold text-red-400 mb-2">12-36</div>
+                <div className="text-lg text-slate-300">Months to First Sale</div>
+              </div>
+              <div className="text-slate-400 text-sm italic">
+                Zero cash flow during verification period
+              </div>
+            </div>
+          </div>
+        </SlideVisual>
       </div>
     </SlideLayout>
   );
