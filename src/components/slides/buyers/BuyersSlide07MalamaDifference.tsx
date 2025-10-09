@@ -1,5 +1,4 @@
-import { SlideLayout } from '../SlideLayout';
-import { motion } from 'motion/react';
+import { SlideLayout, SlideHeadline, SlideBody } from '../SlideLayout';
 import { CheckCircle, X } from 'lucide-react';
 
 export function BuyersSlide07MalamaDifference() {
@@ -37,41 +36,43 @@ export function BuyersSlide07MalamaDifference() {
   ];
 
   return (
-    <SlideLayout
-      title="The Mālama Difference"
-      subtitle="Integrity and Access, Not Intermediation"
-    >
-      <div className="max-w-5xl mx-auto">
-        <div className="bg-white rounded-2xl border-2 border-border/50 overflow-hidden">
+    <SlideLayout>
+      <SlideHeadline className="bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
+        The Mālama Difference
+      </SlideHeadline>
+
+      <SlideBody>
+        <p className="mb-8 text-slate-300 text-center text-xl">
+          Integrity and Access, Not Intermediation
+        </p>
+
+        <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl overflow-hidden">
           {/* Header */}
-          <div className="grid grid-cols-3 bg-gradient-to-r from-primary/10 to-secondary/10 border-b-2 border-border/50">
+          <div className="grid grid-cols-3 bg-slate-700/50 border-b border-slate-600">
             <div className="p-4 font-semibold text-primary">Feature</div>
-            <div className="p-4 font-semibold text-red-600 border-l-2 border-border/50">Traditional Broker</div>
-            <div className="p-4 font-semibold text-green-600 border-l-2 border-border/50">Mālama Labs</div>
+            <div className="p-4 font-semibold text-red-400 border-l border-slate-600">Traditional Broker</div>
+            <div className="p-4 font-semibold text-emerald-400 border-l border-slate-600">Mālama Labs</div>
           </div>
 
           {/* Rows */}
           {comparisons.map((row, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-              className="grid grid-cols-3 border-b border-border/30 hover:bg-accent/10 transition-colors"
+              className="grid grid-cols-3 border-b border-slate-700/50 last:border-b-0"
             >
-              <div className="p-4 font-medium text-primary">{row.feature}</div>
-              <div className="p-4 border-l-2 border-border/50 flex items-center gap-2">
-                <X className="w-4 h-4 text-red-500 flex-shrink-0" />
-                <span className="text-sm text-muted-foreground">{row.traditional}</span>
+              <div className="p-4 font-medium text-slate-200">{row.feature}</div>
+              <div className="p-4 border-l border-slate-600 flex items-center gap-2">
+                <X className="w-4 h-4 text-red-400 flex-shrink-0" />
+                <span className="text-sm text-slate-400">{row.traditional}</span>
               </div>
-              <div className="p-4 border-l-2 border-border/50 flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
-                <span className="text-sm text-foreground font-medium">{row.malama}</span>
+              <div className="p-4 border-l border-slate-600 flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                <span className="text-sm text-slate-200 font-medium">{row.malama}</span>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
-      </div>
+      </SlideBody>
     </SlideLayout>
   );
 }

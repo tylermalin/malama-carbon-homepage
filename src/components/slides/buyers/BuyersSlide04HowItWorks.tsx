@@ -1,5 +1,4 @@
-import { SlideLayout } from '../SlideLayout';
-import { motion } from 'motion/react';
+import { SlideLayout, SlideHeadline, SlideBody } from '../SlideLayout';
 import { Search, BarChart3, DollarSign, CheckCircle, Target } from 'lucide-react';
 
 export function BuyersSlide04HowItWorks() {
@@ -12,37 +11,36 @@ export function BuyersSlide04HowItWorks() {
   ];
 
   return (
-    <SlideLayout
-      title="How It Works"
-      subtitle="From Data to Verified Credits — A Transparent Lifecycle"
-    >
-      <div className="max-w-5xl mx-auto">
+    <SlideLayout>
+      <SlideHeadline className="bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
+        How It Works
+      </SlideHeadline>
+
+      <SlideBody>
+        <p className="mb-12 text-slate-300 text-center text-xl">
+          From Data to Verified Credits — A Transparent Lifecycle
+        </p>
+
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           {steps.map((step, index) => {
             const IconComponent = step.icon;
             return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                className="flex flex-col items-center text-center"
-              >
+              <div key={index} className="flex flex-col items-center text-center">
                 <div className="relative mb-4">
-                  <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center">
-                    <IconComponent className="w-8 h-8 text-primary-foreground" />
+                  <div className="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center">
+                    <IconComponent className="w-8 h-8 text-white" />
                   </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-secondary rounded-full flex items-center justify-center text-sm font-bold text-secondary-foreground">
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-sm font-bold text-white">
                     {index + 1}
                   </div>
                 </div>
                 <h3 className="font-semibold text-primary mb-2">{step.title}</h3>
-                <p className="text-sm text-muted-foreground">{step.desc}</p>
-              </motion.div>
+                <p className="text-sm text-slate-400">{step.desc}</p>
+              </div>
             );
           })}
         </div>
-      </div>
+      </SlideBody>
     </SlideLayout>
   );
 }
