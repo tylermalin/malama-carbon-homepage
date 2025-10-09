@@ -1,25 +1,24 @@
-import { SlideLayout } from '../SlideLayout';
-import { motion } from 'motion/react';
+import { SlideLayout, SlideHeadline, SlideBody } from '../SlideLayout';
 import { ExternalLink, Video, Calendar, Mail, Lock } from 'lucide-react';
 import { Button } from '../../ui/button';
 
 export function ProjectsSlide10Closing() {
   return (
-    <SlideLayout
-      title="Join Mālama's Developer Network"
-      subtitle="Build, Verify, and Finance the Next Generation of Carbon Projects"
-    >
-      <div className="max-w-5xl mx-auto space-y-12">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          <div className="bg-gradient-to-br from-primary/10 to-primary/5 border-2 border-primary/20 rounded-xl p-6 text-center">
-            <Video className="w-10 h-10 text-primary mx-auto mb-3" />
+    <SlideLayout>
+      <SlideHeadline className="bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
+        Join Mālama's Developer Network
+      </SlideHeadline>
+
+      <SlideBody>
+        <p className="mb-8 text-slate-300 text-center text-xl">
+          Build, Verify, and Finance the Next Generation of Carbon Projects
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 text-center">
+            <Video className="w-10 h-10 text-emerald-400 mx-auto mb-3" />
             <h3 className="font-semibold text-primary mb-2">Watch Overview</h3>
-            <p className="text-sm text-muted-foreground mb-4">5-min introduction</p>
+            <p className="text-xs text-slate-400 mb-4">5-min introduction</p>
             <Button 
               onClick={() => window.open('https://youtu.be/nAYsgyyh7cc?si=VdeTGcOkYCdpvOjO', '_blank')}
               size="sm"
@@ -30,10 +29,10 @@ export function ProjectsSlide10Closing() {
             </Button>
           </div>
 
-          <div className="bg-gradient-to-br from-secondary/10 to-secondary/5 border-2 border-secondary/20 rounded-xl p-6 text-center">
-            <Calendar className="w-10 h-10 text-secondary mx-auto mb-3" />
+          <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 text-center">
+            <Calendar className="w-10 h-10 text-blue-400 mx-auto mb-3" />
             <h3 className="font-semibold text-primary mb-2">Book Session</h3>
-            <p className="text-sm text-muted-foreground mb-4">Schedule with team</p>
+            <p className="text-xs text-slate-400 mb-4">Schedule with team</p>
             <Button 
               onClick={() => window.open('https://calendar.app.google/PjPddjUkZjdxHPqr8', '_blank')}
               variant="secondary"
@@ -45,10 +44,10 @@ export function ProjectsSlide10Closing() {
             </Button>
           </div>
 
-          <div className="bg-gradient-to-br from-accent/20 to-accent/10 border-2 border-accent/30 rounded-xl p-6 text-center">
-            <Mail className="w-10 h-10 text-accent-foreground mx-auto mb-3" />
+          <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 text-center">
+            <Mail className="w-10 h-10 text-emerald-400 mx-auto mb-3" />
             <h3 className="font-semibold text-primary mb-2">Email Us</h3>
-            <p className="text-sm text-muted-foreground mb-4">Direct contact</p>
+            <p className="text-xs text-slate-400 mb-4">Direct contact</p>
             <Button 
               onClick={() => window.location.href = 'mailto:tyler@malamalabs.com'}
               variant="outline"
@@ -59,10 +58,10 @@ export function ProjectsSlide10Closing() {
             </Button>
           </div>
 
-          <div className="bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-xl p-6 text-center">
-            <Lock className="w-10 h-10 text-green-600 mx-auto mb-3" />
+          <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 text-center">
+            <Lock className="w-10 h-10 text-blue-400 mx-auto mb-3" />
             <h3 className="font-semibold text-primary mb-2">Investor Portal</h3>
-            <p className="text-sm text-muted-foreground mb-4">Code: malama2025</p>
+            <p className="text-xs text-slate-400 mb-4">Code: malama2025</p>
             <Button 
               onClick={() => window.location.href = '/investors'}
               variant="outline"
@@ -72,30 +71,20 @@ export function ProjectsSlide10Closing() {
               Access
             </Button>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="bg-gradient-to-r from-primary/10 to-secondary/10 border-2 border-primary/20 rounded-xl p-8 text-center"
-        >
-          <h3 className="text-2xl font-bold text-primary mb-3">Zero Upfront Costs</h3>
-          <p className="text-lg text-muted-foreground">
+        <div className="bg-slate-700/50 border border-slate-600 rounded-xl p-8 text-center mb-8">
+          <h3 className="text-2xl font-bold text-emerald-400 mb-3">Zero Upfront Costs</h3>
+          <p className="text-lg text-slate-300">
             Mālama only earns when your project generates revenue — aligning our success with yours
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-center space-y-2"
-        >
-          <p className="text-2xl font-bold text-primary">🌐 www.malamalabs.com</p>
-          <p className="text-lg text-muted-foreground">📧 tyler@malamalabs.com</p>
-        </motion.div>
-      </div>
+        <div className="text-center">
+          <p className="text-2xl font-bold text-primary mb-2">🌐 www.malamalabs.com</p>
+          <p className="text-lg text-slate-400">📧 tyler@malamalabs.com</p>
+        </div>
+      </SlideBody>
     </SlideLayout>
   );
 }

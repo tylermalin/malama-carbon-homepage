@@ -1,5 +1,4 @@
-import { SlideLayout } from '../SlideLayout';
-import { motion } from 'motion/react';
+import { SlideLayout, SlideHeadline, SlideBody } from '../SlideLayout';
 import { Sprout, Trees, Flame, Waves, Factory } from 'lucide-react';
 
 export function ProjectsSlide07ProjectTypes() {
@@ -12,21 +11,23 @@ export function ProjectsSlide07ProjectTypes() {
   ];
 
   return (
-    <SlideLayout
-      title="Built for All Project Types"
-      subtitle="From Farms to Forests — and Everything In Between"
-    >
-      <div className="max-w-5xl mx-auto">
+    <SlideLayout>
+      <SlideHeadline className="bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
+        Built for All Project Types
+      </SlideHeadline>
+
+      <SlideBody>
+        <p className="mb-8 text-slate-300 text-center text-xl">
+          From Farms to Forests — and Everything In Between
+        </p>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projectTypes.map((type, index) => {
             const IconComponent = type.icon;
             return (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                className="bg-gradient-to-br from-background to-accent/10 border-2 border-border/50 rounded-xl p-6 text-center hover:shadow-lg transition-shadow"
+                className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 text-center"
               >
                 <div className={`w-16 h-16 bg-gradient-to-br ${type.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
                   <IconComponent className="w-8 h-8 text-white" />
@@ -35,21 +36,15 @@ export function ProjectsSlide07ProjectTypes() {
                 <h3 className="text-base font-semibold text-primary leading-tight">
                   {type.title}
                 </h3>
-              </motion.div>
+              </div>
             );
           })}
           
-          {/* Placeholder for visual balance */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="bg-gradient-to-br from-primary/5 to-secondary/5 border-2 border-dashed border-primary/30 rounded-xl p-6 text-center flex items-center justify-center"
-          >
-            <p className="text-muted-foreground italic">...and more methodologies coming soon</p>
-          </motion.div>
+          <div className="bg-slate-800/30 border-2 border-dashed border-slate-600 rounded-xl p-6 text-center flex items-center justify-center">
+            <p className="text-slate-500 italic">...and more methodologies coming soon</p>
+          </div>
         </div>
-      </div>
+      </SlideBody>
     </SlideLayout>
   );
 }

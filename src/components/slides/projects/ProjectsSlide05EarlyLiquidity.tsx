@@ -1,79 +1,56 @@
-import { SlideLayout } from '../SlideLayout';
-import { motion } from 'motion/react';
+import { SlideLayout, SlideHeadline, SlideBody } from '../SlideLayout';
 import { DollarSign, TrendingUp, Coins, ArrowRight } from 'lucide-react';
 
 export function ProjectsSlide05EarlyLiquidity() {
   return (
-    <SlideLayout
-      title="Early Liquidity: LCO₂"
-      subtitle="Finance Your Project Before Final Verification"
-    >
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="text-xl text-center text-muted-foreground mb-12 max-w-3xl mx-auto"
-      >
-        Turn verified data into immediate working capital
-      </motion.p>
+    <SlideLayout>
+      <SlideHeadline className="bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
+        Early Liquidity: LCO₂
+      </SlideHeadline>
 
-      <div className="max-w-5xl mx-auto space-y-6">
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex items-center gap-4 bg-gradient-to-r from-primary/10 to-secondary/10 border-2 border-primary/20 rounded-xl p-6"
-        >
-          <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
-            <DollarSign className="w-6 h-6 text-primary-foreground" />
-          </div>
-          <p className="text-lg text-muted-foreground">
-            <strong className="text-primary">Access 30–50%</strong> of your projected carbon credit value early
-          </p>
-        </motion.div>
+      <SlideBody>
+        <p className="mb-8 text-slate-300 text-center text-xl">
+          Finance Your Project Before Final Verification — Turn verified data into immediate working capital
+        </p>
 
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex items-center gap-4 bg-gradient-to-r from-secondary/10 to-accent/10 border-2 border-secondary/20 rounded-xl p-6"
-        >
-          <div className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center flex-shrink-0">
-            <Coins className="w-6 h-6 text-secondary-foreground" />
+        <div className="space-y-4">
+          <div className="flex items-center gap-4 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6">
+            <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center flex-shrink-0">
+              <DollarSign className="w-6 h-6 text-white" />
+            </div>
+            <p className="text-lg text-slate-300">
+              <strong className="text-emerald-400">Access 30–50%</strong> of your projected carbon credit value early
+            </p>
           </div>
-          <p className="text-lg text-muted-foreground">
-            <strong className="text-primary">Sell or stake LCO₂ tokens</strong> to raise funds and attract buyers
-          </p>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="flex items-center gap-4 bg-gradient-to-r from-accent/20 to-primary/10 border-2 border-accent/30 rounded-xl p-6"
-        >
-          <div className="w-12 h-12 bg-accent/50 rounded-full flex items-center justify-center flex-shrink-0">
-            <TrendingUp className="w-6 h-6 text-accent-foreground" />
+          <div className="flex items-center gap-4 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6">
+            <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+              <Coins className="w-6 h-6 text-white" />
+            </div>
+            <p className="text-lg text-slate-300">
+              <strong className="text-blue-400">Sell or stake LCO₂ tokens</strong> to raise funds and attract buyers
+            </p>
           </div>
-          <p className="text-lg text-muted-foreground">
-            <strong className="text-primary">Use as collateral</strong> for loans or to fund equipment, labor, or validation costs
-          </p>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="flex items-center gap-4 bg-gradient-to-r from-primary/10 to-secondary/10 border-2 border-primary/20 rounded-xl p-6"
-        >
-          <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-            <ArrowRight className="w-6 h-6 text-white" />
+          <div className="flex items-center gap-4 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6">
+            <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center flex-shrink-0">
+              <TrendingUp className="w-6 h-6 text-white" />
+            </div>
+            <p className="text-lg text-slate-300">
+              <strong className="text-emerald-400">Use as collateral</strong> for loans or to fund equipment, labor, or validation costs
+            </p>
           </div>
-          <p className="text-lg text-muted-foreground">
-            As your project is verified, <strong className="text-primary">tokens convert seamlessly into VCO₂ credits</strong>
-          </p>
-        </motion.div>
-      </div>
+
+          <div className="flex items-center gap-4 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6">
+            <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+              <ArrowRight className="w-6 h-6 text-white" />
+            </div>
+            <p className="text-lg text-slate-300">
+              As your project is verified, <strong className="text-emerald-400">tokens convert seamlessly into VCO₂ credits</strong>
+            </p>
+          </div>
+        </div>
+      </SlideBody>
     </SlideLayout>
   );
 }
