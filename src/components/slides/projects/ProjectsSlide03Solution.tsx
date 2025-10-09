@@ -2,7 +2,7 @@ import { SlideLayout } from '../SlideLayout';
 import { motion } from 'motion/react';
 import { Zap, TrendingUp, Shield } from 'lucide-react';
 
-export function ProjectsSlide02Solution() {
+export function ProjectsSlide03Solution() {
   return (
     <SlideLayout
       title="The Mālama Solution: CO₂.0"

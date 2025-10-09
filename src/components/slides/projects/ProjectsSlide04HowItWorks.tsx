@@ -2,7 +2,7 @@ import { SlideLayout } from '../SlideLayout';
 import { motion } from 'motion/react';
 import { UserPlus, FileText, Wifi, BarChart3, Coins } from 'lucide-react';
 
-export function ProjectsSlide03HowItWorks() {
+export function ProjectsSlide04HowItWorks() {
   const steps = [
     { 
       icon: UserPlus, 
