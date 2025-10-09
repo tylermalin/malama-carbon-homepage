@@ -39,16 +39,16 @@ export function BuyersSlide08CaseStudy() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl p-6 text-center">
-            <TrendingDown className="w-10 h-10 mx-auto mb-2" />
+          <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-slate-900 rounded-xl p-6 text-center">
+            <TrendingDown className="w-10 h-10 mx-auto mb-2 text-slate-900" />
             <div className="text-4xl font-bold mb-1">31%</div>
-            <div className="text-sm">Cost Savings</div>
+            <div className="text-sm font-medium">Cost Savings</div>
           </div>
 
-          <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl p-6 text-center">
-            <CheckCircle className="w-10 h-10 mx-auto mb-2" />
+          <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-slate-900 rounded-xl p-6 text-center">
+            <CheckCircle className="w-10 h-10 mx-auto mb-2 text-slate-900" />
             <div className="text-xl font-bold mb-1">Auto-Converted to VCO₂</div>
-            <div className="text-sm">with on-chain proof</div>
+            <div className="text-sm font-medium">with on-chain proof</div>
           </div>
         </div>
       </SlideBody>

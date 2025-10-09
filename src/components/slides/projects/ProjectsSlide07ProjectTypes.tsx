@@ -30,7 +30,7 @@ export function ProjectsSlide07ProjectTypes() {
                 className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 text-center"
               >
                 <div className={`w-16 h-16 bg-gradient-to-br ${type.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
-                  <IconComponent className="w-8 h-8 text-white" />
+                  <IconComponent className="w-8 h-8 text-slate-900" />
                 </div>
                 <div className="text-3xl mb-2">{type.emoji}</div>
                 <h3 className="text-base font-semibold text-primary leading-tight">

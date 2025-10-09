@@ -7,31 +7,26 @@ export function BuyersSlide07MalamaDifference() {
       feature: 'Transparency',
       traditional: 'Hidden project info',
       malama: 'Full on-chain data lineage',
-      malamaWins: true
     },
     { 
       feature: 'Pricing',
       traditional: 'Markups & opacity',
       malama: 'Transparent market pricing',
-      malamaWins: true
     },
     { 
       feature: 'Verification',
       traditional: 'Offline docs',
       malama: 'Real-time digital MRV',
-      malamaWins: true
     },
     { 
       feature: 'Access',
       traditional: 'Limited to elite buyers',
       malama: 'Open to all qualified participants',
-      malamaWins: true
     },
     { 
       feature: 'Liquidity',
       traditional: 'Manual resale',
       malama: 'Smart-contract-enabled trading',
-      malamaWins: true
     },
   ];
 
@@ -46,31 +41,40 @@ export function BuyersSlide07MalamaDifference() {
           Integrity and Access, Not Intermediation
         </p>
 
-        <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl overflow-hidden">
-          {/* Header */}
-          <div className="grid grid-cols-3 bg-slate-700/50 border-b border-slate-600">
-            <div className="p-4 font-semibold text-primary">Feature</div>
-            <div className="p-4 font-semibold text-red-400 border-l border-slate-600">Traditional Broker</div>
-            <div className="p-4 font-semibold text-emerald-400 border-l border-slate-600">Mālama Labs</div>
-          </div>
-
-          {/* Rows */}
-          {comparisons.map((row, index) => (
-            <div
-              key={index}
-              className="grid grid-cols-3 border-b border-slate-700/50 last:border-b-0"
-            >
-              <div className="p-4 font-medium text-slate-200">{row.feature}</div>
-              <div className="p-4 border-l border-slate-600 flex items-center gap-2">
-                <X className="w-4 h-4 text-red-400 flex-shrink-0" />
-                <span className="text-sm text-slate-400">{row.traditional}</span>
-              </div>
-              <div className="p-4 border-l border-slate-600 flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                <span className="text-sm text-slate-200 font-medium">{row.malama}</span>
-              </div>
-            </div>
-          ))}
+        <div className="max-w-5xl mx-auto bg-slate-800/50 backdrop-blur-sm border-2 border-slate-700 rounded-2xl overflow-x-auto">
+          <table className="w-full min-w-[600px]">
+            <thead>
+              <tr className="bg-slate-700/80 border-b-2 border-slate-600">
+                <th className="p-5 font-bold text-lg text-primary text-left w-1/4"></th>
+                <th className="p-5 font-bold text-lg text-red-400 border-l-2 border-slate-600 text-center w-3/8">
+                  Traditional Broker
+                </th>
+                <th className="p-5 font-bold text-lg text-emerald-400 border-l-2 border-slate-600 text-center w-3/8">
+                  Mālama Labs
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {comparisons.map((row, index) => (
+                <tr
+                  key={index}
+                  className="border-b border-slate-700/50 last:border-b-0 hover:bg-slate-700/30 transition-colors"
+                >
+                  <td className="p-5 font-semibold text-slate-200 align-middle">
+                    {row.feature}
+                  </td>
+                  <td className="p-5 border-l-2 border-slate-600 text-center align-middle">
+                    <X className="w-6 h-6 text-red-400 mb-2 mx-auto" />
+                    <div className="text-sm text-slate-400">{row.traditional}</div>
+                  </td>
+                  <td className="p-5 border-l-2 border-slate-600 text-center align-middle">
+                    <CheckCircle className="w-6 h-6 text-emerald-400 mb-2 mx-auto" />
+                    <div className="text-sm text-slate-200 font-medium">{row.malama}</div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </SlideBody>
     </SlideLayout>

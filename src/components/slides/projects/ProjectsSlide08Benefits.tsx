@@ -30,7 +30,7 @@ export function ProjectsSlide08Benefits() {
                 className="flex items-center gap-6 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6"
               >
                 <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center flex-shrink-0">
-                  <IconComponent className="w-6 h-6 text-white" />
+                  <IconComponent className="w-6 h-6 text-slate-900" />
                 </div>
                 <p className="text-lg text-slate-300 flex items-center gap-2">
                   <span className="text-2xl">✅</span>
