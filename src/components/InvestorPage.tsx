@@ -235,9 +235,16 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        {/* Header Section */}
+        <div className="mb-8 pt-8">
+          <h2 className="text-4xl font-bold text-gray-900 mb-2">mālama labs inc.</h2>
+          <h3 className="text-2xl font-semibold text-primary mb-2">SAFE round 2025</h3>
+          <p className="text-xl text-gray-600">executive summary</p>
+        </div>
+
         <Card className="border-2 border-border/50 bg-card/80 backdrop-blur-sm">
           {/* Enhanced Tabs Navigation */}
-          <div className="bg-gradient-to-r from-primary/5 via-background to-secondary/5 border-b border-border/50">
+          <div className="bg-slate-800 border-b border-slate-700">
             <div className="px-6 py-4">
               <nav className="flex flex-wrap gap-4 justify-center lg:justify-start">
                 {[
@@ -250,29 +257,29 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
                   <button
                     key={tab.id}
                     onClick={() => setSelectedTab(tab.id)}
-                    className={`group relative flex flex-col items-center p-4 rounded-xl transition-all duration-200 min-w-[140px] ${
+                    className={`group relative flex flex-col items-center p-4 rounded-xl transition-all duration-200 min-w-[140px] border-2 ${
                       selectedTab === tab.id
-                        ? 'bg-primary text-white shadow-lg transform scale-105'
-                        : 'bg-white/50 hover:bg-white/80 text-muted-foreground hover:text-foreground hover:shadow-md'
+                        ? 'bg-primary text-white shadow-lg transform scale-105 border-primary'
+                        : 'bg-slate-700/50 hover:bg-slate-600/50 text-slate-200 hover:text-white hover:shadow-md border-slate-600 hover:border-slate-500'
                     }`}
                   >
                     <div className={`p-3 rounded-lg mb-3 ${
                       selectedTab === tab.id 
                         ? 'bg-white/20' 
-                        : 'bg-primary/10 group-hover:bg-primary/20'
+                        : 'bg-slate-600/50 group-hover:bg-slate-500/50'
                     }`}>
                       <tab.icon className={`w-6 h-6 ${
-                        selectedTab === tab.id ? 'text-white' : 'text-primary'
+                        selectedTab === tab.id ? 'text-white' : 'text-slate-200'
                       }`} />
                     </div>
                     <div className="text-center">
                       <div className={`font-semibold text-sm mb-1 ${
-                        selectedTab === tab.id ? 'text-white' : 'text-primary'
+                        selectedTab === tab.id ? 'text-white' : 'text-slate-200'
                       }`}>
                         {tab.label}
                       </div>
                       <div className={`text-xs leading-tight ${
-                        selectedTab === tab.id ? 'text-white/80' : 'text-muted-foreground'
+                        selectedTab === tab.id ? 'text-white/80' : 'text-slate-400 group-hover:text-slate-200'
                       }`}>
                         {tab.description}
                       </div>
