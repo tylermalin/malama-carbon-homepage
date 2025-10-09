@@ -5,13 +5,35 @@ import { AnimatedBackground } from './AnimatedBackground';
 interface SlideLayoutProps {
   children: ReactNode;
   className?: string;
+  title?: string;
+  subtitle?: string;
 }
 
-export function SlideLayout({ children, className = '' }: SlideLayoutProps) {
+export function SlideLayout({ children, className = '', title, subtitle }: SlideLayoutProps) {
   return (
     <div className={`w-full h-full flex items-center justify-center p-12 md:p-20 relative ${className}`}>
       <AnimatedBackground />
       <div className="max-w-6xl w-full relative z-10">
+        {title && (
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4 text-center leading-tight"
+          >
+            {title}
+          </motion.h1>
+        )}
+        {subtitle && (
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl md:text-2xl text-muted-foreground mb-12 text-center leading-relaxed"
+          >
+            {subtitle}
+          </motion.p>
+        )}
         {children}
       </div>
     </div>
