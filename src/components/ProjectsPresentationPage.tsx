@@ -87,17 +87,16 @@ export function ProjectsPresentationPage({ onNavigate }: ProjectsPresentationPag
       tabIndex={0}
     >
       {/* Close button */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute top-6 right-6 z-50 bg-background/80 backdrop-blur-sm hover:bg-background"
+      <button
         onClick={onNavigate}
+        className="absolute top-6 right-6 z-50 p-2 rounded-full bg-slate-800/80 hover:bg-slate-900 backdrop-blur-sm transition-colors"
+        aria-label="Close presentation"
       >
-        <X className="w-5 h-5" />
-      </Button>
+        <X className="w-6 h-6 text-primary" />
+      </button>
 
-      {/* Main slide area */}
-      <div className="h-full flex items-center justify-center px-4 sm:px-8 py-24">
+      {/* Slide content */}
+      <div className="absolute inset-0 flex items-center justify-center">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
             key={currentSlide}
@@ -110,7 +109,7 @@ export function ProjectsPresentationPage({ onNavigate }: ProjectsPresentationPag
               x: { type: "spring", stiffness: 300, damping: 30 },
               opacity: { duration: 0.2 }
             }}
-            className="w-full max-w-7xl mx-auto"
+            className="w-full h-full"
           >
             <CurrentSlideComponent />
           </motion.div>
@@ -118,48 +117,56 @@ export function ProjectsPresentationPage({ onNavigate }: ProjectsPresentationPag
       </div>
 
       {/* Navigation controls */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center gap-4 bg-background/80 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-6 z-50">
+        {/* Previous button */}
         <Button
-          variant="ghost"
-          size="icon"
           onClick={prevSlide}
           disabled={currentSlide === 0}
-          className="rounded-full"
+          variant="outline"
+          size="icon"
+          className="bg-slate-800 border-slate-700 hover:bg-slate-900 disabled:opacity-30 disabled:cursor-not-allowed text-white"
         >
-          <ChevronLeft className="w-5 h-5" />
+          <ChevronLeft className="w-5 h-5 text-primary" />
         </Button>
 
+        {/* Progress indicator */}
         <div className="flex items-center gap-2">
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              className={`h-2 rounded-full transition-all ${
                 index === currentSlide
-                  ? 'bg-primary w-8'
-                  : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                  ? 'w-8 bg-emerald-500'
+                  : 'w-2 bg-white/30 hover:bg-white/50'
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
         </div>
 
+        {/* Slide counter */}
+        <div className="text-slate-600 text-sm font-medium min-w-16 text-center">
+          {currentSlide + 1} / {slides.length}
+        </div>
+
+        {/* Next button */}
         <Button
-          variant="ghost"
-          size="icon"
           onClick={nextSlide}
           disabled={currentSlide === slides.length - 1}
-          className="rounded-full"
+          variant="outline"
+          size="icon"
+          className="bg-slate-800 border-slate-700 hover:bg-slate-900 disabled:opacity-30 disabled:cursor-not-allowed text-white"
         >
-          <ChevronRight className="w-5 h-5" />
+          <ChevronRight className="w-5 h-5 text-primary" />
         </Button>
       </div>
 
-      {/* Slide counter */}
-      <div className="absolute bottom-6 left-6 text-sm text-muted-foreground bg-background/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg">
-        <span className="font-medium text-primary">{currentSlide + 1}</span>
-        <span className="mx-1">/</span>
-        <span>{slides.length}</span>
+      {/* Slide title indicator */}
+      <div className="absolute top-6 left-6 z-40">
+        <p className="text-slate-500 text-sm font-medium">
+          {slides[currentSlide].title}
+        </p>
       </div>
     </div>
   );
