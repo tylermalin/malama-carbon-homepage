@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { Button } from './ui/button';
 
 // Projects slide components
+import { ProjectsSlide00Cover } from './slides/projects/ProjectsSlide00Cover';
 import { ProjectsSlide01Problem } from './slides/projects/ProjectsSlide01Problem';
 import { ProjectsSlide02Opportunity } from './slides/projects/ProjectsSlide02Opportunity';
 import { ProjectsSlide03Solution } from './slides/projects/ProjectsSlide03Solution';
@@ -24,6 +25,7 @@ export function ProjectsPresentationPage({ onNavigate }: ProjectsPresentationPag
   const [direction, setDirection] = useState(0);
 
   const slides = [
+    { component: ProjectsSlide00Cover, title: 'Cover' },
     { component: ProjectsSlide01Problem, title: 'The Problem' },
     { component: ProjectsSlide02Opportunity, title: 'The Opportunity' },
     { component: ProjectsSlide03Solution, title: 'The Solution' },

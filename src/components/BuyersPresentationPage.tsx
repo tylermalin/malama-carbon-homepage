@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { Button } from './ui/button';
 
 // Buyer slide components
+import { BuyersSlide00Cover } from './slides/buyers/BuyersSlide00Cover';
 import { BuyersSlide01Problem } from './slides/buyers/BuyersSlide01Problem';
 import { BuyersSlide02BrokenModel } from './slides/buyers/BuyersSlide02BrokenModel';
 import { BuyersSlide03CO2Solution } from './slides/buyers/BuyersSlide03CO2Solution';
@@ -24,6 +25,7 @@ export function BuyersPresentationPage({ onNavigate }: BuyersPresentationPagePro
   const [direction, setDirection] = useState(0);
 
   const slides = [
+    { component: BuyersSlide00Cover, title: 'Cover' },
     { component: BuyersSlide01Problem, title: 'The 99% Lockout' },
     { component: BuyersSlide02BrokenModel, title: 'Broken Model' },
     { component: BuyersSlide03CO2Solution, title: 'CO₂.0 Solution' },
