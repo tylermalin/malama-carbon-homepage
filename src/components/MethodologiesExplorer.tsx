@@ -210,19 +210,19 @@ export function MethodologiesExplorer() {
                 </header>
 
                 <dl className="mt-3 grid grid-cols-2 gap-2 text-xs">
-                  <div className="rounded-xl bg-gray-50 p-3">
+                  <div className="rounded-md bg-gray-50 p-3">
                     <dt className="text-gray-500">Sequestration potential</dt>
                     <dd className="mt-0.5 font-medium text-gray-900">{m.sequestrationPotential}</dd>
                   </div>
-                  <div className="rounded-xl bg-gray-50 p-3">
+                  <div className="rounded-md bg-gray-50 p-3">
                     <dt className="text-gray-500">Cost per ton (CO₂)</dt>
                     <dd className="mt-0.5 font-medium text-gray-900">{m.costRange.label}</dd>
                   </div>
-                  <div className="rounded-xl bg-gray-50 p-3">
+                  <div className="rounded-md bg-gray-50 p-3">
                     <dt className="text-gray-500">Initial CAPEX</dt>
                     <dd className="mt-0.5 font-medium text-gray-900">{m.capex}</dd>
                   </div>
-                  <div className="rounded-xl bg-gray-50 p-3">
+                  <div className="rounded-md bg-gray-50 p-3">
                     <dt className="text-gray-500">Standards & registries</dt>
                     <dd className="mt-0.5 font-medium text-gray-900">{m.standards.join(", ")}</dd>
                   </div>
