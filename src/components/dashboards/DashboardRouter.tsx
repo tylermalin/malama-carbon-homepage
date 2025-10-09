@@ -24,7 +24,7 @@ interface DashboardRouterProps {
 const roleTypes = [
   {
     id: 'steward' as DashboardType,
-    title: 'Land Steward',
+    title: 'Project Developer',
     description: 'Manage land operations and create biochar to earn carbon credits',
     icon: Leaf,
     color: 'bg-primary',

@@ -94,7 +94,7 @@ interface FormData {
 const userTypes = [
   {
     id: 'steward' as UserType,
-    title: 'Land Steward',
+    title: 'Project Developer',
     description: 'Manage land operations and create biochar to earn carbon credits',
     icon: Leaf,
     color: 'bg-primary',

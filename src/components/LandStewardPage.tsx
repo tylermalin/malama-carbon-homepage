@@ -87,7 +87,7 @@ export function LandStewardPage({ onNavigate, onStartProject }: LandStewardPageP
                 }}
                 className="hover:scale-105 transition-transform duration-300"
               >
-                Get Started as a Steward
+                Get Started as a Project Developer
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button 
@@ -496,7 +496,7 @@ export function LandStewardPage({ onNavigate, onStartProject }: LandStewardPageP
                 onClick={onStartProject}
                 className="hover:scale-105 transition-transform duration-300"
               >
-                Get Started as a Steward
+                Get Started as a Project Developer
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button 

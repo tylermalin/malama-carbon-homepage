@@ -54,7 +54,7 @@ const userTypes: UserType[] = [
     color: 'text-green-600',
     gradientFrom: 'from-green-50',
     gradientTo: 'to-emerald-50',
-    ctaText: 'Get Started as a Steward',
+    ctaText: 'Get Started as a Project Developer',
     steps: [
       {
         title: 'Intro Questionnaire',

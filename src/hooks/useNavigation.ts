@@ -135,7 +135,7 @@ export function useNavigation() {
         getStarted: 'Get Started | Mālama Labs',
         dashboard: 'Dashboard | Mālama Labs',
         dashboards: 'Dashboards | Mālama Labs',
-        landSteward: 'Land Steward | Mālama Labs',
+        landSteward: 'Project Developer | Mālama Labs',
         projectGallery: 'Projects | Mālama Labs',
         privacyPolicy: 'Privacy Policy | Mālama Labs',
         termsOfService: 'Terms of Service | Mālama Labs',
