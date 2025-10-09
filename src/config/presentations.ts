@@ -16,7 +16,7 @@ export const PRESENTATIONS = {
     deckKey: "BUYERS" as const,
   },
   PROJECTS: {
-    title: "CO₂.0 for Project Developers & Land Stewards",
+    title: "CO₂.0 for Project Developers",
     href: "/presentations/projects",
     description:
       "No upfront fees. Early liquidity via LCO₂. Faster MRV and issuance with Sensor Lab and universal dMRV.",

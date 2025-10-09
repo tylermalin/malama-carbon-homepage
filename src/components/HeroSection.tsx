@@ -86,7 +86,7 @@ export function HeroSection({ onExplorePlatform, onHowItWorks, onStartProject, o
             onClick={onLandSteward}
             className="border-white text-[rgba(0,0,0,1)] hover:bg-white hover:text-primary transition-all duration-300 hover:shadow-lg hover:scale-105"
           >
-            For Land Stewards
+            For Project Developers
           </Button>
           <Button 
             variant="outline" 

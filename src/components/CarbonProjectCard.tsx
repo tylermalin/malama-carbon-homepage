@@ -564,12 +564,11 @@ export function CarbonProjectCard({
           
           <Button 
             variant="outline" 
-            onClick={() => onLearnMore?.(project.id)}
             className="flex-1 hover:scale-105 transition-transform duration-300"
             size="lg"
+            disabled
           >
-            <ExternalLink className="w-5 h-5 mr-2" />
-            View all projects
+            More Projects Coming Soon
           </Button>
         </div>
       </CardContent>

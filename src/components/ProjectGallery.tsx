@@ -46,7 +46,7 @@ export function ProjectGallery({ onNavigate }: ProjectGalleryProps) {
         dataPoints: 0, // Planned
         aiAccuracy: 0, // Pre-certification underway
         lastUpdate: '2024-12-15T10:30:00Z',
-        monitoringType: ['Universal dMRV deployment planned for site monitoring', 'Automated pre-certification data streams', 'Real-time metrics across soil health, biomass conversion, and carbon stability']
+        monitoringType: ['Universal dMRV', 'Automated Data Streams', 'Real-Time Metrics']
       },
       pricing: {
         currentPrice: 0, // TBD

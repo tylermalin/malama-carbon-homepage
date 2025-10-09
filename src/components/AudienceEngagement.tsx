@@ -5,7 +5,7 @@ import { Leaf, Code, ShoppingCart, Handshake, ArrowRight } from 'lucide-react';
 
 const audiences = [
   {
-    title: "Land Stewards",
+    title: "Project Developers",
     description: "Earn from regenerative practices",
     detail: "Transform your agricultural waste into valuable carbon credits while improving soil health and generating additional revenue streams.",
     icon: Leaf,

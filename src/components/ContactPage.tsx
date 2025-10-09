@@ -289,7 +289,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
               viewport={{ once: true }}
             >
               <Card className="p-6 border-2 h-full">
-                <h3 className="text-xl mb-4 text-primary">For Land Stewards</h3>
+                <h3 className="text-xl mb-4 text-primary">For Project Developers</h3>
                 <div className="space-y-3 text-sm">
                   <div>
                     <h4 className="font-medium text-primary mb-1">How do I get started?</h4>

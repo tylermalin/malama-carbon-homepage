@@ -47,7 +47,7 @@ interface UserType {
 const userTypes: UserType[] = [
   {
     id: 'stewards',
-    title: 'Land Stewards',
+    title: 'Project Developers',
     headline: 'Earn from regenerative practices',
     subheadline: 'Transform your agricultural waste into valuable carbon credits while improving soil health and generating new income.',
     icon: Leaf,
