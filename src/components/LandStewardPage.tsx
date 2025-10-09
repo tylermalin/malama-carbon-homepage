@@ -65,11 +65,11 @@ export function LandStewardPage({ onNavigate, onStartProject }: LandStewardPageP
           >
             <Badge variant="secondary" className="mb-6 text-lg px-6 py-2">
               <Sprout className="w-5 h-5 mr-2" />
-              Land Steward Path
+              Project Path
             </Badge>
             
             <h1 className="text-5xl md:text-6xl mb-6 text-primary leading-tight">
-              Your Steward Journey
+              Your Project Path
               <span className="block text-secondary">in 4 Steps</span>
             </h1>
             
@@ -115,7 +115,7 @@ export function LandStewardPage({ onNavigate, onStartProject }: LandStewardPageP
             className="text-center mb-16"
           >
             <h2 className="text-4xl mb-6 text-primary">
-              Your Steward Journey in 4 Steps
+              Your Project Path in 4 Steps
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               We've streamlined the onboarding process to get you from land assessment 
@@ -469,7 +469,7 @@ export function LandStewardPage({ onNavigate, onStartProject }: LandStewardPageP
             viewport={{ once: true }}
           >
             <h2 className="text-4xl mb-6 text-primary">
-              Ready to Start Your Steward Journey?
+              Ready to Start Your Project?
             </h2>
             <p className="text-xl text-muted-foreground mb-8">
               Turn your land into a powerful tool for climate action while generating sustainable income through verified carbon credits.
