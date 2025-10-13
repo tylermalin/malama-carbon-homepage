@@ -17,8 +17,12 @@ import {
   Users,
   Briefcase,
   HelpCircle,
-  Handshake
+  Handshake,
+  CheckCircle,
+  AlertCircle,
+  Loader2
 } from 'lucide-react';
+import { submitContactForm } from '../lib/supabaseClient';
 
 interface ContactPageProps {
   onNavigate: (section?: string) => void;
@@ -33,12 +37,45 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
     
-    // Create mailto link with form data
-    const subject = `Contact Form: ${formData.inquiryType || 'General Inquiry'}`;
-    const body = `
+    try {
+      // Submit to Supabase
+      const result = await submitContactForm({
+        name: formData.name,
+        email: formData.email,
+        company: formData.company,
+        inquiry_type: formData.inquiryType,
+        message: formData.message,
+      });
+
+      if (result.success) {
+        // Success - show success message
+        setSubmitStatus('success');
+        console.log('✅ Form submitted successfully to database');
+        
+        // Reset form after 2 seconds
+        setTimeout(() => {
+          setFormData({
+            name: '',
+            email: '',
+            company: '',
+            inquiryType: '',
+            message: ''
+          });
+          setSubmitStatus('idle');
+        }, 2000);
+      } else if (result.fallbackToMailto) {
+        // Fallback to mailto if Supabase fails
+        console.warn('⚠️ Supabase not configured, falling back to mailto');
+        const subject = `Contact Form: ${formData.inquiryType || 'General Inquiry'}`;
+        const body = `
 Name: ${formData.name}
 Email: ${formData.email}
 Company: ${formData.company}
@@ -46,13 +83,19 @@ Inquiry Type: ${formData.inquiryType}
 
 Message:
 ${formData.message}
-    `.trim();
-    
-    const mailtoLink = `mailto:hello@malamalabs.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailtoLink;
-    
-    // Show success message (optional - you could add a toast notification here)
-    console.log('Opening email client with form data...');
+        `.trim();
+        
+        const mailtoLink = `mailto:hello@malamalabs.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailtoLink;
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactMethods = [
@@ -264,14 +307,44 @@ ${formData.message}
                     />
                   </div>
 
+                  {/* Status Message */}
+                  {submitStatus === 'success' && (
+                    <div className="flex items-center justify-center gap-2 text-emerald-600 bg-emerald-50 p-4 rounded-lg">
+                      <CheckCircle className="w-5 h-5" />
+                      <span className="font-medium">Message sent successfully! We'll be in touch soon.</span>
+                    </div>
+                  )}
+                  
+                  {submitStatus === 'error' && (
+                    <div className="flex items-center justify-center gap-2 text-red-600 bg-red-50 p-4 rounded-lg">
+                      <AlertCircle className="w-5 h-5" />
+                      <span className="font-medium">Failed to send message. Please try again or email us directly.</span>
+                    </div>
+                  )}
+
                   <div className="flex justify-center">
                     <Button 
                       type="submit" 
                       size="lg"
-                      className="text-lg px-8 py-4 hover:scale-105 transition-transform duration-300"
+                      disabled={isSubmitting}
+                      className="text-lg px-8 py-4 hover:scale-105 transition-transform duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <Send className="w-5 h-5 mr-2" />
-                      Send Message
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                          Sending...
+                        </>
+                      ) : submitStatus === 'success' ? (
+                        <>
+                          <CheckCircle className="w-5 h-5 mr-2" />
+                          Message Sent!
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-5 h-5 mr-2" />
+                          Send Message
+                        </>
+                      )}
                     </Button>
                   </div>
                 </form>
