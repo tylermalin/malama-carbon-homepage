@@ -35,8 +35,24 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
+    
+    // Create mailto link with form data
+    const subject = `Contact Form: ${formData.inquiryType || 'General Inquiry'}`;
+    const body = `
+Name: ${formData.name}
+Email: ${formData.email}
+Company: ${formData.company}
+Inquiry Type: ${formData.inquiryType}
+
+Message:
+${formData.message}
+    `.trim();
+    
+    const mailtoLink = `mailto:hello@malamalabs.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
+    
+    // Show success message (optional - you could add a toast notification here)
+    console.log('Opening email client with form data...');
   };
 
   const contactMethods = [
