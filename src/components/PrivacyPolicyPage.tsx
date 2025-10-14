@@ -252,7 +252,7 @@ export function PrivacyPolicyPage({ onNavigate }: PrivacyPolicyPageProps) {
                     <div>
                       <p className="font-medium text-primary">Mālama Labs Inc.</p>
                       <p className="text-sm">Email: <a href="mailto:privacy@malamalabs.com" className="text-primary hover:underline">privacy@malamalabs.com</a></p>
-                      <p className="text-sm text-muted-foreground">Address: [Insert Business Address]</p>
+                      <p className="text-sm text-muted-foreground">Address: 505 E Kuiaha Rd, Haiku, HI 96708</p>
                     </div>
                   </div>
                 </div>

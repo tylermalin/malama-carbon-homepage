@@ -14,6 +14,7 @@ import { ClosingCTA } from './ClosingCTA';
 import { Footer } from './Footer';
 import { DashboardRouter } from './dashboards/DashboardRouter';
 import { PrivacyPolicyPage } from './PrivacyPolicyPage';
+import { TermsOfServicePage } from './TermsOfServicePage';
 import { DMRVDashboard } from './dMRVDashboard';
 import { TokenomicsOverview } from './TokenomicsOverview';
 import { CarbonTimelineLanding } from './CarbonTimelineLanding';
@@ -508,35 +509,9 @@ export function PageRouter({
       
     case 'termsOfService':
       return (
-        <>
-          <LegalPage 
-            onNavigate={navigateToSection}
-            title="Terms of Service"
-            content="These Terms of Service govern your use of Mālama Carbon's platform and services. By accessing or using our platform, you agree to be bound by these terms."
-          />
-          <Footer 
-            onShowDocumentation={showDocumentation} 
-            onShowBlog={showBlog} 
-            onShowPlatform={showPlatform}
-            onShowHowItWorks={showHowItWorks}
-            onShowAbout={showAbout}
-            onShowTeam={showTeam}
-            onShowContact={showContact}
-            onShowCareers={showCareers}
-            onShowFAQ={showFAQ}
-            onShowPrivacyPolicy={showPrivacyPolicy}
-            onShowTermsOfService={showTermsOfService}
-            onShowCookiePolicy={showCookiePolicy}
-            onShowCarbonStudio={showCarbonStudio}
-            onShowCarbonProtocols={showCarbonProtocols}
-            onShowDMRVEngine={showDMRVEngine}
-            onShowFinancials={showFinancials}
-            onShowInvestor={showInvestor}
-            onShowAdvisory={showAdvisory}
-            onShowPresentation={showPresentation}
-            onShowPresentations={showPresentations}
-          />
-        </>
+        <TermsOfServicePage 
+          onNavigate={navigateToSection}
+        />
       );
       
     case 'cookiePolicy':
