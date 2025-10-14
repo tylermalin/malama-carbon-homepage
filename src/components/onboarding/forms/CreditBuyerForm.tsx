@@ -32,6 +32,8 @@ export function CreditBuyerForm({ onComplete }: CreditBuyerFormProps) {
   const [step, setStep] = useState(1);
   const [showEmailVerification, setShowEmailVerification] = useState(false);
   const [userEmail, setUserEmail] = useState<string>('');
+  const [existingUser, setExistingUser] = useState<{ id: string; email: string } | null>(null);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   
   const {
     register,
@@ -48,6 +50,26 @@ export function CreditBuyerForm({ onComplete }: CreditBuyerFormProps) {
       accept_terms: false
     }
   });
+
+  // Check if user is already logged in
+  React.useEffect(() => {
+    async function checkExistingSession() {
+      try {
+        const currentUser = await authHelpers.getCurrentUser();
+        if (currentUser) {
+          console.log('✅ User already logged in:', currentUser.email);
+          setExistingUser({ id: currentUser.id, email: currentUser.email });
+          setUserEmail(currentUser.email);
+          setStep(2);
+        }
+      } catch (err) {
+        console.log('No existing session');
+      } finally {
+        setIsCheckingAuth(false);
+      }
+    }
+    checkExistingSession();
+  }, []);
 
   const intendedUse = watch('intended_use') || [];
   const preferredMethods = watch('preferred_methods') || [];
@@ -73,43 +95,50 @@ export function CreditBuyerForm({ onComplete }: CreditBuyerFormProps) {
     setError(null);
 
     try {
-      console.log('🚀 Starting signup with:', { email: data.email, name: data.contact_name });
+      let userId: string;
       
-      // 1. Create account
-      const { data: signUpData, error: signUpError } = await authHelpers.signUp(
-        data.email,
-        data.password,
-        data.contact_name
-      );
-
-      console.log('📋 Sign up result:', { data: signUpData, error: signUpError });
-
-      if (signUpError || !signUpData?.user) {
-        console.error('❌ Sign up failed:', signUpError);
+      if (existingUser) {
+        console.log('✅ Using existing logged-in user:', existingUser.email);
+        userId = existingUser.id;
+      } else {
+        console.log('🚀 Starting signup with:', { email: data.email, name: data.contact_name });
         
-        // Provide user-friendly error messages
-        let errorMsg = 'Failed to create account';
-        if (signUpError) {
-          const errorStr = signUpError.toLowerCase();
-          if (errorStr.includes('rate') || errorStr.includes('too many')) {
-            errorMsg = 'Please wait a moment before trying again (rate limit)';
-          } else if (errorStr.includes('already registered') || errorStr.includes('already exists')) {
-            errorMsg = 'This email is already registered. Please sign in instead.';
-          } else if (errorStr.includes('invalid email')) {
-            errorMsg = 'Please enter a valid email address';
-          } else if (errorStr.includes('password')) {
-            errorMsg = 'Password must be at least 6 characters';
-          } else {
-            errorMsg = signUpError;
+        // 1. Create account
+        const { data: signUpData, error: signUpError } = await authHelpers.signUp(
+          data.email,
+          data.password,
+          data.contact_name
+        );
+
+        console.log('📋 Sign up result:', { data: signUpData, error: signUpError });
+
+        if (signUpError || !signUpData?.user) {
+          console.error('❌ Sign up failed:', signUpError);
+          
+          // Provide user-friendly error messages
+          let errorMsg = 'Failed to create account';
+          if (signUpError) {
+            const errorStr = signUpError.toLowerCase();
+            if (errorStr.includes('rate') || errorStr.includes('too many')) {
+              errorMsg = 'Please wait a moment before trying again (rate limit)';
+            } else if (errorStr.includes('already registered') || errorStr.includes('already exists')) {
+              errorMsg = 'This email is already registered. Please sign in instead.';
+            } else if (errorStr.includes('invalid email')) {
+              errorMsg = 'Please enter a valid email address';
+            } else if (errorStr.includes('password')) {
+              errorMsg = 'Password must be at least 6 characters';
+            } else {
+              errorMsg = signUpError;
+            }
           }
+          
+          throw new Error(errorMsg);
         }
-        
-        throw new Error(errorMsg);
+
+        console.log('✅ Account created, user ID:', signUpData.user.id);
+        userId = signUpData.user.id;
+        setUserEmail(data.email);
       }
-
-      console.log('✅ Account created, user ID:', signUpData.user.id);
-
-      const userId = signUpData.user.id;
 
       // 2. Save role
       await saveUserRole(
@@ -129,10 +158,14 @@ export function CreditBuyerForm({ onComplete }: CreditBuyerFormProps) {
       // 4. Generate tasks
       await generateTasksForRole(userId, 'CREDIT_BUYER');
 
-      // 5. Show email verification screen
-      console.log('✅ Account created! Showing email verification instructions');
-      setUserEmail(data.email);
-      setShowEmailVerification(true);
+      // 5. Handle completion based on user type
+      if (existingUser) {
+        console.log('✅ Existing user onboarding complete! Redirecting to dashboard');
+        onComplete();
+      } else {
+        console.log('✅ Account created! Showing email verification instructions');
+        setShowEmailVerification(true);
+      }
       setIsSubmitting(false);
     } catch (err) {
       console.error('Onboarding error:', err);

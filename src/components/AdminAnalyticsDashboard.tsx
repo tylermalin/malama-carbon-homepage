@@ -100,8 +100,16 @@ export function AdminAnalyticsDashboard({ onNavigate, onShowGetStarted, user }: 
   useEffect(() => {
     if (isAdmin) {
       loadAnalytics();
+      loadAllUsers();
+      loadUploadedImages();
     }
   }, [timeRange, isAdmin]);
+
+  useEffect(() => {
+    if (isAdmin && activeTab === 'users') {
+      loadAllUsers();
+    }
+  }, [activeTab, isAdmin]);
 
   const loadAnalytics = async () => {
     setIsLoading(true);
@@ -259,6 +267,171 @@ export function AdminAnalyticsDashboard({ onNavigate, onShowGetStarted, user }: 
       totalErrors: 0,
     });
     setIsLoading(false);
+  };
+
+  const loadAllUsers = async () => {
+    if (!supabase) return;
+
+    try {
+      // Get all users from auth.users (via profiles)
+      const { data: profilesData, error: profilesError } = await supabase
+        .from('profiles')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (profilesError) throw profilesError;
+
+      // Get user_profiles for additional info
+      const { data: userProfilesData } = await supabase
+        .from('user_profiles')
+        .select('*');
+
+      // Merge data
+      const mergedUsers = (profilesData || []).map(profile => {
+        const userProfile = (userProfilesData || []).find(up => up.user_id === profile.user_id);
+        return {
+          ...profile,
+          ...userProfile,
+          id: profile.user_id
+        };
+      });
+
+      setAllUsers(mergedUsers);
+      console.log('✅ Loaded users:', mergedUsers.length);
+    } catch (error) {
+      console.error('Error loading users:', error);
+      setAllUsers([]);
+    }
+  };
+
+  const loadUploadedImages = async () => {
+    if (!supabase) return;
+
+    try {
+      // List all files from profile-images bucket
+      const { data: profileImages, error: profileError } = await supabase
+        .storage
+        .from('profile-images')
+        .list();
+
+      if (profileError) throw profileError;
+
+      // List all files from logos bucket
+      const { data: logoImages, error: logoError } = await supabase
+        .storage
+        .from('logos')
+        .list();
+
+      if (logoError) throw logoError;
+
+      // Combine and format
+      const allImages = [
+        ...(profileImages || []).map(img => ({
+          ...img,
+          bucket: 'profile-images',
+          url: supabase.storage.from('profile-images').getPublicUrl(img.name).data.publicUrl
+        })),
+        ...(logoImages || []).map(img => ({
+          ...img,
+          bucket: 'logos',
+          url: supabase.storage.from('logos').getPublicUrl(img.name).data.publicUrl
+        }))
+      ];
+
+      setUploadedImages(allImages);
+      console.log('✅ Loaded images:', allImages.length);
+    } catch (error) {
+      console.error('Error loading images:', error);
+      setUploadedImages([]);
+    }
+  };
+
+  const deleteUser = async (userId: string) => {
+    if (!supabase || !confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      // Delete profile (cascade will handle related records)
+      const { error } = await supabase
+        .from('profiles')
+        .delete()
+        .eq('user_id', userId);
+
+      if (error) throw error;
+
+      alert('User deleted successfully');
+      loadAllUsers();
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      alert('Failed to delete user');
+    }
+  };
+
+  const deleteImage = async (bucketName: string, fileName: string) => {
+    if (!supabase || !confirm('Are you sure you want to delete this image?')) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .storage
+        .from(bucketName)
+        .remove([fileName]);
+
+      if (error) throw error;
+
+      alert('Image deleted successfully');
+      loadUploadedImages();
+    } catch (error) {
+      console.error('Error deleting image:', error);
+      alert('Failed to delete image');
+    }
+  };
+
+  const sendUserInvite = async () => {
+    if (!supabase || !inviteEmail) {
+      alert('Please enter an email address');
+      return;
+    }
+
+    try {
+      // Create a magic link invite (Supabase handles this)
+      const { data, error } = await supabase.auth.admin.inviteUserByEmail(inviteEmail, {
+        data: {
+          role: inviteRole,
+          invite_message: inviteMessage
+        }
+      });
+
+      if (error) throw error;
+
+      alert(`Invitation sent to ${inviteEmail}!`);
+      setInviteEmail('');
+      setInviteMessage('');
+    } catch (error: any) {
+      console.error('Error sending invite:', error);
+      // Fallback: create a record in a custom invites table
+      try {
+        const { error: insertError } = await supabase
+          .from('user_invites')
+          .insert({
+            email: inviteEmail,
+            role: inviteRole,
+            message: inviteMessage,
+            invited_by: user.email,
+            status: 'pending'
+          });
+
+        if (insertError) throw insertError;
+
+        alert(`Invitation record created for ${inviteEmail}. Note: Email may need to be sent manually.`);
+        setInviteEmail('');
+        setInviteMessage('');
+      } catch (fallbackError) {
+        alert('Failed to send invitation: ' + (error.message || 'Unknown error'));
+      }
+    }
   };
 
   const checkAdminStatus = async () => {
@@ -539,8 +712,62 @@ export function AdminAnalyticsDashboard({ onNavigate, onShowGetStarted, user }: 
         </div>
       </div>
 
+      {/* Tab Navigation */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex space-x-8">
+            <button
+              onClick={() => setActiveTab('analytics')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                activeTab === 'analytics'
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <BarChart3 className="w-4 h-4 inline-block mr-2" />
+              Analytics
+            </button>
+            <button
+              onClick={() => setActiveTab('users')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                activeTab === 'users'
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <Users className="w-4 h-4 inline-block mr-2" />
+              Users ({allUsers.length})
+            </button>
+            <button
+              onClick={() => setActiveTab('images')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                activeTab === 'images'
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <ImageIcon className="w-4 h-4 inline-block mr-2" />
+              Images ({uploadedImages.length})
+            </button>
+            <button
+              onClick={() => setActiveTab('invite')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                activeTab === 'invite'
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <UserPlus className="w-4 h-4 inline-block mr-2" />
+              Invite User
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {activeTab === 'analytics' && (
+          <>
         {/* Time Range Selector */}
         <div className="mb-8 flex items-center justify-between">
           <div className="flex items-center space-x-2">
@@ -797,6 +1024,304 @@ export function AdminAnalyticsDashboard({ onNavigate, onShowGetStarted, user }: 
             </div>
           </CardContent>
         </Card>
+        </>
+        )}
+
+        {/* Users Tab */}
+        {activeTab === 'users' && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex-1 max-w-md">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <input
+                    type="text"
+                    placeholder="Search users..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  />
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Filter className="w-5 h-5 text-gray-400" />
+                <select
+                  value={userFilter}
+                  onChange={(e) => setUserFilter(e.target.value)}
+                  className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                >
+                  <option value="all">All Users</option>
+                  <option value="PROJECT_DEVELOPER">Project Developers</option>
+                  <option value="TECHNOLOGY_DEVELOPER">Tech Developers</option>
+                  <option value="CREDIT_BUYER">Credit Buyers</option>
+                  <option value="PARTNER">Partners</option>
+                </select>
+              </div>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  <span className="flex items-center gap-2">
+                    <Users className="w-5 h-5 text-primary" />
+                    Registered Users ({allUsers.filter(u => 
+                      (userFilter === 'all' || u.role === userFilter) &&
+                      (searchTerm === '' || 
+                        u.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        u.org_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        u.email?.toLowerCase().includes(searchTerm.toLowerCase()))
+                    ).length})
+                  </span>
+                  <Button variant="outline" size="sm" onClick={loadAllUsers}>
+                    <RefreshCw className="w-4 h-4 mr-2" />
+                    Refresh
+                  </Button>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {allUsers.length === 0 ? (
+                  <p className="text-center text-muted-foreground py-8">No users found</p>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead className="bg-slate-50 border-b">
+                        <tr>
+                          <th className="text-left p-3 text-sm font-semibold text-gray-700">Name</th>
+                          <th className="text-left p-3 text-sm font-semibold text-gray-700">Organization</th>
+                          <th className="text-left p-3 text-sm font-semibold text-gray-700">Role</th>
+                          <th className="text-left p-3 text-sm font-semibold text-gray-700">Created</th>
+                          <th className="text-right p-3 text-sm font-semibold text-gray-700">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {allUsers
+                          .filter(u => 
+                            (userFilter === 'all' || u.role === userFilter) &&
+                            (searchTerm === '' || 
+                              u.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                              u.org_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                              u.email?.toLowerCase().includes(searchTerm.toLowerCase()))
+                          )
+                          .map((user) => (
+                          <tr key={user.id} className="border-b hover:bg-slate-50 transition-colors">
+                            <td className="p-3">
+                              <div>
+                                <p className="font-medium text-gray-900">{user.full_name || 'N/A'}</p>
+                                <p className="text-sm text-gray-500">{user.email || user.user_id}</p>
+                              </div>
+                            </td>
+                            <td className="p-3 text-gray-700">{user.org_name || user.company_name || '—'}</td>
+                            <td className="p-3">
+                              <Badge variant={
+                                user.role === 'PROJECT_DEVELOPER' ? 'default' :
+                                user.role === 'CREDIT_BUYER' ? 'secondary' :
+                                'outline'
+                              }>
+                                {user.role || 'N/A'}
+                              </Badge>
+                            </td>
+                            <td className="p-3 text-sm text-gray-600">
+                              {user.created_at ? new Date(user.created_at).toLocaleDateString() : '—'}
+                            </td>
+                            <td className="p-3 text-right">
+                              <div className="flex items-center justify-end gap-2">
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm"
+                                  onClick={() => {
+                                    const info = `User ID: ${user.id}\nName: ${user.full_name}\nEmail: ${user.email || 'N/A'}\nRole: ${user.role}\nOrganization: ${user.org_name || user.company_name || 'N/A'}\nCreated: ${user.created_at ? new Date(user.created_at).toLocaleString() : 'N/A'}`;
+                                    alert(info);
+                                  }}
+                                >
+                                  <Edit className="w-4 h-4" />
+                                </Button>
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm"
+                                  onClick={() => deleteUser(user.id)}
+                                  className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </Button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* Images Tab */}
+        {activeTab === 'images' && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">Uploaded Images</h2>
+              <Button variant="outline" size="sm" onClick={loadUploadedImages}>
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Refresh
+              </Button>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <ImageIcon className="w-5 h-5 text-primary" />
+                  Image Gallery ({uploadedImages.length} files)
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {uploadedImages.length === 0 ? (
+                  <p className="text-center text-muted-foreground py-8">No images uploaded yet</p>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {uploadedImages.map((image, index) => (
+                      <div key={index} className="border rounded-lg p-3 hover:border-primary transition-colors group">
+                        <div className="aspect-square bg-slate-100 rounded-lg mb-3 overflow-hidden flex items-center justify-center">
+                          <img 
+                            src={image.url} 
+                            alt={image.name}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).style.display = 'none';
+                              (e.target as HTMLImageElement).parentElement!.innerHTML = '<ImageIcon className="w-12 h-12 text-gray-400" />';
+                            }}
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <p className="text-sm font-medium text-gray-900 truncate" title={image.name}>
+                            {image.name}
+                          </p>
+                          <div className="flex items-center justify-between text-xs text-gray-500">
+                            <Badge variant="secondary" className="text-xs">
+                              {image.bucket}
+                            </Badge>
+                            <span>{image.metadata?.size ? `${(image.metadata.size / 1024).toFixed(1)}KB` : 'N/A'}</span>
+                          </div>
+                          <div className="flex items-center gap-2 pt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a 
+                              href={image.url} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="flex-1"
+                            >
+                              <Button variant="outline" size="sm" className="w-full text-xs">
+                                <ExternalLink className="w-3 h-3 mr-1" />
+                                View
+                              </Button>
+                            </a>
+                            <Button 
+                              variant="ghost" 
+                              size="sm"
+                              onClick={() => deleteImage(image.bucket, image.name)}
+                              className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                            >
+                              <Trash2 className="w-3 h-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* Invite User Tab */}
+        {activeTab === 'invite' && (
+          <div className="max-w-2xl mx-auto space-y-6">
+            <div className="text-center mb-8">
+              <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                <UserPlus className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">Invite New User</h2>
+              <p className="text-gray-600">Send an invitation to join Mālama Labs</p>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>User Details</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    value={inviteEmail}
+                    onChange={(e) => setInviteEmail(e.target.value)}
+                    placeholder="user@example.com"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    User Role *
+                  </label>
+                  <select
+                    value={inviteRole}
+                    onChange={(e) => setInviteRole(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  >
+                    <option value="PROJECT_DEVELOPER">Project Developer</option>
+                    <option value="TECHNOLOGY_DEVELOPER">Technology Developer / Builder</option>
+                    <option value="CREDIT_BUYER">Credit Buyer</option>
+                    <option value="PARTNER">Partner / Collaborator</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Personal Message (Optional)
+                  </label>
+                  <textarea
+                    value={inviteMessage}
+                    onChange={(e) => setInviteMessage(e.target.value)}
+                    placeholder="Add a personal note to your invitation..."
+                    rows={4}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                  />
+                </div>
+
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <p className="text-sm text-blue-800">
+                    <strong>Note:</strong> The invited user will receive an email with a magic link to set up their account 
+                    as a <strong>{inviteRole.split('_').join(' ')}</strong>.
+                  </p>
+                </div>
+
+                <Button 
+                  onClick={sendUserInvite}
+                  className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity"
+                  disabled={!inviteEmail}
+                >
+                  <Send className="w-5 h-5 mr-2" />
+                  Send Invitation
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Recent Invitations</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-center text-muted-foreground py-4 text-sm">
+                  Invitation history will appear here once the feature is fully configured with Supabase Auth.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </div>
     </div>
   );
