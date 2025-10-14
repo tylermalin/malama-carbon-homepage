@@ -4,17 +4,9 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Debug logging
-console.log('🔍 Supabase Config:', {
-  hasUrl: !!supabaseUrl,
-  hasKey: !!supabaseAnonKey,
-  url: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'NOT SET',
-  keyPrefix: supabaseAnonKey ? supabaseAnonKey.substring(0, 20) + '...' : 'NOT SET'
-});
-
+// Only warn if credentials are missing (removed verbose debug logging)
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('⚠️ Supabase credentials not found. Form submissions will fall back to mailto.');
-  console.warn('Make sure .env.local has VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY');
+  console.warn('⚠️ Supabase credentials not found. Some features may be limited.');
 }
 
 // Create Supabase client

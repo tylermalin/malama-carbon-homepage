@@ -1,16 +1,20 @@
-import { createClient } from '@supabase/supabase-js';
-import { projectId, publicAnonKey } from './info';
+// Import the shared Supabase client instead of creating a new one
+// This prevents "Multiple GoTrueClient instances" warning
+import { supabase as sharedSupabase } from '../../lib/supabaseClient';
+// Import project info for API endpoints
+import { projectId } from './info';
 
-// Create a singleton Supabase client
-export const supabase = createClient(
-  `https://${projectId}.supabase.co`,
-  publicAnonKey
-);
+// Re-export the shared client
+export const supabase = sharedSupabase;
 
 // Auth helper functions
 export const authHelpers = {
   async signUp(email: string, password: string, name: string) {
     try {
+      if (!supabase) {
+        throw new Error('Supabase client not initialized');
+      }
+      
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -28,12 +32,16 @@ export const authHelpers = {
       return { data, error: null };
     } catch (error) {
       console.error('Sign up error:', error);
-      return { data: null, error: error.message };
+      return { data: null, error: error instanceof Error ? error.message : 'Unknown error' };
     }
   },
 
   async signIn(email: string, password: string) {
     try {
+      if (!supabase) {
+        throw new Error('Supabase client not initialized');
+      }
+      
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
@@ -46,12 +54,16 @@ export const authHelpers = {
       return { data, error: null };
     } catch (error) {
       console.error('Sign in error:', error);
-      return { data: null, error: error.message };
+      return { data: null, error: error instanceof Error ? error.message : 'Unknown error' };
     }
   },
 
   async signOut() {
     try {
+      if (!supabase) {
+        throw new Error('Supabase client not initialized');
+      }
+      
       const { error } = await supabase.auth.signOut();
       
       if (error) {
@@ -61,12 +73,16 @@ export const authHelpers = {
       return { error: null };
     } catch (error) {
       console.error('Sign out error:', error);
-      return { error: error.message };
+      return { error: error instanceof Error ? error.message : 'Unknown error' };
     }
   },
 
   async getCurrentSession() {
     try {
+      if (!supabase) {
+        throw new Error('Supabase client not initialized');
+      }
+      
       const { data: { session }, error } = await supabase.auth.getSession();
       
       if (error) {
@@ -76,12 +92,16 @@ export const authHelpers = {
       return { session, error: null };
     } catch (error) {
       console.error('Get session error:', error);
-      return { session: null, error: error.message };
+      return { session: null, error: error instanceof Error ? error.message : 'Unknown error' };
     }
   },
 
   async resendConfirmationEmail(email: string) {
     try {
+      if (!supabase) {
+        throw new Error('Supabase client not initialized');
+      }
+      
       const { data, error } = await supabase.auth.resend({
         type: 'signup',
         email: email
@@ -94,7 +114,7 @@ export const authHelpers = {
       return { data, error: null };
     } catch (error) {
       console.error('Resend confirmation error:', error);
-      return { data: null, error: error.message };
+      return { data: null, error: error instanceof Error ? error.message : 'Unknown error' };
     }
   }
 };
