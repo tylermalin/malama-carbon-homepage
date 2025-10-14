@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Your Email Change - Mālama Labs</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; background: linear-gradient(135deg, #f5f7fa 0%, #e8f5e9 100%); padding: 40px 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #1B4332 0%, #0A3D3F 100%); padding: 40px 30px; text-align: center; }
+        .logo { width: 60px; height: 60px; background: linear-gradient(135deg, #52B788 0%, #95D5B2 100%); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: bold; color: white; }
+        .header h1 { color: white; font-size: 28px; margin-bottom: 10px; }
+        .header p { color: rgba(255,255,255,0.9); font-size: 16px; }
+        .content { padding: 40px 30px; }
+        .greeting { font-size: 20px; color: #1B4332; margin-bottom: 20px; font-weight: 600; }
+        .message { color: #555; font-size: 16px; margin-bottom: 30px; line-height: 1.8; }
+        .cta-button { display: inline-block; background: linear-gradient(135deg, #1B4332 0%, #0A3D3F 100%); color: white; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; box-shadow: 0 4px 15px rgba(27,67,50,0.3); transition: transform 0.2s, box-shadow 0.2s; }
+        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(27,67,50,0.4); }
+        .email-change-box { background: #f0fdf4; border: 2px solid #52B788; padding: 20px; margin: 30px 0; border-radius: 8px; }
+        .email-item { display: flex; align-items: center; margin: 10px 0; }
+        .email-label { font-weight: 600; color: #1B4332; min-width: 120px; }
+        .email-value { color: #0A3D3F; font-family: 'Courier New', monospace; background: white; padding: 8px 12px; border-radius: 4px; flex: 1; }
+        .warning-box { background: #fff9e6; border: 2px solid #ffd700; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .warning-box p { color: #856404; font-size: 14px; margin: 8px 0; }
+        .footer { background: #f8f9fa; padding: 30px; text-align: center; color: #666; font-size: 14px; border-top: 1px solid #e9ecef; }
+        .footer p { margin: 8px 0; }
+        .footer a { color: #52B788; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        .divider { height: 1px; background: linear-gradient(to right, transparent, #e0e0e0, transparent); margin: 30px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">M</div>
+            <h1>Confirm Email Change</h1>
+            <p>Verify your new email address</p>
+        </div>
+        
+        <div class="content">
+            <p class="greeting">Aloha!</p>
+            
+            <p class="message">
+                We received a request to change the email address for your Mālama Labs account. 
+                To complete this change, please confirm your new email address.
+            </p>
+            
+            <div class="email-change-box">
+                <div class="email-item">
+                    <span class="email-label">Old Email:</span>
+                    <span class="email-value">{{ .Email }}</span>
+                </div>
+                <div style="text-align: center; margin: 15px 0;">
+                    <span style="font-size: 24px; color: #52B788;">↓</span>
+                </div>
+                <div class="email-item">
+                    <span class="email-label">New Email:</span>
+                    <span class="email-value">{{ .NewEmail }}</span>
+                </div>
+            </div>
+            
+            <p class="message">
+                Click the button below to confirm this change and start using your new email address to sign in.
+            </p>
+            
+            <div style="text-align: center;">
+                <a href="{{ .ConfirmationURL }}" class="cta-button">
+                    ✅ Confirm New Email
+                </a>
+            </div>
+            
+            <div class="warning-box">
+                <p><strong>⚠️ Important Security Notice:</strong></p>
+                <p>• If you didn't request this email change, <strong>do not click the button above</strong>.</p>
+                <p>• Contact us immediately at <a href="mailto:aloha@malamalabs.com" style="color: #52B788;">aloha@malamalabs.com</a></p>
+                <p>• This link expires in 24 hours for your security.</p>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <p style="color: #666; font-size: 14px; text-align: center;">
+                After confirmation, you'll use your new email address to sign in. 
+                Your account data and settings will remain unchanged.
+            </p>
+            
+            <p style="color: #999; font-size: 12px; text-align: center; margin-top: 20px;">
+                Having trouble? Copy and paste this link into your browser:<br>
+                <span style="color: #52B788; word-break: break-all;">{{ .ConfirmationURL }}</span>
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Mālama Labs Inc.</strong></p>
+            <p>505 E Kuiaha Rd, Haiku, HI 96708</p>
+            <p style="margin-top: 15px;">
+                Questions? <a href="mailto:aloha@malamalabs.com">aloha@malamalabs.com</a>
+            </p>
+            <p style="margin-top: 15px; font-size: 12px; color: #999;">
+                <a href="https://www.malamalabs.com/privacy" style="color: #999;">Privacy Policy</a> • 
+                <a href="https://www.malamalabs.com/terms" style="color: #999;">Terms of Use</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+

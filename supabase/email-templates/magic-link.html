@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In to Mālama Labs</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; background: linear-gradient(135deg, #f5f7fa 0%, #e8f5e9 100%); padding: 40px 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #1B4332 0%, #0A3D3F 100%); padding: 40px 30px; text-align: center; }
+        .logo { width: 60px; height: 60px; background: linear-gradient(135deg, #52B788 0%, #95D5B2 100%); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: bold; color: white; }
+        .header h1 { color: white; font-size: 28px; margin-bottom: 10px; }
+        .header p { color: rgba(255,255,255,0.9); font-size: 16px; }
+        .content { padding: 40px 30px; }
+        .greeting { font-size: 20px; color: #1B4332; margin-bottom: 20px; font-weight: 600; }
+        .message { color: #555; font-size: 16px; margin-bottom: 30px; line-height: 1.8; }
+        .cta-button { display: inline-block; background: linear-gradient(135deg, #1B4332 0%, #0A3D3F 100%); color: white; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; box-shadow: 0 4px 15px rgba(27,67,50,0.3); transition: transform 0.2s, box-shadow 0.2s; }
+        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(27,67,50,0.4); }
+        .info-box { background: #f0fdf4; border-left: 4px solid #52B788; padding: 20px; margin: 30px 0; border-radius: 8px; }
+        .info-box p { color: #1B4332; font-size: 14px; margin: 0; }
+        .footer { background: #f8f9fa; padding: 30px; text-align: center; color: #666; font-size: 14px; border-top: 1px solid #e9ecef; }
+        .footer p { margin: 8px 0; }
+        .footer a { color: #52B788; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        .divider { height: 1px; background: linear-gradient(to right, transparent, #e0e0e0, transparent); margin: 30px 0; }
+        .security-note { background: #fff9e6; border: 1px solid #ffd700; border-radius: 8px; padding: 15px; margin: 20px 0; }
+        .security-note p { color: #856404; font-size: 13px; margin: 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">M</div>
+            <h1>Sign In to Mālama Labs</h1>
+            <p>Your secure magic link is ready</p>
+        </div>
+        
+        <div class="content">
+            <p class="greeting">Aloha!</p>
+            
+            <p class="message">
+                You requested a magic link to sign in to your Mālama Labs account. Click the button below to securely access your dashboard.
+            </p>
+            
+            <div style="text-align: center;">
+                <a href="{{ .ConfirmationURL }}" class="cta-button">
+                    🔐 Sign In Securely
+                </a>
+            </div>
+            
+            <div class="info-box">
+                <p><strong>Why magic links?</strong></p>
+                <p>Magic links provide a secure, passwordless way to access your account. No need to remember complex passwords!</p>
+            </div>
+            
+            <div class="security-note">
+                <p><strong>⏰ This link expires in 1 hour</strong> for your security. If it expires, simply request a new one.</p>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <p style="color: #666; font-size: 14px; text-align: center;">
+                If you didn't request this magic link, you can safely ignore this email. 
+                Your account remains secure.
+            </p>
+            
+            <p style="color: #999; font-size: 12px; text-align: center; margin-top: 20px;">
+                Having trouble? Copy and paste this link into your browser:<br>
+                <span style="color: #52B788; word-break: break-all;">{{ .ConfirmationURL }}</span>
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Mālama Labs Inc.</strong></p>
+            <p>505 E Kuiaha Rd, Haiku, HI 96708</p>
+            <p style="margin-top: 15px;">
+                Questions? <a href="mailto:aloha@malamalabs.com">aloha@malamalabs.com</a>
+            </p>
+            <p style="margin-top: 15px; font-size: 12px; color: #999;">
+                <a href="https://www.malamalabs.com/privacy" style="color: #999;">Privacy Policy</a> • 
+                <a href="https://www.malamalabs.com/terms" style="color: #999;">Terms of Use</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+
