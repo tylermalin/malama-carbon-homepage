@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'motion/react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
@@ -13,7 +14,7 @@ const audiences = [
     delay: 0.1
   },
   {
-    title: "Developers",
+    title: "Technology Developers / Builders",
     description: "Build tools on our APIs",
     detail: "Access comprehensive APIs for carbon measurement, verification, and trading. Create innovative climate solutions with our developer-friendly platform.",
     icon: Code,
@@ -29,7 +30,7 @@ const audiences = [
     delay: 0.3
   },
   {
-    title: "Partners",
+    title: "Partners / Collaborators",
     description: "Help us scale",
     detail: "Join our network of technology partners, research institutions, and climate organizations to accelerate global carbon removal.",
     icon: Handshake,

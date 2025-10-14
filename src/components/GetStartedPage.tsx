@@ -102,7 +102,7 @@ const userTypes = [
   },
   {
     id: 'developer' as UserType,
-    title: 'Developer',
+    title: 'Technology Developer / Builder',
     description: 'Build tools on our APIs for carbon measurement and trading',
     icon: Code,
     color: 'bg-secondary',
@@ -118,7 +118,7 @@ const userTypes = [
   },
   {
     id: 'partner' as UserType,
-    title: 'Partner',
+    title: 'Partner / Collaborator',
     description: 'Join our network to scale global carbon removal initiatives',
     icon: Handshake,
     color: 'bg-primary',

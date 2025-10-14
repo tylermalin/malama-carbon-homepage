@@ -97,7 +97,7 @@ const userTypes: UserType[] = [
   },
   {
     id: 'developers',
-    title: 'Developers',
+    title: 'Technology Developers / Builders',
     headline: 'Build tools on our APIs',
     subheadline: 'Access comprehensive APIs for carbon measurement, verification, and trading. Create innovative climate solutions on our open platform.',
     icon: Code,
@@ -195,7 +195,7 @@ const userTypes: UserType[] = [
   },
   {
     id: 'partners',
-    title: 'Partners',
+    title: 'Partners / Collaborators',
     headline: 'Help us scale',
     subheadline: 'Join our network of technology providers, research institutions, and climate organizations accelerating global carbon removal.',
     icon: Handshake,
