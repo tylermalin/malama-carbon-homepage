@@ -7,15 +7,13 @@ import { Button } from '../../ui/button';
 import { Input } from '../../ui/input';
 import { Label } from '../../ui/label';
 import { Textarea } from '../../ui/textarea';
-import { Checkbox } from '../../ui/checkbox';
 import { Alert, AlertDescription } from '../../ui/alert';
-import { Loader2, Code, ArrowRight, CheckCircle2 } from 'lucide-react';
-import { EmailVerificationSuccess } from '../EmailVerificationSuccess';
+import { Loader2, Code, ArrowRight, CheckCircle2, X } from 'lucide-react';
 import { 
-  technologyDeveloperSchema, 
-  TechnologyDeveloperFormData,
+  technologyDeveloperQuestionnaireSchema, 
+  TechnologyDeveloperQuestionnaireData,
   technologyDeveloperLabels 
-} from '../../../schemas/onboarding/technologyDeveloper';
+} from '../../../schemas/onboarding/technologyDeveloperQuestionnaire';
 import { 
   saveUserRole, 
   saveOnboardingAnswers, 
@@ -32,10 +30,10 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState(1);
-  const [showEmailVerification, setShowEmailVerification] = useState(false);
-  const [userEmail, setUserEmail] = useState<string>('');
   const [existingUser, setExistingUser] = useState<{ id: string; email: string } | null>(null);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [techStack, setTechStack] = useState<string[]>([]);
+  const [techStackInput, setTechStackInput] = useState('');
   
   const {
     register,
@@ -44,33 +42,33 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
     watch,
     setValue,
     control
-  } = useForm<TechnologyDeveloperFormData>({
-    resolver: zodResolver(technologyDeveloperSchema),
+  } = useForm<TechnologyDeveloperQuestionnaireData>({
+    resolver: zodResolver(technologyDeveloperQuestionnaireSchema),
     defaultValues: {
       integration_types: [],
-      stack: [],
-      accept_terms: false
+      stack: []
     }
   });
 
-  // Check if user is already logged in
+  // Check if user is logged in
   React.useEffect(() => {
-    async function checkExistingSession() {
+    async function checkAuth() {
       try {
         const currentUser = await authHelpers.getCurrentUser();
         if (currentUser) {
-          console.log('✅ User already logged in:', currentUser.email);
-          setExistingUser({ id: currentUser.id, email: currentUser.email });
-          setUserEmail(currentUser.email);
-          setStep(2); // Skip to questionnaire
+          console.log('✅ User logged in:', currentUser.email);
+          setExistingUser({ id: currentUser.id, email: currentUser.email || '' });
+        } else {
+          setError('Please sign in to complete the questionnaire');
         }
       } catch (err) {
-        console.log('No existing session');
+        console.error('Auth check failed:', err);
+        setError('Please sign in to continue');
       } finally {
         setIsCheckingAuth(false);
       }
     }
-    checkExistingSession();
+    checkAuth();
   }, []);
 
   const integrationTypes = watch('integration_types') || [];
@@ -83,86 +81,59 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
     setValue('integration_types', updated);
   };
 
-  async function onSubmit(data: TechnologyDeveloperFormData) {
+  const addTechStack = () => {
+    if (techStackInput.trim() && !techStack.includes(techStackInput.trim())) {
+      const updated = [...techStack, techStackInput.trim()];
+      setTechStack(updated);
+      setValue('stack', updated);
+      setTechStackInput('');
+    }
+  };
+
+  const removeTechStack = (item: string) => {
+    const updated = techStack.filter(t => t !== item);
+    setTechStack(updated);
+    setValue('stack', updated);
+  };
+
+  async function onSubmit(data: TechnologyDeveloperQuestionnaireData) {
+    console.log('🎯 Questionnaire submitted!', { data });
     setIsSubmitting(true);
     setError(null);
 
     try {
-      let userId: string;
-      
-      // If user is already logged in, use their existing account
-      if (existingUser) {
-        console.log('✅ Using existing logged-in user:', existingUser.email);
-        userId = existingUser.id;
-      } else {
-        console.log('🚀 Starting signup with:', { email: data.email, name: data.project_name });
-        
-        // 1. Create account
-        const { data: signUpData, error: signUpError } = await authHelpers.signUp(
-          data.email,
-          data.password,
-          data.project_name
-        );
-
-        console.log('📋 Sign up result:', { data: signUpData, error: signUpError });
-
-        if (signUpError || !signUpData?.user) {
-          console.error('❌ Sign up failed:', signUpError);
-        
-        // Provide user-friendly error messages
-        let errorMsg = 'Failed to create account';
-        if (signUpError) {
-          const errorStr = signUpError.toLowerCase();
-          if (errorStr.includes('rate') || errorStr.includes('too many')) {
-            errorMsg = 'Please wait a moment before trying again (rate limit)';
-          } else if (errorStr.includes('already registered') || errorStr.includes('already exists')) {
-            errorMsg = 'This email is already registered. Please sign in instead.';
-          } else if (errorStr.includes('invalid email')) {
-            errorMsg = 'Please enter a valid email address';
-          } else if (errorStr.includes('password')) {
-            errorMsg = 'Password must be at least 6 characters';
-          } else {
-            errorMsg = signUpError;
-          }
-        }
-        
-        throw new Error(errorMsg);
-        }
-
-        console.log('✅ Account created, user ID:', signUpData.user.id);
-        userId = signUpData.user.id;
-        setUserEmail(data.email);
+      if (!existingUser) {
+        throw new Error('You must be logged in to complete the questionnaire');
       }
 
-      // 2. Save role
-      await saveUserRole(
+      const userId = existingUser.id;
+      console.log('✅ Saving questionnaire for user:', existingUser.email);
+
+      // Save role
+      const roleResult = await saveUserRole(
         userId,
         'TECHNOLOGY_DEVELOPER',
-        data.project_name,
-        data.org_name
+        existingUser.email?.split('@')[0] || 'User',
+        data.org_name || data.project_name
       );
+      if (!roleResult.success) console.warn('Failed to save role:', roleResult.error);
 
-      // 3. Save answers
-      await saveOnboardingAnswers(
-        userId,
-        'TECHNOLOGY_DEVELOPER',
-        data
-      );
+      // Save answers
+      const answersResult = await saveOnboardingAnswers(userId, 'TECHNOLOGY_DEVELOPER', data);
+      if (!answersResult.success) console.warn('Failed to save answers:', answersResult.error);
 
-      // 4. Generate tasks
-      await generateTasksForRole(userId, 'TECHNOLOGY_DEVELOPER');
+      // Generate tasks
+      const tasksResult = await generateTasksForRole(userId, 'TECHNOLOGY_DEVELOPER');
+      if (!tasksResult.success) console.warn('Failed to generate tasks:', tasksResult.error);
 
-      // 5. Mark questionnaire as completed
-      await markQuestionnaireComplete(userId, 'TECHNOLOGY_DEVELOPER');
+      // Mark questionnaire complete
+      const completeResult = await markQuestionnaireComplete(userId, 'TECHNOLOGY_DEVELOPER');
+      if (!completeResult.success) console.warn('Failed to mark questionnaire complete:', completeResult.error);
+      else console.log('✅ Questionnaire marked as complete!');
 
-      // 6. Handle completion based on user type
-      if (existingUser) {
-        console.log('✅ Existing user onboarding complete! Redirecting to dashboard');
-        onComplete();
-      } else {
-        console.log('✅ Account created! Showing email verification instructions');
-        setShowEmailVerification(true);
-      }
+      console.log('✅ Questionnaire complete! Redirecting to dashboard');
+      console.log('📊 Role added to profile. Dashboard will refresh to show updates.');
+      onComplete();
       setIsSubmitting(false);
     } catch (err) {
       console.error('Onboarding error:', err);
@@ -171,9 +142,16 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
     }
   }
 
-  // Show email verification success screen
-  if (showEmailVerification) {
-    return <EmailVerificationSuccess email={userEmail} onContinue={onComplete} />;
+  // Show loading state while checking authentication
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 py-12 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -189,10 +167,10 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
             <Code className="w-8 h-8 text-slate-900" />
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Technology Developer Registration
+            Technology Developer Questionnaire
           </h1>
           <p className="text-gray-600">
-            Build with Mālama APIs and smart contracts
+            Tell us about your integration needs
           </p>
         </motion.div>
 
@@ -208,8 +186,8 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
             </div>
           </div>
           <div className="flex items-center justify-between mt-2 text-xs text-gray-600">
+            <span>Use Case & Integration</span>
             <span>Project Details</span>
-            <span>Account</span>
           </div>
         </div>
 
@@ -220,30 +198,37 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
         )}
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* Step 1: Project Details */}
+          {/* Step 1: Use Case & Integration */}
           {step === 1 && (
             <motion.div
+              key="step1"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
             >
               <Card>
                 <CardHeader>
-                  <CardTitle>Tell us about your project</CardTitle>
+                  <CardTitle>Use Case & Integration Needs</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   {/* Use Case */}
                   <div>
-                    <Label htmlFor="use_case">Primary Use Case *</Label>
-                    <select
-                      id="use_case"
-                      {...register('use_case')}
-                      className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                    >
-                      <option value="">Select use case...</option>
+                    <Label>Primary Use Case *</Label>
+                    <div className="grid grid-cols-1 gap-2 mt-3">
                       {Object.entries(technologyDeveloperLabels.use_case).map(([value, label]) => (
-                        <option key={value} value={value}>{label}</option>
+                        <label key={value} className="relative">
+                          <input
+                            type="radio"
+                            value={value}
+                            {...register('use_case')}
+                            className="peer sr-only"
+                          />
+                          <div className="p-4 border-2 border-gray-800 rounded-lg cursor-pointer hover:bg-gray-100 peer-checked:bg-gray-800 peer-checked:border-gray-800 transition-all">
+                            <p className="text-sm font-medium text-gray-900 peer-checked:text-white">{label}</p>
+                          </div>
+                        </label>
                       ))}
-                    </select>
+                    </div>
                     {errors.use_case && (
                       <p className="text-sm text-red-600 mt-1">{errors.use_case.message}</p>
                     )}
@@ -251,20 +236,21 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
 
                   {/* Integration Types */}
                   <div>
-                    <Label>Integration Types *</Label>
-                    <p className="text-sm text-gray-600 mb-2">Select all that apply</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <Label>Integration Types * (Select all that apply)</Label>
+                    <div className="grid grid-cols-2 gap-3 mt-3">
                       {Object.entries(technologyDeveloperLabels.integration_types).map(([value, label]) => (
-                        <div key={value} className="flex items-center">
-                          <Checkbox
-                            id={`integration-${value}`}
-                            checked={integrationTypes.includes(value as any)}
-                            onCheckedChange={() => toggleIntegrationType(value)}
-                          />
-                          <label htmlFor={`integration-${value}`} className="ml-2 text-sm cursor-pointer">
-                            {label}
-                          </label>
-                        </div>
+                        <button
+                          key={value}
+                          type="button"
+                          onClick={() => toggleIntegrationType(value)}
+                          className={`p-3 border-2 rounded-lg text-left transition-all ${
+                            integrationTypes.includes(value as any)
+                              ? 'border-gray-800 bg-gray-800 text-white'
+                              : 'border-gray-800 text-gray-800 hover:bg-gray-100'
+                          }`}
+                        >
+                          <p className={`text-sm font-medium ${integrationTypes.includes(value as any) ? 'text-white' : 'text-gray-900'}`}>{label}</p>
+                        </button>
                       ))}
                     </div>
                     {errors.integration_types && (
@@ -272,13 +258,66 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
                     )}
                   </div>
 
+                  {/* Environment Preference */}
+                  <div>
+                    <Label>Preferred Environment *</Label>
+                    <div className="grid grid-cols-1 gap-2 mt-3">
+                      {Object.entries(technologyDeveloperLabels.env).map(([value, label]) => (
+                        <label key={value} className="relative">
+                          <input
+                            type="radio"
+                            value={value}
+                            {...register('env')}
+                            className="peer sr-only"
+                          />
+                          <div className="p-3 border-2 border-gray-800 rounded-lg cursor-pointer hover:bg-gray-100 peer-checked:bg-gray-800 peer-checked:border-gray-800 transition-all">
+                            <p className="text-sm font-medium text-gray-900 peer-checked:text-white">{label}</p>
+                          </div>
+                        </label>
+                      ))}
+                    </div>
+                    {errors.env && (
+                      <p className="text-sm text-red-600 mt-1">{errors.env.message}</p>
+                    )}
+                  </div>
+
+                  <div className="flex justify-end">
+                    <Button
+                      type="button"
+                      onClick={() => setStep(2)}
+                      variant="outline"
+                      className="border-2 border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white"
+                    >
+                      Next
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+
+          {/* Step 2: Project Details */}
+          {step === 2 && (
+            <motion.div
+              key="step2"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+            >
+              <Card>
+                <CardHeader>
+                  <CardTitle>Project Details</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
                   {/* Project Name */}
                   <div>
                     <Label htmlFor="project_name">Project Name *</Label>
                     <Input
                       id="project_name"
                       {...register('project_name')}
-                      placeholder="My Carbon Project"
+                      placeholder="My Carbon MRV Platform"
+                      className="mt-1"
                     />
                     {errors.project_name && (
                       <p className="text-sm text-red-600 mt-1">{errors.project_name.message}</p>
@@ -291,26 +330,52 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
                     <Input
                       id="org_name"
                       {...register('org_name')}
-                      placeholder="Your Company"
+                      placeholder="Your Company Inc."
+                      className="mt-1"
                     />
                   </div>
 
-                  {/* Environment */}
+                  {/* Tech Stack */}
                   <div>
-                    <Label htmlFor="env">Preferred Environment *</Label>
-                    <select
-                      id="env"
-                      {...register('env')}
-                      className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                    >
-                      <option value="">Select environment...</option>
-                      {Object.entries(technologyDeveloperLabels.env).map(([value, label]) => (
-                        <option key={value} value={value}>{label}</option>
-                      ))}
-                    </select>
-                    {errors.env && (
-                      <p className="text-sm text-red-600 mt-1">{errors.env.message}</p>
-                    )}
+                    <Label htmlFor="stack">Tech Stack (Optional)</Label>
+                    <div className="mt-2 space-y-2">
+                      <div className="flex gap-2">
+                        <Input
+                          id="stack"
+                          value={techStackInput}
+                          onChange={(e) => setTechStackInput(e.target.value)}
+                          placeholder="e.g., React, Node.js, PostgreSQL"
+                          onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                              e.preventDefault();
+                              addTechStack();
+                            }
+                          }}
+                        />
+                        <Button type="button" onClick={addTechStack} variant="outline">
+                          Add
+                        </Button>
+                      </div>
+                      {techStack.length > 0 && (
+                        <div className="flex flex-wrap gap-2">
+                          {techStack.map((tech, idx) => (
+                            <span
+                              key={idx}
+                              className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                            >
+                              {tech}
+                              <button
+                                type="button"
+                                onClick={() => removeTechStack(tech)}
+                                className="hover:text-blue-900"
+                              >
+                                <X className="w-3 h-3" />
+                              </button>
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   {/* Description */}
@@ -319,131 +384,36 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
                     <Textarea
                       id="description"
                       {...register('description')}
-                      placeholder="Tell us more about what you're building..."
-                      rows={4}
+                      placeholder="Tell us about your project and what you're building..."
+                      className="mt-1 h-24"
+                      maxLength={1000}
                     />
-                    {errors.description && (
-                      <p className="text-sm text-red-600 mt-1">{errors.description.message}</p>
-                    )}
+                    <p className="text-xs text-gray-500 mt-1">
+                      Max 1000 characters
+                    </p>
                   </div>
 
-                  <Button
-                    type="button"
-                    onClick={() => setStep(2)}
-                    className="w-full bg-gradient-to-r from-blue-500 to-indigo-600"
-                  >
-                    Continue
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </Button>
-                </CardContent>
-              </Card>
-            </motion.div>
-          )}
-
-          {/* Step 2: Account */}
-          {step === 2 && (
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-            >
-              <Card>
-                <CardHeader>
-                  <CardTitle>Create Your Account</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  {/* Email */}
-                  <div>
-                    <Label htmlFor="email">Email Address *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      {...register('email')}
-                      placeholder="developer@example.com"
-                    />
-                    {errors.email && (
-                      <p className="text-sm text-red-600 mt-1">{errors.email.message}</p>
-                    )}
-                  </div>
-
-                  {/* Password */}
-                  <div>
-                    <Label htmlFor="password">Password *</Label>
-                    <Input
-                      id="password"
-                      type="password"
-                      {...register('password')}
-                      placeholder="Min. 8 characters"
-                    />
-                    {errors.password && (
-                      <p className="text-sm text-red-600 mt-1">{errors.password.message}</p>
-                    )}
-                  </div>
-
-                  {/* Password Confirm */}
-                  <div>
-                    <Label htmlFor="password_confirm">Confirm Password *</Label>
-                    <Input
-                      id="password_confirm"
-                      type="password"
-                      {...register('password_confirm')}
-                      placeholder="Re-enter password"
-                    />
-                    {errors.password_confirm && (
-                      <p className="text-sm text-red-600 mt-1">{errors.password_confirm.message}</p>
-                    )}
-                  </div>
-
-                  {/* Terms */}
-                  <div className="flex items-start">
-                    <Controller
-                      name="accept_terms"
-                      control={control}
-                      render={({ field }) => (
-                        <Checkbox
-                          id="accept_terms"
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      )}
-                    />
-                    <label htmlFor="accept_terms" className="ml-2 text-sm">
-                      I agree to the{' '}
-                      <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                        Terms of Service
-                      </a>
-                      {' '}and{' '}
-                      <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                        Privacy Policy
-                      </a>
-                    </label>
-                  </div>
-                  {errors.accept_terms && (
-                    <p className="text-sm text-red-600">{errors.accept_terms.message}</p>
-                  )}
-
-                  <div className="flex gap-4">
+                  <div className="flex justify-between pt-4">
                     <Button
                       type="button"
                       variant="outline"
                       onClick={() => setStep(1)}
-                      className="flex-1"
-                      disabled={isSubmitting}
                     >
                       Back
                     </Button>
                     <Button
                       type="submit"
-                      variant="outline"
-                      className="flex-1 border-2 border-slate-900 text-slate-900 bg-transparent hover:bg-slate-900 hover:text-white transition-all duration-300"
                       disabled={isSubmitting}
+                      variant="outline"
+                      className="border-2 border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white"
                     >
                       {isSubmitting ? (
                         <>
-                          <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                          Creating Account...
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Completing...
                         </>
                       ) : (
-                        'Complete Registration'
+                        'Complete Questionnaire'
                       )}
                     </Button>
                   </div>
@@ -456,4 +426,3 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
     </div>
   );
 }
-

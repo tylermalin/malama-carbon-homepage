@@ -17,7 +17,7 @@ import {
   Zap,
   Leaf
 } from 'lucide-react';
-import malamaLogo from '../assets/malamalabbs.png';
+const MALAMA_LOGO_URL = 'https://fykjijdixtcgjavidmve.supabase.co/storage/v1/object/public/website-assets/logos/logo.png';
 
 // Interactive components
 import PortraitPopover from './PortraitPopover';
@@ -289,7 +289,7 @@ export function UnifiedCarbonTimeline({
                 transition={{ duration: 0.8 }}
               >
                 <img
-                  src={malamaLogo}
+                  src={MALAMA_LOGO_URL}
                   alt="Mālama Labs"
                   className="h-32 w-auto mx-auto"
                 />

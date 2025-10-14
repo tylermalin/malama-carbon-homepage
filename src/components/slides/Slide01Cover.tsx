@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { SlideLayout, SlideHeadline, SlideSubtitle } from './SlideLayout';
-import malamaLogo from '../../assets/malamalabbs.png';
+
+const MALAMA_LOGO_URL = 'https://fykjijdixtcgjavidmve.supabase.co/storage/v1/object/public/website-assets/logos/logo.png';
 
 export function Slide01Cover() {
   return (
@@ -14,7 +15,7 @@ export function Slide01Cover() {
           className="inline-block mb-12"
         >
           <img 
-            src={malamaLogo} 
+            src={MALAMA_LOGO_URL} 
             alt="Mālama Labs" 
             className="w-48 h-48 mx-auto object-contain"
           />

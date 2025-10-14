@@ -26,7 +26,8 @@ export function ScheduleCallCard() {
         <div className="space-y-2">
           <Button 
             onClick={handleScheduleClick}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+            variant="outline"
+            className="w-full border-2 border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white transition-all"
           >
             <Calendar className="w-4 h-4 mr-2" />
             Book Your Call

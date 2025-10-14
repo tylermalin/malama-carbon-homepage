@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { CheckCircle, ChevronRight, Globe, Shield, Zap, Leaf, ArrowRight, ExternalLink, Plus } from 'lucide-react';
-import malamaLogo from '../assets/malamalabbs.png';
+const MALAMA_LOGO_URL = 'https://fykjijdixtcgjavidmve.supabase.co/storage/v1/object/public/website-assets/logos/logo.png';
 
 interface ActIIITimelineProps {
   onPartnerWithMalama?: () => void;
@@ -114,7 +114,7 @@ export function ActIIITimeline({
             whileHover={{ scale: 1.05 }}
           >
             <img 
-              src={malamaLogo} 
+              src={MALAMA_LOGO_URL} 
               alt="Mālama Labs" 
               className="h-10 w-auto"
             />

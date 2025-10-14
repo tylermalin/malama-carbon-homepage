@@ -24,7 +24,8 @@ import { RequestAccessForm } from './RequestAccessForm';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
-import malamaLogo from '../assets/malamalabbs.png';
+
+const MALAMA_LOGO_URL = 'https://fykjijdixtcgjavidmve.supabase.co/storage/v1/object/public/website-assets/logos/logo.png';
 
 interface InvestorPageProps {
   onNavigate: (page: string) => void;
@@ -129,7 +130,7 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <img 
-                src={malamaLogo} 
+                src={MALAMA_LOGO_URL} 
                 alt="Mālama Labs" 
                 className="h-12 w-auto object-contain"
               />
@@ -149,87 +150,97 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
       </div>
 
       {/* Investment Introduction Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" style={{ marginTop: '100px' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
           <div className="bg-white rounded-xl border-2 border-emerald-500/20 p-8 shadow-lg mb-8">
+            {/* Logo and Title */}
+            <div className="flex items-center gap-4 mb-8">
+              <img 
+                src={MALAMA_LOGO_URL} 
+                alt="Mālama Labs" 
+                className="h-16 w-auto object-contain"
+              />
+              <h1 className="text-4xl font-bold text-gray-900">Mālama Labs Investor Portal</h1>
+            </div>
+
             <p className="text-lg text-slate-700 leading-relaxed mb-6">
               Mālama Labs is building the digital infrastructure for compliance-grade carbon markets. This secure investor portal provides authorized stakeholders with exclusive access to current fundraising details, company performance data, and key strategic materials. Our goal is to align mission-driven investors with the future of verifiable carbon removal—turning nature-based impact into investable, high-integrity climate assets.
             </p>
             
-            <div className="border-t border-slate-200 pt-6">
+            <div className="border-t border-slate-200 pt-6 mb-6">
               <p className="text-base text-slate-600 leading-relaxed">
                 Through a <span className="font-semibold text-primary">$1.2M SAFE round</span> at an <span className="font-semibold text-primary">$8M post-money valuation cap</span>, Mālama Labs is advancing its Universal dMRV platform, certification integrations (Puro.earth, Article 6.4), and Hawai'i-based carbon innovation projects. This portal includes the Executive Summary, Financials, and Data Room materials needed for due diligence and participation in the round.
               </p>
             </div>
-          </div>
 
-          {/* Key Investment Metrics */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card className="border-2 border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-xl transition-shadow">
-            <CardContent className="pt-6">
-              <div className="flex items-start justify-between mb-4">
-                <div className="p-3 rounded-xl bg-primary/10">
-                  <DollarSign className="w-6 h-6 text-primary" />
-                </div>
-                <Badge className="bg-primary/10 text-primary border-primary/20">
-                  Pre-Seed
-                </Badge>
-              </div>
-              <h3 className="text-3xl font-bold mb-1 text-primary">$1.2M</h3>
-              <p className="text-sm text-muted-foreground font-medium">SAFE Round</p>
-              <p className="text-xs text-muted-foreground mt-1">Raising</p>
-            </CardContent>
-          </Card>
-          <Card className="border-2 border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-xl transition-shadow">
-            <CardContent className="pt-6">
-              <div className="flex items-start justify-between mb-4">
-                <div className="p-3 rounded-xl bg-secondary/10">
-                  <Target className="w-6 h-6 text-secondary" />
-                </div>
-                <Badge className="bg-secondary/10 text-secondary border-secondary/20">
-                  Valuation
-                </Badge>
-              </div>
-              <h3 className="text-3xl font-bold mb-1 text-primary">$8M</h3>
-              <p className="text-sm text-muted-foreground font-medium">Valuation Cap</p>
-              <p className="text-xs text-muted-foreground mt-1">SAFE Terms</p>
-            </CardContent>
-          </Card>
-          <Card className="border-2 border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-xl transition-shadow">
-            <CardContent className="pt-6">
-              <div className="flex items-start justify-between mb-4">
-                <div className="p-3 rounded-xl bg-primary/10">
-                  <TrendingUp className="w-6 h-6 text-primary" />
-                </div>
-                <Badge className="bg-green-50 text-green-700 border-green-200">
-                  +20%
-                </Badge>
-              </div>
-              <h3 className="text-3xl font-bold mb-1 text-primary">20%</h3>
-              <p className="text-sm text-muted-foreground font-medium">Discount</p>
-              <p className="text-xs text-muted-foreground mt-1">Series Seed</p>
-            </CardContent>
-          </Card>
-          <Card className="border-2 border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-xl transition-shadow">
-            <CardContent className="pt-6">
-              <div className="flex items-start justify-between mb-4">
-                <div className="p-3 rounded-xl bg-secondary/10">
-                  <Users className="w-6 h-6 text-secondary" />
-                </div>
-                <Badge className="bg-blue-50 text-blue-700 border-blue-200">
-                  Growing
-                </Badge>
-              </div>
-              <h3 className="text-3xl font-bold mb-1 text-primary">12</h3>
-              <p className="text-sm text-muted-foreground font-medium">Team Members</p>
-              <p className="text-xs text-muted-foreground mt-1">Core Team</p>
-            </CardContent>
-          </Card>
-        </div>
+            {/* Key Investment Metrics */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <Card className="border-2 border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-xl transition-shadow">
+                <CardContent className="pt-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="p-3 rounded-xl bg-primary/10">
+                      <DollarSign className="w-6 h-6 text-primary" />
+                    </div>
+                    <Badge className="bg-primary/10 text-primary border-primary/20">
+                      Pre-Seed
+                    </Badge>
+                  </div>
+                  <h3 className="text-3xl font-bold mb-1 text-primary">$1.2M</h3>
+                  <p className="text-sm text-muted-foreground font-medium">SAFE Round</p>
+                  <p className="text-xs text-muted-foreground mt-1">Raising</p>
+                </CardContent>
+              </Card>
+              <Card className="border-2 border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-xl transition-shadow">
+                <CardContent className="pt-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="p-3 rounded-xl bg-secondary/10">
+                      <Target className="w-6 h-6 text-secondary" />
+                    </div>
+                    <Badge className="bg-secondary/10 text-secondary border-secondary/20">
+                      Valuation
+                    </Badge>
+                  </div>
+                  <h3 className="text-3xl font-bold mb-1 text-primary">$8M</h3>
+                  <p className="text-sm text-muted-foreground font-medium">Valuation Cap</p>
+                  <p className="text-xs text-muted-foreground mt-1">SAFE Terms</p>
+                </CardContent>
+              </Card>
+              <Card className="border-2 border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-xl transition-shadow">
+                <CardContent className="pt-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="p-3 rounded-xl bg-primary/10">
+                      <TrendingUp className="w-6 h-6 text-primary" />
+                    </div>
+                    <Badge className="bg-green-50 text-green-700 border-green-200">
+                      +20%
+                    </Badge>
+                  </div>
+                  <h3 className="text-3xl font-bold mb-1 text-primary">20%</h3>
+                  <p className="text-sm text-muted-foreground font-medium">Discount</p>
+                  <p className="text-xs text-muted-foreground mt-1">Series Seed</p>
+                </CardContent>
+              </Card>
+              <Card className="border-2 border-border/50 bg-card/80 backdrop-blur-sm hover:shadow-xl transition-shadow">
+                <CardContent className="pt-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="p-3 rounded-xl bg-secondary/10">
+                      <Users className="w-6 h-6 text-secondary" />
+                    </div>
+                    <Badge className="bg-blue-50 text-blue-700 border-blue-200">
+                      Growing
+                    </Badge>
+                  </div>
+                  <h3 className="text-3xl font-bold mb-1 text-primary">12</h3>
+                  <p className="text-sm text-muted-foreground font-medium">Team Members</p>
+                  <p className="text-xs text-muted-foreground mt-1">Core Team</p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
         </motion.div>
       </div>
 
@@ -777,6 +788,23 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
                         </CardContent>
                       </Card>
                     ))}
+                  </div>
+                </div>
+
+                {/* Download All Data Room Docs */}
+                <div className="mt-12 pt-8 border-t border-slate-200">
+                  <div className="text-center">
+                    <Button 
+                      size="lg"
+                      onClick={() => window.open('https://www.dropbox.com/scl/fo/4bcyctj65pjoylh4391ba/AHUpjuhlrFXY5a_PYqw2qV8?rlkey=q1nuwi1eso7lfjfhw8ddrl3r2&st=5dlyqb5r&dl=0', '_blank')}
+                      className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg"
+                    >
+                      <Download className="w-5 h-5 mr-3" />
+                      Download All Data Room Docs
+                    </Button>
+                    <p className="text-sm text-muted-foreground mt-3">
+                      Access the complete data room via Dropbox
+                    </p>
                   </div>
                 </div>
               </div>

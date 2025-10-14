@@ -170,6 +170,47 @@ export function ProfileEditor({ userId, userEmail, onProfileUpdate }: ProfileEdi
     setIsEditing(false);
   };
 
+  const toggleRole = async (role: string) => {
+    if (!supabase) return;
+
+    try {
+      const hasRole = userRoles.some(r => r.role === role);
+
+      if (hasRole) {
+        // Remove role
+        const { error } = await supabase
+          .from('user_roles')
+          .delete()
+          .eq('user_id', userId)
+          .eq('role', role);
+
+        if (error) throw error;
+        console.log(`✅ Removed role: ${role}`);
+      } else {
+        // Add role
+        const { error } = await supabase
+          .from('user_roles')
+          .insert({
+            user_id: userId,
+            role: role,
+            questionnaire_completed: false,
+            added_at: new Date().toISOString()
+          });
+
+        if (error) throw error;
+        console.log(`✅ Added role: ${role}`);
+      }
+
+      // Reload roles to reflect changes
+      await loadRoles();
+      onProfileUpdate?.(); // Notify dashboard to refresh
+
+    } catch (error: any) {
+      console.error('Error toggling role:', error);
+      alert(`Failed to ${userRoles.some(r => r.role === role) ? 'remove' : 'add'} role. ${error.message || ''}`);
+    }
+  };
+
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file || !supabase) return;
@@ -177,26 +218,69 @@ export function ProfileEditor({ userId, userEmail, onProfileUpdate }: ProfileEdi
     setIsUploading(true);
 
     try {
+      // ✅ CRITICAL: Verify auth session exists before upload
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      
+      if (sessionError || !session) {
+        console.error('❌ No active session found:', sessionError);
+        alert('You must be logged in to upload images. Please sign in again.');
+        setIsUploading(false);
+        return;
+      }
+      
+      console.log('✅ Auth session verified, user:', session.user.id);
+      
       const fileExt = file.name.split('.').pop();
+      // Simple flat structure - just userId-timestamp.ext
       const fileName = `${userId}-${Date.now()}.${fileExt}`;
-      const filePath = `${fileName}`;
+
+      console.log('📤 Attempting upload:', {
+        bucket: 'profile-images',
+        fileName,
+        fileSize: file.size,
+        fileType: file.type,
+        userId: session.user.id
+      });
 
       const { error: uploadError } = await supabase.storage
         .from('profile-images')
-        .upload(filePath, file, { upsert: true });
+        .upload(fileName, file, { upsert: true });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error('Upload error details:', {
+          message: uploadError.message,
+          error: uploadError.error,
+          statusCode: uploadError.statusCode,
+          full: uploadError
+        });
+        throw uploadError;
+      }
 
       const { data: { publicUrl } } = supabase.storage
         .from('profile-images')
-        .getPublicUrl(filePath);
+        .getPublicUrl(fileName);
 
       setEditedData({ ...editedData, profile_image_url: publicUrl });
       
-      console.log('✅ Image uploaded successfully');
-    } catch (error) {
-      console.error('❌ Error uploading image:', error);
-      alert('Failed to upload image. Please try again.');
+      console.log('✅ Image uploaded successfully to:', publicUrl);
+    } catch (error: any) {
+      console.error('❌ Error uploading image:', {
+        message: error?.message,
+        statusCode: error?.statusCode,
+        error: error?.error,
+        full: error
+      });
+      
+      let errorMessage = 'Failed to upload image. ';
+      if (error?.message) {
+        errorMessage += error.message;
+      } else if (error?.statusCode === 404) {
+        errorMessage += 'Storage bucket not found. Please run the setup SQL first.';
+      } else {
+        errorMessage += 'Please ensure the image is under 5MB and in JPEG, PNG, GIF, or WebP format.';
+      }
+      
+      alert(errorMessage);
     } finally {
       setIsUploading(false);
     }
@@ -312,7 +396,9 @@ export function ProfileEditor({ userId, userEmail, onProfileUpdate }: ProfileEdi
                   placeholder="John Doe"
                 />
               ) : (
-                <p className="mt-1 text-gray-900">{profileData.full_name || '—'}</p>
+                <p className="mt-1 text-gray-900">
+                  {profileData.full_name || <span className="text-gray-400 italic text-sm">Not set</span>}
+                </p>
               )}
             </div>
 
@@ -337,7 +423,9 @@ export function ProfileEditor({ userId, userEmail, onProfileUpdate }: ProfileEdi
                   placeholder="+1 (555) 123-4567"
                 />
               ) : (
-                <p className="mt-1 text-gray-900">{profileData.phone || '—'}</p>
+                <p className="mt-1 text-gray-900">
+                  {profileData.phone || <span className="text-gray-400 italic text-sm">Not set</span>}
+                </p>
               )}
             </div>
 
@@ -352,7 +440,9 @@ export function ProfileEditor({ userId, userEmail, onProfileUpdate }: ProfileEdi
                   placeholder="Lead person for projects"
                 />
               ) : (
-                <p className="mt-1 text-gray-900">{profileData.project_lead || '—'}</p>
+                <p className="mt-1 text-gray-900">
+                  {profileData.project_lead || <span className="text-gray-400 italic text-sm">Not set</span>}
+                </p>
               )}
             </div>
           </div>
@@ -375,7 +465,9 @@ export function ProfileEditor({ userId, userEmail, onProfileUpdate }: ProfileEdi
                 placeholder="Your Company LLC"
               />
             ) : (
-              <p className="mt-1 text-gray-900">{profileData.org_name || '—'}</p>
+              <p className="mt-1 text-gray-900">
+                {profileData.org_name || <span className="text-gray-400 italic text-sm">Not set</span>}
+              </p>
             )}
           </div>
 
@@ -390,7 +482,9 @@ export function ProfileEditor({ userId, userEmail, onProfileUpdate }: ProfileEdi
                 rows={4}
               />
             ) : (
-              <p className="mt-1 text-gray-900 whitespace-pre-wrap">{profileData.project_description || '—'}</p>
+              <p className="mt-1 text-gray-600 whitespace-pre-wrap">
+                {profileData.project_description || <span className="text-gray-400 italic text-sm">No description provided</span>}
+              </p>
             )}
           </div>
         </div>
@@ -402,8 +496,9 @@ export function ProfileEditor({ userId, userEmail, onProfileUpdate }: ProfileEdi
             Your Roles
           </h3>
           
+          {/* Current Roles */}
           {userRoles.length > 0 ? (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mb-4">
               {userRoles.map((userRole) => {
                 const Icon = roleIcons[userRole.role as keyof typeof roleIcons];
                 return (
@@ -422,8 +517,40 @@ export function ProfileEditor({ userId, userEmail, onProfileUpdate }: ProfileEdi
               })}
             </div>
           ) : (
-            <p className="text-sm text-gray-500">No roles selected yet. Select a role to get started.</p>
+            <p className="text-sm text-gray-500 mb-4">No roles selected yet. Click below to add a role.</p>
           )}
+
+          {/* Add/Remove Roles */}
+          <div className="border-t border-gray-200 pt-4">
+            <p className="text-xs text-gray-600 mb-3">Manage your roles:</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {Object.entries(roleLabels).map(([roleKey, roleLabel]) => {
+                const Icon = roleIcons[roleKey as keyof typeof roleIcons];
+                const hasRole = userRoles.some(r => r.role === roleKey);
+                
+                return (
+                  <button
+                    key={roleKey}
+                    onClick={() => toggleRole(roleKey)}
+                    className={`
+                      flex items-center gap-2 px-3 py-2 rounded-md border-2 transition-all text-left
+                      ${hasRole 
+                        ? 'border-primary bg-primary/5 text-primary hover:bg-primary/10' 
+                        : 'border-gray-200 bg-white hover:border-gray-300 text-gray-700'
+                      }
+                    `}
+                  >
+                    {Icon && <Icon className="w-4 h-4 flex-shrink-0" />}
+                    <span className="text-sm font-medium flex-1">{roleLabel}</span>
+                    {hasRole && <CheckCircle2 className="w-4 h-4 flex-shrink-0" />}
+                  </button>
+                );
+              })}
+            </div>
+            <p className="text-xs text-gray-500 mt-3 italic">
+              Click a role to add it to your profile. Click again to remove it.
+            </p>
+          </div>
         </div>
       </CardContent>
     </Card>

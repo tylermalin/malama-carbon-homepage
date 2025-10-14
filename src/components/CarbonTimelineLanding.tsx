@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from '../utils/motion';
 import { Button } from './ui/button';
 import { ArrowRight, Globe, BookOpen } from 'lucide-react';
-import malamaLogo from '../assets/malamalabbs.png';
+const MALAMA_LOGO_URL = 'https://fykjijdixtcgjavidmve.supabase.co/storage/v1/object/public/website-assets/logos/logo.png';
 
 interface CarbonTimelineLandingProps {
   onExploreTimeline?: () => void;
@@ -72,7 +72,7 @@ export function CarbonTimelineLanding({
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <img 
-              src={malamaLogo} 
+              src={MALAMA_LOGO_URL} 
               alt="Mālama Labs" 
               className="h-16 w-auto mx-auto mb-4"
             />

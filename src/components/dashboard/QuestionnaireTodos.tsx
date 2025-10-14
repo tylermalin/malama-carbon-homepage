@@ -85,8 +85,37 @@ export function QuestionnaireTodos({ userId, onNavigate }: QuestionnaireTodosPro
     }
   };
 
-  if (isLoading || userRoles.length === 0) {
+  if (isLoading) {
     return null;
+  }
+
+  // Show "Up To Date" message when all questionnaires are completed
+  if (userRoles.length === 0) {
+    return (
+      <div className="space-y-4">
+        <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+          <CheckCircle2 className="w-5 h-5 text-green-500" />
+          All Caught Up
+        </h2>
+        <Card className="border-green-200 bg-gradient-to-r from-green-50 to-emerald-50">
+          <CardContent className="p-6">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <CheckCircle2 className="w-6 h-6 text-green-600" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Up To Date
+                </h3>
+                <p className="text-sm text-gray-700">
+                  Your project team will notify you when final onboarding is available.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
   }
 
   return (
@@ -135,7 +164,8 @@ export function QuestionnaireTodos({ userId, onNavigate }: QuestionnaireTodosPro
                     </div>
                     <Button
                       onClick={() => onNavigate(path)}
-                      className="bg-orange-600 hover:bg-orange-700 text-white flex-shrink-0"
+                      variant="outline"
+                      className="border-2 border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white flex-shrink-0"
                     >
                       Complete
                       <ArrowRight className="w-4 h-4 ml-2" />

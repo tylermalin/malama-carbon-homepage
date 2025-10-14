@@ -157,7 +157,7 @@ export function ActIIPromiseTimeline({ onBackToActI, onNextAct }: ActIIPromiseTi
             whileHover={{ scale: 1.05 }}
           >
             <img 
-              src="/images/malama-logo.png"
+              src="https://fykjijdixtcgjavidmve.supabase.co/storage/v1/object/public/website-assets/logos/logo.png"
               alt="Mālama Labs" 
               className="h-10 w-auto"
             />

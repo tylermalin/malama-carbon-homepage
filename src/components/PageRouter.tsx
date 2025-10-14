@@ -223,6 +223,11 @@ export function PageRouter({
       );
     
     case 'getStarted':
+      // Redirect to simple signup instead of full onboarding
+      return <SignupPage onNavigate={navigateToSection} />;
+    
+    case 'getStarted_old':
+      // Old full onboarding page (kept for reference)
       return (
         <>
           <GetStartedPage 
@@ -744,16 +749,25 @@ export function PageRouter({
       return <RoleSelectionV2 onRoleSelect={handleRoleSelect} />;
     
     case 'onboardingV2ProjectDeveloper':
-      return <ProjectDeveloperForm onComplete={() => navigateToSection('dashboard')} />;
+      return <ProjectDeveloperForm onComplete={() => {
+        // Navigate to dashboard and reload to show updated data
+        window.location.href = '/dashboard';
+      }} />;
     
     case 'onboardingV2TechDeveloper':
-      return <TechnologyDeveloperForm onComplete={() => navigateToSection('dashboard')} />;
+      return <TechnologyDeveloperForm onComplete={() => {
+        window.location.href = '/dashboard';
+      }} />;
     
     case 'onboardingV2CreditBuyer':
-      return <CreditBuyerForm onComplete={() => navigateToSection('dashboard')} />;
+      return <CreditBuyerForm onComplete={() => {
+        window.location.href = '/dashboard';
+      }} />;
     
     case 'onboardingV2Partner':
-      return <PartnerForm onComplete={() => navigateToSection('dashboard')} />;
+      return <PartnerForm onComplete={() => {
+        window.location.href = '/dashboard';
+      }} />;
     
     case 'presentation':
       return (

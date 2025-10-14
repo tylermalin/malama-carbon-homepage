@@ -96,6 +96,25 @@ export const authHelpers = {
     }
   },
 
+  async getCurrentUser() {
+    try {
+      if (!supabase) {
+        throw new Error('Supabase client not initialized');
+      }
+      
+      const { data: { user }, error } = await supabase.auth.getUser();
+      
+      if (error) {
+        throw error;
+      }
+
+      return user;
+    } catch (error) {
+      console.error('Get user error:', error);
+      return null;
+    }
+  },
+
   async resendConfirmationEmail(email: string) {
     try {
       if (!supabase) {

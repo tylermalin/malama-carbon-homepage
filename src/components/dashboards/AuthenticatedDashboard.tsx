@@ -22,56 +22,51 @@ interface AuthenticatedDashboardProps {
  */
 export function AuthenticatedDashboard({ user }: AuthenticatedDashboardProps) {
   const handleNavigate = (page: string) => {
-    window.history.pushState({}, '', page === 'onboardingV2' ? '/onboarding/v2' : `/${page}`);
+    // Map page names to correct URL paths
+    const pageToPath: Record<string, string> = {
+      'onboardingV2': '/onboarding/v2',
+      'onboardingV2ProjectDeveloper': '/onboarding/v2/project-developer',
+      'onboardingV2TechDeveloper': '/onboarding/v2/technology-developer',
+      'onboardingV2CreditBuyer': '/onboarding/v2/credit-buyer',
+      'onboardingV2Partner': '/onboarding/v2/partner',
+      'dashboard': '/dashboard'
+    };
+    
+    const path = pageToPath[page] || `/${page}`;
+    window.history.pushState({}, '', path);
     window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header / Hero Section */}
-      <div className="bg-gradient-to-r from-primary to-secondary text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center"
-          >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Dashboard
-            </h1>
-            <p className="text-lg text-white/90 max-w-2xl mx-auto">
-              Track your projects, monitor carbon credits, and manage your carbon removal journey
-            </p>
-          </motion.div>
-        </div>
-      </div>
-
+    <div className="min-h-screen bg-gray-50">
       {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" style={{ marginTop: '200px' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
           {/* Welcome Message */}
-          <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+          <div className="mb-10">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
               Welcome, {user.name || user.email.split('@')[0]}! 👋
-            </h2>
+            </h1>
             <p className="text-lg text-gray-600">
               Your personalized dashboard is ready
             </p>
           </div>
           
           {/* Profile Completion Banner */}
-          <ProfileCompletionBanner 
-            userId={user.id}
-            userEmail={user.email}
-            onNavigate={handleNavigate}
-          />
+          <div className="mb-6">
+            <ProfileCompletionBanner 
+              userId={user.id}
+              userEmail={user.email}
+              onNavigate={handleNavigate}
+            />
+          </div>
           
           {/* Questionnaire Todos */}
-          <div className="mt-8">
+          <div className="mb-6">
             <QuestionnaireTodos 
               userId={user.id}
               onNavigate={handleNavigate}
@@ -79,7 +74,7 @@ export function AuthenticatedDashboard({ user }: AuthenticatedDashboardProps) {
           </div>
           
           {/* Profile Editor */}
-          <div className="mt-8">
+          <div className="mb-6">
             <ProfileEditor 
               userId={user.id}
               userEmail={user.email}
@@ -91,7 +86,7 @@ export function AuthenticatedDashboard({ user }: AuthenticatedDashboardProps) {
           </div>
 
           {/* Schedule Call Card */}
-          <div className="mt-8">
+          <div className="mb-6">
             <ScheduleCallCard />
           </div>
         </motion.div>

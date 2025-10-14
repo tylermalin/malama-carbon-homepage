@@ -10,12 +10,11 @@ import { Textarea } from '../../ui/textarea';
 import { Checkbox } from '../../ui/checkbox';
 import { Alert, AlertDescription } from '../../ui/alert';
 import { Loader2, Leaf, ArrowRight, CheckCircle2 } from 'lucide-react';
-import { EmailVerificationSuccess } from '../EmailVerificationSuccess';
 import { 
-  projectDeveloperSchema, 
-  ProjectDeveloperFormData,
+  projectDeveloperQuestionnaireSchema, 
+  ProjectDeveloperQuestionnaireData,
   projectDeveloperLabels 
-} from '../../../schemas/onboarding/projectDeveloper';
+} from '../../../schemas/onboarding/projectDeveloperQuestionnaire';
 import { 
   saveUserRole, 
   saveOnboardingAnswers, 
@@ -32,8 +31,6 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState(1);
-  const [showEmailVerification, setShowEmailVerification] = useState(false);
-  const [userEmail, setUserEmail] = useState<string>('');
   const [existingUser, setExistingUser] = useState<{ id: string; email: string } | null>(null);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   
@@ -44,35 +41,35 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
     watch,
     setValue,
     control
-  } = useForm<ProjectDeveloperFormData>({
-    resolver: zodResolver(projectDeveloperSchema),
+  } = useForm<ProjectDeveloperQuestionnaireData>({
+    resolver: zodResolver(projectDeveloperQuestionnaireSchema),
     defaultValues: {
       biomass_types: [],
       interests: [],
-      locations: [],
-      accept_terms: false
+      locations: []
     }
   });
 
-  // Check if user is already logged in
+  // Verify user is logged in on mount
   React.useEffect(() => {
-    async function checkExistingSession() {
+    async function checkAuth() {
       try {
         const currentUser = await authHelpers.getCurrentUser();
         if (currentUser) {
-          console.log('✅ User already logged in:', currentUser.email);
-          setExistingUser({ id: currentUser.id, email: currentUser.email });
-          setUserEmail(currentUser.email);
-          // Skip to step 2 (questionnaire) if already logged in
-          setStep(2);
+          console.log('✅ User logged in:', currentUser.email);
+          setExistingUser({ id: currentUser.id, email: currentUser.email || '' });
+        } else {
+          // User not logged in - shouldn't happen, but handle gracefully
+          setError('Please sign in to complete the questionnaire');
         }
       } catch (err) {
-        console.log('No existing session');
+        console.error('Auth check failed:', err);
+        setError('Please sign in to continue');
       } finally {
         setIsCheckingAuth(false);
       }
     }
-    checkExistingSession();
+    checkAuth();
   }, []);
 
   const biomassTypes = watch('biomass_types') || [];
@@ -94,62 +91,25 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
     setValue('interests', updated);
   };
 
-  async function onSubmit(data: ProjectDeveloperFormData) {
+  async function onSubmit(data: ProjectDeveloperQuestionnaireData) {
+    console.log('🎯 Questionnaire submitted!', { data });
     setIsSubmitting(true);
     setError(null);
 
     try {
-      let userId: string;
-      
-      // If user is already logged in, use their existing account
-      if (existingUser) {
-        console.log('✅ Using existing logged-in user:', existingUser.email);
-        userId = existingUser.id;
-      } else {
-        console.log('🚀 Starting signup with:', { email: data.email, name: data.full_name });
-        
-        // 1. Create account with Supabase Auth
-        const { data: signUpData, error: signUpError } = await authHelpers.signUp(
-          data.email,
-          data.password,
-          data.full_name
-        );
-
-        console.log('📋 Sign up result:', { data: signUpData, error: signUpError });
-
-        if (signUpError || !signUpData?.user) {
-          console.error('❌ Sign up failed:', signUpError);
-          
-          // Provide user-friendly error messages
-          let errorMsg = 'Failed to create account';
-          if (signUpError) {
-            const errorStr = signUpError.toLowerCase();
-            if (errorStr.includes('rate') || errorStr.includes('too many')) {
-              errorMsg = 'Please wait a moment before trying again (rate limit)';
-            } else if (errorStr.includes('already registered') || errorStr.includes('already exists')) {
-              errorMsg = 'This email is already registered. Please sign in instead.';
-            } else if (errorStr.includes('invalid email')) {
-              errorMsg = 'Please enter a valid email address';
-            } else if (errorStr.includes('password')) {
-              errorMsg = 'Password must be at least 6 characters';
-            } else {
-              errorMsg = signUpError;
-            }
-          }
-          
-          throw new Error(errorMsg);
-        }
-
-        console.log('✅ Account created, user ID:', signUpData.user.id);
-        userId = signUpData.user.id;
-        setUserEmail(data.email);
+      // User must be logged in to access this form
+      if (!existingUser) {
+        throw new Error('You must be logged in to complete the questionnaire');
       }
 
-      // 2. Save role to profile
+      const userId = existingUser.id;
+      console.log('✅ Saving questionnaire for user:', existingUser.email);
+
+      // 1. Save role to profile
       const roleResult = await saveUserRole(
         userId,
         'PROJECT_DEVELOPER',
-        data.full_name,
+        existingUser.email.split('@')[0], // Use email prefix as fallback name
         data.business_name
       );
 
@@ -157,7 +117,7 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
         console.warn('Failed to save role:', roleResult.error);
       }
 
-      // 3. Save onboarding answers
+      // 2. Save onboarding answers
       const answersResult = await saveOnboardingAnswers(
         userId,
         'PROJECT_DEVELOPER',
@@ -168,30 +128,26 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
         console.warn('Failed to save answers:', answersResult.error);
       }
 
-      // 4. Generate tasks for this role
+      // 3. Generate tasks for this role
       const tasksResult = await generateTasksForRole(userId, 'PROJECT_DEVELOPER');
 
       if (!tasksResult.success) {
         console.warn('Failed to generate tasks:', tasksResult.error);
       }
 
-      // 5. Mark questionnaire as completed
+      // 4. Mark questionnaire as completed
       const completeResult = await markQuestionnaireComplete(userId, 'PROJECT_DEVELOPER');
 
       if (!completeResult.success) {
         console.warn('Failed to mark questionnaire complete:', completeResult.error);
+      } else {
+        console.log('✅ Questionnaire marked as complete!');
       }
 
-      // 6. Handle completion based on user type
-      if (existingUser) {
-        // Existing user - go straight to dashboard
-        console.log('✅ Existing user onboarding complete! Redirecting to dashboard');
-        onComplete();
-      } else {
-        // New user - show email verification screen
-        console.log('✅ Account created! Showing email verification instructions');
-        setShowEmailVerification(true);
-      }
+      // 5. Complete! Redirect to dashboard
+      console.log('✅ Questionnaire complete! Redirecting to dashboard');
+      console.log('📊 Role added to profile. Dashboard will refresh to show updates.');
+      onComplete();
       setIsSubmitting(false);
     } catch (err) {
       console.error('Onboarding error:', err);
@@ -200,9 +156,16 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
     }
   }
 
-  // Show email verification success screen
-  if (showEmailVerification) {
-    return <EmailVerificationSuccess email={userEmail} onContinue={onComplete} />;
+  // Show loading state while checking authentication
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 py-12 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 text-primary animate-spin mx-auto mb-4" />
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -265,7 +228,7 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
               <span>Complete</span>
             </div>
             <p className="text-center text-sm text-muted-foreground mt-4">
-              Already signed in as {userEmail}
+              Signed in as {existingUser?.email}
             </p>
           </div>
         )}
@@ -416,168 +379,21 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
                     >
                       Back
                     </Button>
-                    {existingUser ? (
-                      <Button
-                        type="submit"
-                        className="flex-1 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity"
-                        disabled={isSubmitting}
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                            Saving...
-                          </>
-                        ) : (
-                          <>
-                            Complete
-                            <CheckCircle2 className="w-5 h-5 ml-2" />
-                          </>
-                        )}
-                      </Button>
-                    ) : (
-                      <Button
-                        type="button"
-                        onClick={() => setStep(3)}
-                        className="flex-1"
-                      >
-                        Continue
-                        <ArrowRight className="w-5 h-5 ml-2" />
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          )}
-
-          {/* Step 3: Account Creation (Skip for logged-in users) */}
-          {step === 3 && !existingUser && (
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-            >
-              <Card>
-                <CardHeader>
-                  <CardTitle>Create Your Account</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  {/* Full Name */}
-                  <div>
-                    <Label htmlFor="full_name">Full Name *</Label>
-                    <Input
-                      id="full_name"
-                      {...register('full_name')}
-                      placeholder="John Doe"
-                    />
-                    {errors.full_name && (
-                      <p className="text-sm text-red-600 mt-1">{errors.full_name.message}</p>
-                    )}
-                  </div>
-
-                  {/* Business Name */}
-                  <div>
-                    <Label htmlFor="business_name">Business Name (Optional)</Label>
-                    <Input
-                      id="business_name"
-                      {...register('business_name')}
-                      placeholder="Your Company LLC"
-                    />
-                  </div>
-
-                  {/* Email */}
-                  <div>
-                    <Label htmlFor="email">Email Address *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      {...register('email')}
-                      placeholder="john@example.com"
-                    />
-                    {errors.email && (
-                      <p className="text-sm text-red-600 mt-1">{errors.email.message}</p>
-                    )}
-                  </div>
-
-                  {/* Password */}
-                  <div>
-                    <Label htmlFor="password">Password *</Label>
-                    <Input
-                      id="password"
-                      type="password"
-                      {...register('password')}
-                      placeholder="Min. 8 characters"
-                    />
-                    {errors.password && (
-                      <p className="text-sm text-red-600 mt-1">{errors.password.message}</p>
-                    )}
-                  </div>
-
-                  {/* Password Confirm */}
-                  <div>
-                    <Label htmlFor="password_confirm">Confirm Password *</Label>
-                    <Input
-                      id="password_confirm"
-                      type="password"
-                      {...register('password_confirm')}
-                      placeholder="Re-enter password"
-                    />
-                    {errors.password_confirm && (
-                      <p className="text-sm text-red-600 mt-1">{errors.password_confirm.message}</p>
-                    )}
-                  </div>
-
-                  {/* Terms */}
-                  <div className="flex items-start">
-                    <Controller
-                      name="accept_terms"
-                      control={control}
-                      render={({ field }) => (
-                        <Checkbox
-                          id="accept_terms"
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      )}
-                    />
-                    <label htmlFor="accept_terms" className="ml-2 text-sm">
-                      I agree to the{' '}
-                      <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                        Terms of Service
-                      </a>
-                      {' '}and{' '}
-                      <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                        Privacy Policy
-                      </a>
-                    </label>
-                  </div>
-                  {errors.accept_terms && (
-                    <p className="text-sm text-red-600">{errors.accept_terms.message}</p>
-                  )}
-
-                  <div className="flex gap-4">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => setStep(2)}
-                      className="flex-1"
-                      disabled={isSubmitting}
-                    >
-                      Back
-                    </Button>
                     <Button
                       type="submit"
-                      variant="outline"
-                      className="flex-1 border-2 border-slate-900 text-slate-900 bg-transparent hover:bg-slate-900 hover:text-white transition-all duration-300"
+                      className="flex-1 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (
                         <>
                           <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                          Creating Account...
+                          Saving...
                         </>
                       ) : (
-                        'Complete Registration'
+                        <>
+                          Complete
+                          <CheckCircle2 className="w-5 h-5 ml-2" />
+                        </>
                       )}
                     </Button>
                   </div>

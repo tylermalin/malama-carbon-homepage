@@ -107,7 +107,7 @@ export function Footer({
           >
             <div className="flex items-center gap-3 mb-6">
               <img 
-                src="/malamalabbs.png" 
+                src="https://fykjijdixtcgjavidmve.supabase.co/storage/v1/object/public/website-assets/logos/logo.png" 
                 alt="Mālama Labs" 
                 className="h-[80px] w-auto object-contain"
               />

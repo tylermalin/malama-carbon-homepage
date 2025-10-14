@@ -1,7 +1,9 @@
+import React from 'react';
 import { motion } from '../utils/motion';
 import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import malamaLogo from '../assets/malamalabbs.png';
+
+const MALAMA_LOGO_URL = 'https://fykjijdixtcgjavidmve.supabase.co/storage/v1/object/public/website-assets/logos/logo.png';
 
 // Track CTA clicks
 async function trackCTA(buttonLabel: string, destination: string) {
@@ -54,7 +56,7 @@ export function HeroSection({ onExplorePlatform, onHowItWorks, onStartProject, o
         transition={{ duration: 1, delay: 0.1 }}
       >
         <img 
-          src={malamaLogo} 
+          src={MALAMA_LOGO_URL} 
           alt="Mālama Labs" 
           width="300"
           height="300"
