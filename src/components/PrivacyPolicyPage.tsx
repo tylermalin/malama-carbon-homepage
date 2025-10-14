@@ -359,24 +359,24 @@ export function PrivacyPolicyPage({ onNavigate }: PrivacyPolicyPageProps) {
       </section>
 
       <Footer 
-        onShowDocumentation={() => {}}
-        onShowBlog={() => {}}
-        onShowPlatform={() => {}}
-        onShowHowItWorks={() => {}}
-        onShowAbout={() => {}}
-        onShowTeam={() => {}}
-        onShowContact={() => {}}
-        onShowCareers={() => {}}
-        onShowFAQ={() => {}}
-        onShowPrivacyPolicy={() => {}}
-        onShowTermsOfService={() => {}}
-        onShowCookiePolicy={() => {}}
-        onShowCarbonStudio={() => {}}
-        onShowCarbonProtocols={() => {}}
-        onShowDMRVEngine={() => {}}
-        onShowFinancials={() => {}}
-        onShowInvestor={() => {}}
-        onShowAdvisory={() => {}}
+        onShowDocumentation={() => onNavigate('documentation')}
+        onShowBlog={() => onNavigate('blog')}
+        onShowPlatform={() => onNavigate('platform')}
+        onShowHowItWorks={() => onNavigate('howItWorks')}
+        onShowAbout={() => onNavigate('about')}
+        onShowTeam={() => onNavigate('team')}
+        onShowContact={() => onNavigate('contact')}
+        onShowCareers={() => onNavigate('careers')}
+        onShowFAQ={() => onNavigate('faq')}
+        onShowPrivacyPolicy={() => onNavigate('privacyPolicy')}
+        onShowTermsOfService={() => onNavigate('termsOfService')}
+        onShowCookiePolicy={() => onNavigate('cookiePolicy')}
+        onShowCarbonStudio={() => onNavigate('carbonStudio')}
+        onShowCarbonProtocols={() => onNavigate('carbonProtocols')}
+        onShowDMRVEngine={() => onNavigate('dmrvEngine')}
+        onShowFinancials={() => onNavigate('financials')}
+        onShowInvestor={() => onNavigate('investor')}
+        onShowAdvisory={() => onNavigate('advisory')}
       />
     </div>
   );
