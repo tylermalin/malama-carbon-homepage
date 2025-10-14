@@ -78,6 +78,24 @@ export const authHelpers = {
       console.error('Get session error:', error);
       return { session: null, error: error.message };
     }
+  },
+
+  async resendConfirmationEmail(email: string) {
+    try {
+      const { data, error } = await supabase.auth.resend({
+        type: 'signup',
+        email: email
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      console.error('Resend confirmation error:', error);
+      return { data: null, error: error.message };
+    }
   }
 };
 

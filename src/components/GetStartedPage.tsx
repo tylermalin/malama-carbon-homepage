@@ -144,6 +144,9 @@ export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards,
   const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
   const [showTooltips, setShowTooltips] = useState<{[key: string]: boolean}>({});
   const [showManualSignIn, setShowManualSignIn] = useState(false);
+  const [showEmailNotConfirmed, setShowEmailNotConfirmed] = useState(false);
+  const [unconfirmedEmail, setUnconfirmedEmail] = useState('');
+  const [resendingEmail, setResendingEmail] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     userType: null,
     email: '',
@@ -277,6 +280,35 @@ export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards,
     }
   };
 
+  const handleResendConfirmation = async () => {
+    if (!unconfirmedEmail) return;
+    
+    setResendingEmail(true);
+    try {
+      const { error } = await authHelpers.resendConfirmationEmail(unconfirmedEmail);
+      
+      if (error) {
+        setValidationErrors({ 
+          general: 'Failed to resend confirmation email. Please try again or contact support.' 
+        });
+        showTooltip('general');
+      } else {
+        setValidationErrors({ 
+          general: 'Confirmation email sent! Please check your inbox and spam folder.' 
+        });
+        showTooltip('general');
+      }
+    } catch (error) {
+      console.error('Resend confirmation error:', error);
+      setValidationErrors({ 
+        general: 'Failed to resend confirmation email. Please try again.' 
+      });
+      showTooltip('general');
+    } finally {
+      setResendingEmail(false);
+    }
+  };
+
   const handleSubmit = async () => {
     // Validate form before submission
     if (!validateForm()) {
@@ -389,6 +421,19 @@ export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards,
             
             if (signInError) {
               console.error('Sign-in error details:', signInError);
+              
+              // Check if the error is about unconfirmed email
+              if (signInError.toLowerCase().includes('email not confirmed') || 
+                  signInError.toLowerCase().includes('not confirmed')) {
+                setShowEmailNotConfirmed(true);
+                setUnconfirmedEmail(formData.email);
+                setValidationErrors({ 
+                  general: 'Email not confirmed' 
+                });
+                showTooltip('general');
+                return;
+              }
+              
               setValidationErrors({ 
                 general: 'Account created successfully! Please sign in manually to continue.' 
               });

@@ -20,7 +20,13 @@ import {
   Zap,
   Award,
   Loader2,
-  AlertCircle
+  AlertCircle,
+  User,
+  Building2,
+  Mail,
+  Shield,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import { projectAPI } from '../utils/supabase/client';
 
@@ -53,6 +59,18 @@ export function ProjectDashboard({ user }: ProjectDashboardProps) {
   const [error, setError] = useState('');
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
+  const [showProfileDetails, setShowProfileDetails] = useState(true);
+  const [isAddProfileModalOpen, setIsAddProfileModalOpen] = useState(false);
+
+  // User profile data (would come from database in production)
+  const [userProfile, setUserProfile] = useState({
+    name: user.name,
+    email: user.email,
+    company: 'Sample Company', // Would load from database
+    profileTypes: ['Project Developer'], // Would load from database
+    registrationDate: new Date().toLocaleDateString(),
+    industry: 'Carbon Markets', // Would load from database
+  });
 
   // New project form state
   const [newProject, setNewProject] = useState({
@@ -148,6 +166,167 @@ export function ProjectDashboard({ user }: ProjectDashboardProps) {
   return (
     <section className="py-20 px-6 bg-muted/30">
       <div className="max-w-7xl mx-auto">
+        {/* User Profile Section */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-8"
+        >
+          <Card className="bg-gradient-to-r from-primary/5 via-background to-secondary/5 border-2 border-primary/20">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
+                    <User className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-primary">{userProfile.name}</h3>
+                    <p className="text-sm text-muted-foreground">User Profile</p>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowProfileDetails(!showProfileDetails)}
+                  className="hover:scale-105 transition-transform"
+                >
+                  {showProfileDetails ? (
+                    <>
+                      <ChevronUp className="w-4 h-4 mr-2" />
+                      Hide Details
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="w-4 h-4 mr-2" />
+                      Show Details
+                    </>
+                  )}
+                </Button>
+              </div>
+            </CardHeader>
+
+            <AnimatePresence>
+              {showProfileDetails && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-3">
+                        <Mail className="w-5 h-5 text-primary" />
+                        <div>
+                          <p className="text-sm text-muted-foreground">Email</p>
+                          <p className="font-medium">{userProfile.email}</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <Building2 className="w-5 h-5 text-primary" />
+                        <div>
+                          <p className="text-sm text-muted-foreground">Company</p>
+                          <p className="font-medium">{userProfile.company}</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <Calendar className="w-5 h-5 text-primary" />
+                        <div>
+                          <p className="text-sm text-muted-foreground">Registered Since</p>
+                          <p className="font-medium">{userProfile.registrationDate}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-3">
+                        <Shield className="w-5 h-5 text-primary mt-1" />
+                        <div className="flex-1">
+                          <p className="text-sm text-muted-foreground mb-2">Profile Types</p>
+                          <div className="flex flex-wrap gap-2">
+                            {userProfile.profileTypes.map((type, index) => (
+                              <Badge key={index} variant="default" className="text-sm">
+                                {type}
+                              </Badge>
+                            ))}
+                          </div>
+                          <Dialog open={isAddProfileModalOpen} onOpenChange={setIsAddProfileModalOpen}>
+                            <DialogTrigger asChild>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="mt-3 hover:scale-105 transition-transform"
+                              >
+                                <Plus className="w-4 h-4 mr-2" />
+                                Add Profile Type
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>Add New Profile Type</DialogTitle>
+                                <DialogDescription>
+                                  Register for additional profile types to access more features and dashboards.
+                                </DialogDescription>
+                              </DialogHeader>
+                              <div className="space-y-4 py-4">
+                                <div className="grid grid-cols-1 gap-4">
+                                  {['Project Developer', 'Carbon Credit Buyer', 'Land Steward', 'Industry Partner'].map((type) => (
+                                    <Card
+                                      key={type}
+                                      className={`p-4 cursor-pointer hover:border-primary transition-all ${
+                                        userProfile.profileTypes.includes(type) ? 'opacity-50 pointer-events-none' : ''
+                                      }`}
+                                      onClick={() => {
+                                        if (!userProfile.profileTypes.includes(type)) {
+                                          setUserProfile({
+                                            ...userProfile,
+                                            profileTypes: [...userProfile.profileTypes, type]
+                                          });
+                                          setIsAddProfileModalOpen(false);
+                                        }
+                                      }}
+                                    >
+                                      <div className="flex items-center justify-between">
+                                        <div>
+                                          <h4 className="font-semibold">{type}</h4>
+                                          <p className="text-sm text-muted-foreground">
+                                            {type === 'Project Developer' && 'Create and manage carbon projects'}
+                                            {type === 'Carbon Credit Buyer' && 'Purchase verified carbon credits'}
+                                            {type === 'Land Steward' && 'Manage land-based carbon sequestration'}
+                                            {type === 'Industry Partner' && 'Collaborate on carbon solutions'}
+                                          </p>
+                                        </div>
+                                        {userProfile.profileTypes.includes(type) && (
+                                          <Badge variant="secondary">Active</Badge>
+                                        )}
+                                      </div>
+                                    </Card>
+                                  ))}
+                                </div>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <Activity className="w-5 h-5 text-primary" />
+                        <div>
+                          <p className="text-sm text-muted-foreground">Industry</p>
+                          <p className="font-medium">{userProfile.industry}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Card>
+        </motion.div>
+
         <motion.div 
           className="flex items-center justify-between mb-12"
           initial={{ opacity: 0, y: 30 }}
