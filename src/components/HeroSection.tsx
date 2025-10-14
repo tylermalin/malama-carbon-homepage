@@ -91,7 +91,7 @@ export function HeroSection({ onExplorePlatform, onHowItWorks, onStartProject, o
           <Button 
             size="lg" 
             onClick={() => {
-              trackCTA('Start Your Project', '/onboarding/v2');
+              trackCTA('Start Your Project', '/signup');
               onStartProject?.();
             }}
             className="bg-white text-primary hover:bg-white/90 hover:shadow-lg transition-all duration-300 hover:scale-105"

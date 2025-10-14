@@ -22,6 +22,8 @@ export type PageType =
   | 'platform'
   | 'howItWorks'
   | 'getStarted'
+  | 'signup'
+  | 'signin'
   | 'landSteward'
   | 'documentation'
   | 'blog'
@@ -88,6 +90,9 @@ const pathToPageMap: Record<string, PageType> = {
   '/dashboard': 'dashboard',
   '/dashboards': 'dashboards',
   '/land-steward': 'landSteward',
+  '/signup': 'signup',
+  '/signin': 'signin',
+  '/login': 'signin',
   '/onboarding/v2': 'onboardingV2',
   '/onboarding/v2/project-developer': 'onboardingV2ProjectDeveloper',
   '/onboarding/v2/technology-developer': 'onboardingV2TechDeveloper',
@@ -115,7 +120,9 @@ const pageToPathMap: Record<PageType, string> = {
   blog: '/blog',
   documentation: '/documentation',
   howItWorks: '/how-it-works',
-  getStarted: '/onboarding/v2',
+  getStarted: '/signup',
+  signup: '/signup',
+  signin: '/signin',
   dashboard: '/dashboard',
   dashboards: '/dashboards',
   landSteward: '/land-steward',
@@ -173,6 +180,8 @@ export function useNavigation() {
         documentation: 'Documentation | Mālama Labs',
         howItWorks: 'How It Works | Mālama Labs',
         getStarted: 'Get Started | Mālama Labs',
+        signup: 'Sign Up | Mālama Labs',
+        signin: 'Sign In | Mālama Labs',
         dashboard: 'Dashboard | Mālama Labs',
         dashboards: 'Dashboards | Mālama Labs',
         landSteward: 'Project Developer | Mālama Labs',
@@ -185,6 +194,11 @@ export function useNavigation() {
         dmrvEngine: 'dMRV Engine | Mālama Labs',
         timeline: 'Timeline | Mālama Labs',
         financials: 'Financials | Mālama Labs',
+        onboardingV2: 'Choose Your Path | Mālama Labs',
+        onboardingV2ProjectDeveloper: 'Project Developer Registration | Mālama Labs',
+        onboardingV2TechDeveloper: 'Tech Developer Registration | Mālama Labs',
+        onboardingV2CreditBuyer: 'Credit Buyer Registration | Mālama Labs',
+        onboardingV2Partner: 'Partner Registration | Mālama Labs',
       };
       
       document.title = pageTitles[currentPage] || 'Mālama Labs';

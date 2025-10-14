@@ -9,6 +9,7 @@ import { getUserProfile, UserRole } from '../../lib/onboardingV2';
 import { NextStepsCard } from '../dashboard/NextStepsCard';
 import { ProcessOverviewCard } from '../dashboard/ProcessOverviewCard';
 import { ScheduleCallCard } from '../dashboard/ScheduleCallCard';
+import { ProfileCompletionBanner } from '../dashboard/ProfileCompletionBanner';
 
 interface AuthenticatedDashboardProps {
   user: {
@@ -149,37 +150,32 @@ export function AuthenticatedDashboard({ user }: AuthenticatedDashboardProps) {
 }
 
 function DefaultDashboardWithOnboarding({ user }: AuthenticatedDashboardProps) {
+  const handleNavigate = (page: string) => {
+    window.history.pushState({}, '', page === 'onboardingV2' ? '/onboarding/v2' : `/${page}`);
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  };
+
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-primary mb-6">
-            Welcome, {user.name || user.email}! 👋
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8">
-            Complete your onboarding to unlock your personalized dashboard
-          </p>
+          {/* Profile Completion Banner */}
+          <ProfileCompletionBanner 
+            userId={user.id}
+            userEmail={user.email}
+            onNavigate={handleNavigate}
+          />
           
-          <div className="bg-muted/20 rounded-xl p-8 mb-8">
-            <h2 className="text-2xl font-semibold text-primary mb-4">
-              Get Started in 3 Minutes
-            </h2>
-            <p className="text-muted-foreground mb-6">
-              Tell us about your role in the carbon removal ecosystem and we'll set up your dashboard with the tools you need.
+          <div className="text-center mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">
+              Welcome, {user.name || user.email.split('@')[0]}! 👋
+            </h1>
+            <p className="text-xl text-muted-foreground">
+              Your personalized dashboard is ready
             </p>
-            <button
-              onClick={() => {
-                window.history.pushState({}, '', '/onboarding/v2');
-                window.dispatchEvent(new PopStateEvent('popstate'));
-              }}
-              className="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium"
-            >
-              Complete Onboarding
-            </button>
           </div>
           
           <div className="grid md:grid-cols-3 gap-6">

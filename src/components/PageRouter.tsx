@@ -58,6 +58,7 @@ import { TechnologyDeveloperForm } from './onboarding/forms/TechnologyDeveloperF
 import { CreditBuyerForm } from './onboarding/forms/CreditBuyerForm';
 import { PartnerForm } from './onboarding/forms/PartnerForm';
 import { UserRole } from '../lib/onboardingV2';
+import { SignupPage } from './SignupPage';
 
 interface PageRouterProps {
   currentPage: PageType;
@@ -735,6 +736,9 @@ export function PageRouter({
     
     case 'storageTest':
       return <StorageTest />;
+    
+    case 'signup':
+      return <SignupPage onNavigate={navigateToSection} />;
     
     case 'onboardingV2':
       return <RoleSelectionV2 onRoleSelect={handleRoleSelect} />;
