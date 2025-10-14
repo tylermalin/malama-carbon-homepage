@@ -104,11 +104,45 @@ export function ProjectDashboard({ user }: ProjectDashboardProps) {
     'Coastal Restoration'
   ];
 
-  // Load user projects and profile image
+  // Load user projects, profile data, and profile image
   useEffect(() => {
     loadProjects();
+    loadUserProfile();
     loadProfileImage();
   }, [user]);
+
+  const loadUserProfile = async () => {
+    try {
+      const { analytics } = await import('../lib/analytics');
+      const result = await analytics.getUserProfile(user.id);
+      
+      if (result.success && result.data) {
+        const profileData = result.data;
+        const loadedProfile = {
+          name: profileData.full_name || user.name,
+          email: user.email,
+          company: profileData.company_name || '',
+          profileTypes: profileData.profile_types || ['Project Developer'],
+          registrationDate: profileData.created_at 
+            ? new Date(profileData.created_at).toLocaleDateString() 
+            : new Date().toLocaleDateString(),
+          industry: profileData.industry || '',
+          phone: profileData.phone || '',
+          address: profileData.address || '',
+          website: profileData.website || '',
+        };
+        
+        setUserProfile(loadedProfile);
+        setEditableProfile(loadedProfile);
+        console.log('✅ User profile loaded from Supabase:', loadedProfile);
+      } else {
+        console.log('No existing profile found, using defaults');
+      }
+    } catch (error) {
+      console.error('Failed to load user profile:', error);
+      // Use defaults if loading fails
+    }
+  };
 
   const loadProfileImage = async () => {
     try {
@@ -278,6 +312,8 @@ export function ProjectDashboard({ user }: ProjectDashboardProps) {
       
       if (result.success) {
         console.log('✅ Profile saved to Supabase:', result.data);
+        // Reload profile to ensure we have the latest data from database
+        await loadUserProfile();
       } else {
         console.error('Failed to save profile:', result.error);
       }
