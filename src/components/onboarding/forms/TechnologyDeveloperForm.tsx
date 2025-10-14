@@ -10,6 +10,7 @@ import { Textarea } from '../../ui/textarea';
 import { Checkbox } from '../../ui/checkbox';
 import { Alert, AlertDescription } from '../../ui/alert';
 import { Loader2, Code, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { EmailVerificationSuccess } from '../EmailVerificationSuccess';
 import { 
   technologyDeveloperSchema, 
   TechnologyDeveloperFormData,
@@ -120,14 +121,21 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
       // 4. Generate tasks
       await generateTasksForRole(userId, 'TECHNOLOGY_DEVELOPER');
 
-      // 5. Complete
-      console.log('✅ Technology Developer onboarding complete!');
-      onComplete();
+      // 5. Show email verification screen
+      console.log('✅ Account created! Showing email verification instructions');
+      setUserEmail(data.email);
+      setShowEmailVerification(true);
+      setIsSubmitting(false);
     } catch (err) {
       console.error('Onboarding error:', err);
       setError(err instanceof Error ? err.message : 'An error occurred during registration');
       setIsSubmitting(false);
     }
+  }
+
+  // Show email verification success screen
+  if (showEmailVerification) {
+    return <EmailVerificationSuccess email={userEmail} onContinue={onComplete} />;
   }
 
   return (
