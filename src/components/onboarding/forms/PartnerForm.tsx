@@ -68,8 +68,12 @@ export function PartnerForm({ onComplete }: PartnerFormProps) {
         data.contact_name
       );
 
+      console.log('Sign up result:', signUpResult);
+
       if (!signUpResult.success || !signUpResult.user) {
-        throw new Error(signUpResult.error || 'Failed to create account');
+        const errorMsg = signUpResult.error || 'Failed to create account';
+        console.error('Sign up failed:', errorMsg);
+        throw new Error(errorMsg);
       }
 
       const userId = signUpResult.user.id;
