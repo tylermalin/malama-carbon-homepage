@@ -46,6 +46,7 @@ import { PresentationsHubPage } from './PresentationsHubPage';
 import { BuyersPresentationPage } from './BuyersPresentationPage';
 import { ProjectsPresentationPage } from './ProjectsPresentationPage';
 import { AdminAnalyticsDashboard } from './AdminAnalyticsDashboard';
+import { StorageTest } from './StorageTest';
 import { Cpu, Flame, Coins } from 'lucide-react';
 
 interface PageRouterProps {
@@ -733,6 +734,9 @@ export function PageRouter({
           user={user}
         />
       );
+    
+    case 'storageTest':
+      return <StorageTest />;
     
     case 'presentation':
       return (

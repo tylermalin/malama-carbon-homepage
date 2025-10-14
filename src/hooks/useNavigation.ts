@@ -5,6 +5,7 @@ export type PageType =
   | 'dashboard' 
   | 'dashboards'
   | 'admin'
+  | 'storageTest'
   | 'platform'
   | 'howItWorks'
   | 'getStarted'
@@ -42,6 +43,8 @@ const pathToPageMap: Record<string, PageType> = {
   '/advisory-board': 'advisory',
   '/admin': 'admin',
   '/analytics': 'admin',
+  '/storage-test': 'storageTest',
+  '/test-storage': 'storageTest',
   '/presentation': 'presentation',
   '/presentations': 'presentations',
   '/presentations/buyers': 'presentationBuyers',
@@ -76,6 +79,7 @@ const pageToPathMap: Record<PageType, string> = {
   investor: '/investors',
   advisory: '/advisory',
   admin: '/admin',
+  storageTest: '/storage-test',
   presentation: '/presentation',
   presentations: '/presentations',
   presentationBuyers: '/presentations/buyers',
@@ -124,6 +128,7 @@ export function useNavigation() {
         investor: 'Investor Portal | Mālama Labs',
         advisory: 'Advisory Board | Mālama Labs',
         admin: 'Admin Analytics | Mālama Labs',
+        storageTest: 'Storage Test | Mālama Labs',
         presentation: 'Investor Presentation | Mālama Labs',
         presentations: 'Presentations | Mālama Labs',
         presentationBuyers: 'CO₂.0 for Buyers | Mālama Labs',
