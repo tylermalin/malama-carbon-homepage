@@ -26,7 +26,14 @@ import {
   Mail,
   Shield,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Edit,
+  Camera,
+  Upload,
+  Save,
+  X,
+  Phone,
+  Globe
 } from 'lucide-react';
 import { projectAPI } from '../utils/supabase/client';
 
@@ -61,6 +68,10 @@ export function ProjectDashboard({ user }: ProjectDashboardProps) {
   const [isCreating, setIsCreating] = useState(false);
   const [showProfileDetails, setShowProfileDetails] = useState(true);
   const [isAddProfileModalOpen, setIsAddProfileModalOpen] = useState(false);
+  const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
+  const [isOnboardingNewProfile, setIsOnboardingNewProfile] = useState(false);
+  const [selectedNewProfileType, setSelectedNewProfileType] = useState<string | null>(null);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
 
   // User profile data (would come from database in production)
   const [userProfile, setUserProfile] = useState({
@@ -70,7 +81,12 @@ export function ProjectDashboard({ user }: ProjectDashboardProps) {
     profileTypes: ['Project Developer'], // Would load from database
     registrationDate: new Date().toLocaleDateString(),
     industry: 'Carbon Markets', // Would load from database
+    phone: '',
+    address: '',
+    website: '',
   });
+
+  const [editableProfile, setEditableProfile] = useState({ ...userProfile });
 
   // New project form state
   const [newProject, setNewProject] = useState({
@@ -150,6 +166,37 @@ export function ProjectDashboard({ user }: ProjectDashboardProps) {
     };
   };
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSaveProfile = () => {
+    setUserProfile({ ...editableProfile });
+    setIsEditProfileModalOpen(false);
+    // In production, save to database here
+    console.log('Profile saved:', editableProfile);
+  };
+
+  const handleAddProfileType = (type: string) => {
+    setSelectedNewProfileType(type);
+    setIsAddProfileModalOpen(false);
+    // Note: In a real implementation, this would navigate to the onboarding flow
+    // For now, we'll just add the profile type
+    setUserProfile({
+      ...userProfile,
+      profileTypes: [...userProfile.profileTypes, type]
+    });
+    console.log('Profile type added:', type);
+    // TODO: Integrate with GetStartedPage onboarding flow
+  };
+
   const stats = getTotalStats();
 
   if (isLoading) {
@@ -177,32 +224,63 @@ export function ProjectDashboard({ user }: ProjectDashboardProps) {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                    <User className="w-6 h-6 text-white" />
+                  <div className="relative">
+                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center overflow-hidden border-2 border-primary">
+                      {profileImage ? (
+                        <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
+                      ) : (
+                        <User className="w-8 h-8 text-white" />
+                      )}
+                    </div>
+                    <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-background rounded-full border-2 border-primary flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
+                         onClick={() => document.getElementById('profile-image-upload')?.click()}>
+                      <Camera className="w-3 h-3 text-primary" />
+                    </div>
+                    <input
+                      id="profile-image-upload"
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImageUpload}
+                    />
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-primary">{userProfile.name}</h3>
                     <p className="text-sm text-muted-foreground">User Profile</p>
                   </div>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowProfileDetails(!showProfileDetails)}
-                  className="hover:scale-105 transition-transform"
-                >
-                  {showProfileDetails ? (
-                    <>
-                      <ChevronUp className="w-4 h-4 mr-2" />
-                      Hide Details
-                    </>
-                  ) : (
-                    <>
-                      <ChevronDown className="w-4 h-4 mr-2" />
-                      Show Details
-                    </>
-                  )}
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setEditableProfile({ ...userProfile });
+                      setIsEditProfileModalOpen(true);
+                    }}
+                    className="hover:scale-105 transition-transform"
+                  >
+                    <Edit className="w-4 h-4 mr-2" />
+                    Edit Profile
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowProfileDetails(!showProfileDetails)}
+                    className="hover:scale-105 transition-transform"
+                  >
+                    {showProfileDetails ? (
+                      <>
+                        <ChevronUp className="w-4 h-4 mr-2" />
+                        Hide
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown className="w-4 h-4 mr-2" />
+                        Show
+                      </>
+                    )}
+                  </Button>
+                </div>
               </div>
             </CardHeader>
 
@@ -281,11 +359,7 @@ export function ProjectDashboard({ user }: ProjectDashboardProps) {
                                       }`}
                                       onClick={() => {
                                         if (!userProfile.profileTypes.includes(type)) {
-                                          setUserProfile({
-                                            ...userProfile,
-                                            profileTypes: [...userProfile.profileTypes, type]
-                                          });
-                                          setIsAddProfileModalOpen(false);
+                                          handleAddProfileType(type);
                                         }
                                       }}
                                     >
@@ -326,6 +400,142 @@ export function ProjectDashboard({ user }: ProjectDashboardProps) {
             </AnimatePresence>
           </Card>
         </motion.div>
+
+        {/* Edit Profile Modal */}
+        <Dialog open={isEditProfileModalOpen} onOpenChange={setIsEditProfileModalOpen}>
+          <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Edit Profile</DialogTitle>
+              <DialogDescription>
+                Update your profile information. All fields are optional except name and email.
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-6 py-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit-name">Full Name *</Label>
+                  <Input
+                    id="edit-name"
+                    value={editableProfile.name}
+                    onChange={(e) => setEditableProfile({ ...editableProfile, name: e.target.value })}
+                    placeholder="Enter your full name"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="edit-email">Email *</Label>
+                  <Input
+                    id="edit-email"
+                    type="email"
+                    value={editableProfile.email}
+                    onChange={(e) => setEditableProfile({ ...editableProfile, email: e.target.value })}
+                    placeholder="your@email.com"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="edit-company">Company Name</Label>
+                  <Input
+                    id="edit-company"
+                    value={editableProfile.company}
+                    onChange={(e) => setEditableProfile({ ...editableProfile, company: e.target.value })}
+                    placeholder="Your company name"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="edit-industry">Industry</Label>
+                  <Select
+                    value={editableProfile.industry}
+                    onValueChange={(value) => setEditableProfile({ ...editableProfile, industry: value })}
+                  >
+                    <SelectTrigger id="edit-industry">
+                      <SelectValue placeholder="Select industry" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Carbon Markets">Carbon Markets</SelectItem>
+                      <SelectItem value="Agriculture">Agriculture</SelectItem>
+                      <SelectItem value="Forestry">Forestry</SelectItem>
+                      <SelectItem value="Energy">Energy</SelectItem>
+                      <SelectItem value="Technology">Technology</SelectItem>
+                      <SelectItem value="Finance">Finance</SelectItem>
+                      <SelectItem value="Consulting">Consulting</SelectItem>
+                      <SelectItem value="Other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="edit-phone">Phone Number</Label>
+                  <Input
+                    id="edit-phone"
+                    type="tel"
+                    value={editableProfile.phone}
+                    onChange={(e) => setEditableProfile({ ...editableProfile, phone: e.target.value })}
+                    placeholder="+1 (555) 123-4567"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="edit-website">Website</Label>
+                  <Input
+                    id="edit-website"
+                    type="url"
+                    value={editableProfile.website}
+                    onChange={(e) => setEditableProfile({ ...editableProfile, website: e.target.value })}
+                    placeholder="https://yourwebsite.com"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="edit-address">Address</Label>
+                <Textarea
+                  id="edit-address"
+                  value={editableProfile.address}
+                  onChange={(e) => setEditableProfile({ ...editableProfile, address: e.target.value })}
+                  placeholder="Enter your full address"
+                  rows={3}
+                />
+              </div>
+
+              <div className="border-t pt-4">
+                <h4 className="font-semibold mb-2 flex items-center gap-2">
+                  <Shield className="w-4 h-4 text-primary" />
+                  Active Profile Types
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {userProfile.profileTypes.map((type, index) => (
+                    <Badge key={index} variant="default">
+                      {type}
+                    </Badge>
+                  ))}
+                </div>
+                <p className="text-sm text-muted-foreground mt-2">
+                  To add new profile types, close this modal and click "Add Profile Type" in your profile card.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-3">
+              <Button
+                variant="outline"
+                onClick={() => setIsEditProfileModalOpen(false)}
+              >
+                <X className="w-4 h-4 mr-2" />
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSaveProfile}
+                className="bg-primary hover:bg-primary/90"
+              >
+                <Save className="w-4 h-4 mr-2" />
+                Save Changes
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         <motion.div 
           className="flex items-center justify-between mb-12"
