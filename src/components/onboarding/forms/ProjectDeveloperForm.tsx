@@ -218,26 +218,49 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
         </motion.div>
 
         {/* Progress Indicator */}
-        <div className="mb-8">
-          <div className="flex items-center justify-center space-x-2">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 1 ? 'bg-primary text-white' : 'bg-gray-200'}`}>
-              {step > 1 ? <CheckCircle2 className="w-5 h-5" /> : '1'}
+        {!existingUser && (
+          <div className="mb-8">
+            <div className="flex items-center justify-center space-x-2">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 1 ? 'bg-primary text-white' : 'bg-gray-200'}`}>
+                {step > 1 ? <CheckCircle2 className="w-5 h-5" /> : '1'}
+              </div>
+              <div className={`w-16 h-1 ${step >= 2 ? 'bg-primary' : 'bg-gray-200'}`} />
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 2 ? 'bg-primary text-white' : 'bg-gray-200'}`}>
+                {step > 2 ? <CheckCircle2 className="w-5 h-5" /> : '2'}
+              </div>
+              <div className={`w-16 h-1 ${step >= 3 ? 'bg-primary' : 'bg-gray-200'}`} />
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 3 ? 'bg-primary text-white' : 'bg-gray-200'}`}>
+                3
+              </div>
             </div>
-            <div className={`w-16 h-1 ${step >= 2 ? 'bg-primary' : 'bg-gray-200'}`} />
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 2 ? 'bg-primary text-white' : 'bg-gray-200'}`}>
-              {step > 2 ? <CheckCircle2 className="w-5 h-5" /> : '2'}
-            </div>
-            <div className={`w-16 h-1 ${step >= 3 ? 'bg-primary' : 'bg-gray-200'}`} />
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 3 ? 'bg-primary text-white' : 'bg-gray-200'}`}>
-              3
+            <div className="flex items-center justify-between mt-2 text-xs text-gray-600">
+              <span>Project Info</span>
+              <span>Details</span>
+              <span>Account</span>
             </div>
           </div>
-          <div className="flex items-center justify-between mt-2 text-xs text-gray-600">
-            <span>Project Info</span>
-            <span>Details</span>
-            <span>Account</span>
+        )}
+        
+        {existingUser && (
+          <div className="mb-8">
+            <div className="flex items-center justify-center space-x-2 max-w-xs mx-auto">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 1 ? 'bg-primary text-white' : 'bg-gray-200'}`}>
+                {step > 1 ? <CheckCircle2 className="w-5 h-5" /> : '1'}
+              </div>
+              <div className={`w-24 h-1 ${step >= 2 ? 'bg-primary' : 'bg-gray-200'}`} />
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 2 ? 'bg-primary text-white' : 'bg-gray-200'}`}>
+                2
+              </div>
+            </div>
+            <div className="flex items-center justify-between mt-2 text-xs text-gray-600 max-w-xs mx-auto">
+              <span>Project Info</span>
+              <span>Complete</span>
+            </div>
+            <p className="text-center text-sm text-muted-foreground mt-4">
+              Already signed in as {userEmail}
+            </p>
           </div>
-        </div>
+        )}
 
         {error && (
           <Alert variant="destructive" className="mb-6">
@@ -381,25 +404,46 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
                       variant="outline"
                       onClick={() => setStep(1)}
                       className="flex-1"
+                      disabled={isSubmitting}
                     >
                       Back
                     </Button>
-                    <Button
-                      type="button"
-                      onClick={() => setStep(3)}
-                      className="flex-1"
-                    >
-                      Continue
-                      <ArrowRight className="w-5 h-5 ml-2" />
-                    </Button>
+                    {existingUser ? (
+                      <Button
+                        type="submit"
+                        className="flex-1 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                            Saving...
+                          </>
+                        ) : (
+                          <>
+                            Complete
+                            <CheckCircle2 className="w-5 h-5 ml-2" />
+                          </>
+                        )}
+                      </Button>
+                    ) : (
+                      <Button
+                        type="button"
+                        onClick={() => setStep(3)}
+                        className="flex-1"
+                      >
+                        Continue
+                        <ArrowRight className="w-5 h-5 ml-2" />
+                      </Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>
             </motion.div>
           )}
 
-          {/* Step 3: Account Creation */}
-          {step === 3 && (
+          {/* Step 3: Account Creation (Skip for logged-in users) */}
+          {step === 3 && !existingUser && (
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
