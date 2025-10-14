@@ -134,8 +134,8 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <Leaf className="w-8 h-8 text-white" />
+          <div className="w-16 h-16 bg-slate-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Leaf className="w-8 h-8 text-slate-900" />
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Project Developer Registration

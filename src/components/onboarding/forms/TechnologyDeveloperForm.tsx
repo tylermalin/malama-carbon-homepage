@@ -112,8 +112,8 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <Code className="w-8 h-8 text-white" />
+          <div className="w-16 h-16 bg-slate-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Code className="w-8 h-8 text-slate-900" />
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Technology Developer Registration

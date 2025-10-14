@@ -120,8 +120,8 @@ export function CreditBuyerForm({ onComplete }: CreditBuyerFormProps) {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <ShoppingCart className="w-8 h-8 text-white" />
+          <div className="w-16 h-16 bg-slate-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <ShoppingCart className="w-8 h-8 text-slate-900" />
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Credit Buyer Registration
