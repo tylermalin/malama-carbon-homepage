@@ -18,7 +18,8 @@ import {
 import { 
   saveUserRole, 
   saveOnboardingAnswers, 
-  generateTasksForRole 
+  generateTasksForRole,
+  markQuestionnaireComplete
 } from '../../../lib/onboardingV2';
 import { authHelpers } from '../../../utils/supabase/client';
 
@@ -158,7 +159,10 @@ export function CreditBuyerForm({ onComplete }: CreditBuyerFormProps) {
       // 4. Generate tasks
       await generateTasksForRole(userId, 'CREDIT_BUYER');
 
-      // 5. Handle completion based on user type
+      // 5. Mark questionnaire as completed
+      await markQuestionnaireComplete(userId, 'CREDIT_BUYER');
+
+      // 6. Handle completion based on user type
       if (existingUser) {
         console.log('✅ Existing user onboarding complete! Redirecting to dashboard');
         onComplete();

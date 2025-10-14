@@ -1,7 +1,7 @@
 /**
- * Profile Completion Banner
+ * Profile Completion Banner - Multi-Role Support
  * Shows profile completion status and prompts users to complete their profile
- * Includes inline role selection for better UX
+ * Supports multiple role selection and per-role questionnaires
  */
 
 import React, { useState, useEffect } from 'react';
@@ -9,7 +9,7 @@ import { motion } from 'motion/react';
 import { Card, CardContent } from '../ui/card';
 import { Button } from '../ui/button';
 import { Progress } from '../ui/progress';
-import { AlertCircle, CheckCircle2, ArrowRight, User, Briefcase, FileText, Leaf, Code, ShoppingCart, Handshake, Loader2 } from 'lucide-react';
+import { AlertCircle, CheckCircle2, ArrowRight, User, Briefcase, FileText, Leaf, Code, ShoppingCart, Handshake, Loader2, Plus } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient';
 
 interface ProfileCompletionBannerProps {
@@ -20,19 +20,28 @@ interface ProfileCompletionBannerProps {
 
 interface ProfileData {
   full_name: string | null;
-  role: string | null;
   org_name: string | null;
-  profile_completed: boolean | null;
+  phone: string | null;
+  project_description: string | null;
+}
+
+interface UserRole {
+  id: number;
+  role: string;
+  questionnaire_completed: boolean;
+  added_at: string;
 }
 
 export function ProfileCompletionBanner({ userId, userEmail, onNavigate }: ProfileCompletionBannerProps) {
   const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [userRoles, setUserRoles] = useState<UserRole[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSavingRole, setIsSavingRole] = useState(false);
   const [completionPercentage, setCompletionPercentage] = useState(0);
 
   useEffect(() => {
     loadProfile();
+    loadRoles();
   }, [userId]);
 
   const loadProfile = async () => {
@@ -44,7 +53,7 @@ export function ProfileCompletionBanner({ userId, userEmail, onNavigate }: Profi
     try {
       const { data, error } = await supabase
         .from('profiles')
-        .select('full_name, role, org_name, profile_completed')
+        .select('full_name, org_name, phone, project_description')
         .eq('user_id', userId)
         .single();
 
@@ -53,13 +62,32 @@ export function ProfileCompletionBanner({ userId, userEmail, onNavigate }: Profi
         setProfile(null);
       } else {
         setProfile(data);
-        calculateCompletion(data);
       }
     } catch (err) {
       console.error('Error loading profile:', err);
       setProfile(null);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const loadRoles = async () => {
+    if (!supabase) return;
+
+    try {
+      const { data, error } = await supabase
+        .from('user_roles')
+        .select('*')
+        .eq('user_id', userId)
+        .order('added_at', { ascending: true });
+
+      if (error) throw error;
+      
+      setUserRoles(data || []);
+      calculateCompletion(data || []);
+    } catch (error) {
+      console.error('Error loading roles:', error);
+      setUserRoles([]);
     }
   };
 
@@ -73,26 +101,25 @@ export function ProfileCompletionBanner({ userId, userEmail, onNavigate }: Profi
     setIsSavingRole(true);
 
     try {
-      // Save role to profile
-      const { error: updateError } = await supabase
-        .from('profiles')
-        .upsert({
+      // Insert role into user_roles table
+      const { error: insertError } = await supabase
+        .from('user_roles')
+        .insert({
           user_id: userId,
           role: roleId,
-          updated_at: new Date().toISOString()
-        }, {
-          onConflict: 'user_id'
+          questionnaire_completed: false,
+          added_at: new Date().toISOString()
         });
 
-      if (updateError) {
-        console.error('Error saving role:', updateError);
-        throw updateError;
+      if (insertError) {
+        console.error('Error saving role:', insertError);
+        throw insertError;
       }
 
       console.log('✅ Role saved:', roleId);
 
-      // Reload profile to update UI
-      await loadProfile();
+      // Reload roles to update UI
+      await loadRoles();
 
       // Navigate to questionnaire
       onNavigate(rolePath);
@@ -104,29 +131,29 @@ export function ProfileCompletionBanner({ userId, userEmail, onNavigate }: Profi
     }
   };
 
-  const calculateCompletion = (profileData: ProfileData | null) => {
+  const calculateCompletion = (roles: UserRole[]) => {
     let percentage = 0;
     
     // Base: Account created = 20%
     percentage += 20;
     
     // Has name = 20%
-    if (profileData?.full_name) {
+    if (profile?.full_name) {
       percentage += 20;
     }
     
-    // Has role selected = 30%
-    if (profileData?.role) {
+    // Has at least one role selected = 30%
+    if (roles.length > 0) {
       percentage += 30;
     }
     
     // Has organization = 15%
-    if (profileData?.org_name) {
+    if (profile?.org_name) {
       percentage += 15;
     }
     
-    // Profile marked as completed = 15%
-    if (profileData?.profile_completed) {
+    // At least one questionnaire completed = 15%
+    if (roles.some(r => r.questionnaire_completed)) {
       percentage += 15;
     }
     
@@ -143,12 +170,8 @@ export function ProfileCompletionBanner({ userId, userEmail, onNavigate }: Profi
     return null;
   }
 
-  // If no profile exists or role is not selected, show banner
-  const needsRoleSelection = !profile || !profile.role;
-  const needsQuestionnaire = profile?.role && !profile?.profile_completed;
-
-  // Define role options
-  const roleOptions = [
+  // Define all role options
+  const allRoleOptions = [
     {
       id: 'PROJECT_DEVELOPER',
       title: 'Project Developer',
@@ -179,6 +202,13 @@ export function ProfileCompletionBanner({ userId, userEmail, onNavigate }: Profi
     }
   ];
 
+  // Filter out roles already selected
+  const selectedRoleIds = userRoles.map(r => r.role);
+  const availableRoles = allRoleOptions.filter(role => !selectedRoleIds.includes(role.id));
+  
+  const hasRoles = userRoles.length > 0;
+  const hasAvailableRoles = availableRoles.length > 0;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: -20 }}
@@ -193,9 +223,11 @@ export function ProfileCompletionBanner({ userId, userEmail, onNavigate }: Profi
               Complete Your Profile
             </h3>
             <p className="text-sm text-gray-700">
-              {needsRoleSelection 
+              {!hasRoles 
                 ? 'Select your role to unlock personalized features and recommendations.'
-                : 'Complete your questionnaire to access all platform features.'}
+                : hasAvailableRoles 
+                  ? 'Add more roles or complete your pending questionnaires.'
+                  : 'Complete your questionnaires to access all platform features.'}
             </p>
           </div>
 
@@ -208,12 +240,12 @@ export function ProfileCompletionBanner({ userId, userEmail, onNavigate }: Profi
             <Progress value={completionPercentage} className="h-2" />
           </div>
 
-          {/* Role Selection Cards (shown if no role selected) */}
-          {needsRoleSelection && (
+          {/* Initial Role Selection (shown if no roles selected) */}
+          {!hasRoles && hasAvailableRoles && (
             <div>
               <h4 className="text-base font-semibold text-gray-900 mb-4">Select Your Role</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {roleOptions.map((role) => {
+                {availableRoles.map((role) => {
                   const Icon = role.icon;
                   return (
                     <motion.button
@@ -247,29 +279,43 @@ export function ProfileCompletionBanner({ userId, userEmail, onNavigate }: Profi
             </div>
           )}
 
-          {/* Questionnaire CTA (shown if role selected but not completed) */}
-          {needsQuestionnaire && (
-            <div className="flex items-center justify-between p-4 bg-white rounded-lg border-2 border-blue-200">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <FileText className="w-5 h-5 text-blue-600" />
-                </div>
-                <div>
-                  <h5 className="font-semibold text-gray-900 mb-1">
-                    Complete Your {profile.role.replace(/_/g, ' ')} Questionnaire
-                  </h5>
-                  <p className="text-sm text-gray-600">
-                    Just a few more questions to personalize your dashboard
-                  </p>
-                </div>
+          {/* Additional Role Selections (shown if at least one role selected) */}
+          {hasRoles && hasAvailableRoles && (
+            <div className="mb-6">
+              <h4 className="text-base font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                <Plus className="w-4 h-4" />
+                Additional Role Selections
+              </h4>
+              <p className="text-sm text-gray-600 mb-4">
+                You can add multiple roles to your profile
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {availableRoles.map((role) => {
+                  const Icon = role.icon;
+                  return (
+                    <motion.button
+                      key={role.id}
+                      onClick={() => handleRoleSelect(role.id, role.path)}
+                      disabled={isSavingRole}
+                      whileHover={{ scale: isSavingRole ? 1 : 1.02 }}
+                      whileTap={{ scale: isSavingRole ? 1 : 0.98 }}
+                      className={`flex items-center gap-3 p-3 bg-white rounded-lg border border-gray-200 hover:border-blue-500 hover:shadow transition-all text-left group ${isSavingRole ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                      <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-blue-50 transition-colors">
+                        <Icon className="w-4 h-4 text-slate-900 group-hover:text-blue-600 transition-colors" />
+                      </div>
+                      <span className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors text-sm flex-1">
+                        {role.title}
+                      </span>
+                      {isSavingRole ? (
+                        <Loader2 className="w-4 h-4 text-blue-600 animate-spin flex-shrink-0" />
+                      ) : (
+                        <Plus className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors flex-shrink-0" />
+                      )}
+                    </motion.button>
+                  );
+                })}
               </div>
-              <Button
-                onClick={() => onNavigate('onboardingV2')}
-                className="bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                Continue
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
             </div>
           )}
 
@@ -286,10 +332,12 @@ export function ProfileCompletionBanner({ userId, userEmail, onNavigate }: Profi
                   <span className="text-gray-600">Name added</span>
                 </div>
               )}
-              {profile?.role ? (
+              {hasRoles ? (
                 <div className="flex items-center gap-2 text-sm">
                   <CheckCircle2 className="w-4 h-4 text-green-500" />
-                  <span className="text-gray-600">Role selected: {profile.role.replace(/_/g, ' ')}</span>
+                  <span className="text-gray-600">
+                    {userRoles.length} role{userRoles.length > 1 ? 's' : ''} selected
+                  </span>
                 </div>
               ) : (
                 <div className="flex items-center gap-2 text-sm">
@@ -297,17 +345,19 @@ export function ProfileCompletionBanner({ userId, userEmail, onNavigate }: Profi
                   <span className="text-gray-700 font-medium">Select your role</span>
                 </div>
               )}
-              {profile?.profile_completed ? (
+              {userRoles.filter(r => r.questionnaire_completed).length > 0 ? (
                 <div className="flex items-center gap-2 text-sm">
                   <CheckCircle2 className="w-4 h-4 text-green-500" />
-                  <span className="text-gray-600">Questionnaire completed</span>
+                  <span className="text-gray-600">
+                    {userRoles.filter(r => r.questionnaire_completed).length} questionnaire{userRoles.filter(r => r.questionnaire_completed).length > 1 ? 's' : ''} completed
+                  </span>
                 </div>
-              ) : (
+              ) : hasRoles ? (
                 <div className="flex items-center gap-2 text-sm">
                   <div className="w-4 h-4 border-2 border-gray-300 rounded-full" />
-                  <span className="text-gray-700 font-medium">Complete questionnaire</span>
+                  <span className="text-gray-700 font-medium">Complete questionnaires</span>
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
         </CardContent>

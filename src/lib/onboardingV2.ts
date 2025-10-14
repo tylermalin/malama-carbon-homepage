@@ -48,7 +48,8 @@ export interface OnboardingAnswer {
 }
 
 /**
- * Save or update user's role in their profile
+ * Save or update user's role in their profile (Multi-Role System)
+ * Inserts into user_roles table and updates basic profile info
  */
 export async function saveUserRole(userId: string, role: UserRole, fullName?: string, orgName?: string) {
   try {
@@ -57,27 +58,78 @@ export async function saveUserRole(userId: string, role: UserRole, fullName?: st
       return { success: false, error: 'Supabase not configured' };
     }
 
-    const { data, error } = await supabase
-      .from('profiles')
-      .upsert({
+    // 1. Insert role into user_roles table
+    const { data: roleData, error: roleError } = await supabase
+      .from('user_roles')
+      .insert({
         user_id: userId,
         role,
-        full_name: fullName,
-        org_name: orgName,
-        updated_at: new Date().toISOString()
+        questionnaire_completed: false,
+        added_at: new Date().toISOString()
       })
       .select()
       .single();
 
+    if (roleError) {
+      console.error('Error saving user role:', roleError);
+      return { success: false, error: roleError.message };
+    }
+
+    // 2. Update profile with basic info (if provided)
+    if (fullName || orgName) {
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({
+          full_name: fullName,
+          org_name: orgName,
+          updated_at: new Date().toISOString()
+        })
+        .eq('user_id', userId);
+
+      if (profileError) {
+        console.warn('Could not update profile info:', profileError);
+        // Don't fail the whole operation if profile update fails
+      }
+    }
+
+    console.log('✅ User role saved:', roleData);
+    return { success: true, data: roleData };
+  } catch (error) {
+    console.error('Failed to save user role:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+  }
+}
+
+/**
+ * Mark a role's questionnaire as completed
+ */
+export async function markQuestionnaireComplete(userId: string, role: UserRole) {
+  try {
+    if (!supabase) {
+      console.warn('Supabase not configured');
+      return { success: false, error: 'Supabase not configured' };
+    }
+
+    const { data, error } = await supabase
+      .from('user_roles')
+      .update({
+        questionnaire_completed: true,
+        completed_at: new Date().toISOString()
+      })
+      .eq('user_id', userId)
+      .eq('role', role)
+      .select()
+      .single();
+
     if (error) {
-      console.error('Error saving user role:', error);
+      console.error('Error marking questionnaire complete:', error);
       return { success: false, error: error.message };
     }
 
-    console.log('✅ User role saved:', data);
+    console.log('✅ Questionnaire marked complete:', data);
     return { success: true, data };
   } catch (error) {
-    console.error('Failed to save user role:', error);
+    console.error('Failed to mark questionnaire complete:', error);
     return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
   }
 }

@@ -19,7 +19,8 @@ import {
 import { 
   saveUserRole, 
   saveOnboardingAnswers, 
-  generateTasksForRole 
+  generateTasksForRole,
+  markQuestionnaireComplete
 } from '../../../lib/onboardingV2';
 import { authHelpers } from '../../../utils/supabase/client';
 
@@ -151,7 +152,10 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
       // 4. Generate tasks
       await generateTasksForRole(userId, 'TECHNOLOGY_DEVELOPER');
 
-      // 5. Handle completion based on user type
+      // 5. Mark questionnaire as completed
+      await markQuestionnaireComplete(userId, 'TECHNOLOGY_DEVELOPER');
+
+      // 6. Handle completion based on user type
       if (existingUser) {
         console.log('✅ Existing user onboarding complete! Redirecting to dashboard');
         onComplete();

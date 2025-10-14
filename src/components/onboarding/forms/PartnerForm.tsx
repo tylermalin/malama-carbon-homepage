@@ -19,7 +19,8 @@ import {
 import { 
   saveUserRole, 
   saveOnboardingAnswers, 
-  generateTasksForRole 
+  generateTasksForRole,
+  markQuestionnaireComplete
 } from '../../../lib/onboardingV2';
 import { authHelpers } from '../../../utils/supabase/client';
 
@@ -149,7 +150,10 @@ export function PartnerForm({ onComplete }: PartnerFormProps) {
       // 4. Generate tasks
       await generateTasksForRole(userId, 'PARTNER');
 
-      // 5. Handle completion based on user type
+      // 5. Mark questionnaire as completed
+      await markQuestionnaireComplete(userId, 'PARTNER');
+
+      // 6. Handle completion based on user type
       if (existingUser) {
         console.log('✅ Existing user onboarding complete! Redirecting to dashboard');
         onComplete();

@@ -19,7 +19,8 @@ import {
 import { 
   saveUserRole, 
   saveOnboardingAnswers, 
-  generateTasksForRole 
+  generateTasksForRole,
+  markQuestionnaireComplete
 } from '../../../lib/onboardingV2';
 import { authHelpers } from '../../../utils/supabase/client';
 
@@ -174,7 +175,14 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
         console.warn('Failed to generate tasks:', tasksResult.error);
       }
 
-      // 5. Handle completion based on user type
+      // 5. Mark questionnaire as completed
+      const completeResult = await markQuestionnaireComplete(userId, 'PROJECT_DEVELOPER');
+
+      if (!completeResult.success) {
+        console.warn('Failed to mark questionnaire complete:', completeResult.error);
+      }
+
+      // 6. Handle completion based on user type
       if (existingUser) {
         // Existing user - go straight to dashboard
         console.log('✅ Existing user onboarding complete! Redirecting to dashboard');

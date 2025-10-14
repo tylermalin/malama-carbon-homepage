@@ -6,11 +6,10 @@ import { DeveloperDashboard } from './DeveloperDashboard';
 import { BuyerDashboard } from './BuyerDashboard';
 import { PartnerDashboard } from './PartnerDashboard';
 import { getUserProfile, UserRole } from '../../lib/onboardingV2';
-import { NextStepsCard } from '../dashboard/NextStepsCard';
-import { ProcessOverviewCard } from '../dashboard/ProcessOverviewCard';
 import { ScheduleCallCard } from '../dashboard/ScheduleCallCard';
 import { ProfileCompletionBanner } from '../dashboard/ProfileCompletionBanner';
-import { QuestionnaireTodoCard } from '../dashboard/QuestionnaireTodoCard';
+import { ProfileEditor } from '../dashboard/ProfileEditor';
+import { QuestionnaireTodos } from '../dashboard/QuestionnaireTodos';
 
 interface AuthenticatedDashboardProps {
   user: {
@@ -177,7 +176,7 @@ function DefaultDashboardWithOnboarding({ user }: AuthenticatedDashboardProps) {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -200,19 +199,29 @@ function DefaultDashboardWithOnboarding({ user }: AuthenticatedDashboardProps) {
             onNavigate={handleNavigate}
           />
           
-          {/* Dashboard Cards */}
-          <div className="grid md:grid-cols-3 gap-6 mt-8">
-            {/* Questionnaire To-Do (if role selected but not completed) */}
-            <QuestionnaireTodoCard 
+          {/* Questionnaire Todos */}
+          <div className="mt-8">
+            <QuestionnaireTodos 
               userId={user.id}
               onNavigate={handleNavigate}
             />
-            
-            <ProcessOverviewCard userId={user.id} />
-            
-            <div className="md:col-span-2">
-              <NextStepsCard userId={user.id} />
-            </div>
+          </div>
+          
+          {/* Profile Editor */}
+          <div className="mt-8">
+            <ProfileEditor 
+              userId={user.id}
+              userEmail={user.email}
+              onProfileUpdate={() => {
+                // Optionally reload data when profile is updated
+                window.location.reload();
+              }}
+            />
+          </div>
+
+          {/* Schedule Call Card */}
+          <div className="mt-8">
+            <ScheduleCallCard />
           </div>
         </motion.div>
       </div>
