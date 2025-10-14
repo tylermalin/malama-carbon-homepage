@@ -162,7 +162,38 @@ VALUES
 ON CONFLICT (role, title) DO NOTHING;
 
 -- ==================
--- 3. CREATE REFERRAL PERFORMANCE VIEW (for analytics)
+-- 3. CREATE ANALYTICS TABLES (if needed)
+-- ==================
+
+-- Create analytics_events table if it doesn't exist
+CREATE TABLE IF NOT EXISTS public.analytics_events (
+  id BIGSERIAL PRIMARY KEY,
+  event_type TEXT NOT NULL,
+  session_id TEXT,
+  user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
+  referral_code TEXT,
+  page_url TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_analytics_events_referral ON public.analytics_events(referral_code);
+CREATE INDEX IF NOT EXISTS idx_analytics_events_created_at ON public.analytics_events(created_at);
+
+-- Create page_views table if it doesn't exist
+CREATE TABLE IF NOT EXISTS public.page_views (
+  id BIGSERIAL PRIMARY KEY,
+  page_url TEXT NOT NULL,
+  session_id TEXT,
+  user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
+  referral_code TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_page_views_page_url ON public.page_views(page_url);
+CREATE INDEX IF NOT EXISTS idx_page_views_created_at ON public.page_views(created_at);
+
+-- ==================
+-- 4. CREATE REFERRAL PERFORMANCE VIEW (for analytics)
 -- ==================
 
 CREATE OR REPLACE VIEW public.referral_performance AS
@@ -177,7 +208,7 @@ GROUP BY referral_code
 ORDER BY total_interactions DESC;
 
 -- ==================
--- 4. CREATE GET_TOP_PAGES FUNCTION (for analytics)
+-- 5. CREATE GET_TOP_PAGES FUNCTION (for analytics)
 -- ==================
 
 CREATE OR REPLACE FUNCTION public.get_top_pages(days_ago INT DEFAULT 30, page_limit INT DEFAULT 10)
