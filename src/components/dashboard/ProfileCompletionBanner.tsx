@@ -9,7 +9,7 @@ import { motion } from 'motion/react';
 import { Card, CardContent } from '../ui/card';
 import { Button } from '../ui/button';
 import { Progress } from '../ui/progress';
-import { AlertCircle, CheckCircle2, ArrowRight, User, Briefcase, FileText, Leaf, Code, ShoppingCart, Handshake } from 'lucide-react';
+import { AlertCircle, CheckCircle2, ArrowRight, User, Briefcase, FileText, Leaf, Code, ShoppingCart, Handshake, Loader2 } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient';
 
 interface ProfileCompletionBannerProps {
@@ -28,6 +28,7 @@ interface ProfileData {
 export function ProfileCompletionBanner({ userId, userEmail, onNavigate }: ProfileCompletionBannerProps) {
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSavingRole, setIsSavingRole] = useState(false);
   const [completionPercentage, setCompletionPercentage] = useState(0);
 
   useEffect(() => {
@@ -59,6 +60,47 @@ export function ProfileCompletionBanner({ userId, userEmail, onNavigate }: Profi
       setProfile(null);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleRoleSelect = async (roleId: string, rolePath: string) => {
+    if (!supabase) {
+      console.warn('Supabase not configured, navigating directly');
+      onNavigate(rolePath);
+      return;
+    }
+
+    setIsSavingRole(true);
+
+    try {
+      // Save role to profile
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .upsert({
+          user_id: userId,
+          role: roleId,
+          updated_at: new Date().toISOString()
+        }, {
+          onConflict: 'user_id'
+        });
+
+      if (updateError) {
+        console.error('Error saving role:', updateError);
+        throw updateError;
+      }
+
+      console.log('✅ Role saved:', roleId);
+
+      // Reload profile to update UI
+      await loadProfile();
+
+      // Navigate to questionnaire
+      onNavigate(rolePath);
+    } catch (error) {
+      console.error('❌ Failed to save role:', error);
+      alert('Failed to save role. Please try again.');
+    } finally {
+      setIsSavingRole(false);
     }
   };
 
@@ -176,10 +218,11 @@ export function ProfileCompletionBanner({ userId, userEmail, onNavigate }: Profi
                   return (
                     <motion.button
                       key={role.id}
-                      onClick={() => onNavigate(role.path)}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="flex items-start gap-3 p-4 bg-white rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:shadow-md transition-all text-left group"
+                      onClick={() => handleRoleSelect(role.id, role.path)}
+                      disabled={isSavingRole}
+                      whileHover={{ scale: isSavingRole ? 1 : 1.02 }}
+                      whileTap={{ scale: isSavingRole ? 1 : 0.98 }}
+                      className={`flex items-start gap-3 p-4 bg-white rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:shadow-md transition-all text-left group ${isSavingRole ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                       <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-blue-50 transition-colors">
                         <Icon className="w-5 h-5 text-slate-900 group-hover:text-blue-600 transition-colors" />
@@ -192,7 +235,11 @@ export function ProfileCompletionBanner({ userId, userEmail, onNavigate }: Profi
                           {role.description}
                         </p>
                       </div>
-                      <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors flex-shrink-0" />
+                      {isSavingRole ? (
+                        <Loader2 className="w-5 h-5 text-blue-600 animate-spin flex-shrink-0" />
+                      ) : (
+                        <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors flex-shrink-0" />
+                      )}
                     </motion.button>
                   );
                 })}
