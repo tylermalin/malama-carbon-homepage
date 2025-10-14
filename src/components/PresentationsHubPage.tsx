@@ -4,6 +4,7 @@ import { ExternalLink, Play, Calendar, Lock, ArrowLeft } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/card';
 import { Badge } from './ui/badge';
+import { Footer } from './Footer';
 import { PRESENTATIONS, PRESENTATION_SECONDARY } from '../config/presentations';
 import { getAndPersistReferralCode } from '../lib/referral';
 import { trackPresentationClick } from '../lib/track';
@@ -14,9 +15,53 @@ interface PresentationsHubPageProps {
   onShowPresentationBuyers: () => void;
   onShowPresentationProjects: () => void;
   onShowInvestor: () => void;
+  onShowDocumentation?: () => void;
+  onShowBlog?: () => void;
+  onShowPlatform?: () => void;
+  onShowHowItWorks?: () => void;
+  onShowAbout?: () => void;
+  onShowTeam?: () => void;
+  onShowContact?: () => void;
+  onShowCareers?: () => void;
+  onShowFAQ?: () => void;
+  onShowPrivacyPolicy?: () => void;
+  onShowTermsOfService?: () => void;
+  onShowCookiePolicy?: () => void;
+  onShowCarbonStudio?: () => void;
+  onShowCarbonProtocols?: () => void;
+  onShowDMRVEngine?: () => void;
+  onShowFinancials?: () => void;
+  onShowAdvisory?: () => void;
+  onShowPresentations?: () => void;
+  onShowProjectGallery?: () => void;
 }
 
-export function PresentationsHubPage({ onNavigate, onShowPresentation, onShowPresentationBuyers, onShowPresentationProjects, onShowInvestor }: PresentationsHubPageProps) {
+export function PresentationsHubPage({ 
+  onNavigate, 
+  onShowPresentation, 
+  onShowPresentationBuyers, 
+  onShowPresentationProjects, 
+  onShowInvestor,
+  onShowDocumentation,
+  onShowBlog,
+  onShowPlatform,
+  onShowHowItWorks,
+  onShowAbout,
+  onShowTeam,
+  onShowContact,
+  onShowCareers,
+  onShowFAQ,
+  onShowPrivacyPolicy,
+  onShowTermsOfService,
+  onShowCookiePolicy,
+  onShowCarbonStudio,
+  onShowCarbonProtocols,
+  onShowDMRVEngine,
+  onShowFinancials,
+  onShowAdvisory,
+  onShowPresentations,
+  onShowProjectGallery
+}: PresentationsHubPageProps) {
   const [refCode, setRefCode] = useState<string | null>(null);
 
   useEffect(() => {
@@ -240,6 +285,30 @@ export function PresentationsHubPage({ onNavigate, onShowPresentation, onShowPre
           </div>
         </div>
       </section>
+
+      <Footer 
+        onShowDocumentation={onShowDocumentation}
+        onShowBlog={onShowBlog}
+        onShowPlatform={onShowPlatform}
+        onShowHowItWorks={onShowHowItWorks}
+        onShowAbout={onShowAbout}
+        onShowTeam={onShowTeam}
+        onShowContact={onShowContact}
+        onShowCareers={onShowCareers}
+        onShowFAQ={onShowFAQ}
+        onShowPrivacyPolicy={onShowPrivacyPolicy}
+        onShowTermsOfService={onShowTermsOfService}
+        onShowCookiePolicy={onShowCookiePolicy}
+        onShowCarbonStudio={onShowCarbonStudio}
+        onShowCarbonProtocols={onShowCarbonProtocols}
+        onShowDMRVEngine={onShowDMRVEngine}
+        onShowFinancials={onShowFinancials}
+        onShowInvestor={onShowInvestor}
+        onShowAdvisory={onShowAdvisory}
+        onShowPresentation={onShowPresentation}
+        onShowPresentations={onShowPresentations}
+        onShowProjectGallery={onShowProjectGallery}
+      />
     </div>
   );
 }

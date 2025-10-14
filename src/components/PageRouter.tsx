@@ -729,6 +729,25 @@ export function PageRouter({
           onShowPresentationBuyers={showPresentationBuyers}
           onShowPresentationProjects={showPresentationProjects}
           onShowInvestor={showInvestor}
+          onShowDocumentation={showDocumentation}
+          onShowBlog={showBlog}
+          onShowPlatform={showPlatform}
+          onShowHowItWorks={showHowItWorks}
+          onShowAbout={showAbout}
+          onShowTeam={showTeam}
+          onShowContact={showContact}
+          onShowCareers={showCareers}
+          onShowFAQ={showFAQ}
+          onShowPrivacyPolicy={showPrivacyPolicy}
+          onShowTermsOfService={showTermsOfService}
+          onShowCookiePolicy={showCookiePolicy}
+          onShowCarbonStudio={showCarbonStudio}
+          onShowCarbonProtocols={showCarbonProtocols}
+          onShowDMRVEngine={showDMRVEngine}
+          onShowFinancials={showFinancials}
+          onShowAdvisory={showAdvisory}
+          onShowPresentations={showPresentations}
+          onShowProjectGallery={showProjectGallery}
         />
       );
     
