@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Calendar, Video, ExternalLink } from 'lucide-react';
 
-const CAL_LINK = import.meta.env.VITE_CAL_LINK || 'https://cal.com/malama/intro';
+const CAL_LINK = import.meta.env.VITE_CAL_LINK || 'https://cal.com/malamalabs';
 
 export function ScheduleCallCard() {
   const handleScheduleClick = () => {
