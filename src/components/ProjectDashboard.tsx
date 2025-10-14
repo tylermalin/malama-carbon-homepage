@@ -115,14 +115,20 @@ export function ProjectDashboard({ user }: ProjectDashboardProps) {
       const { data, error } = await projectAPI.getUserProjects(user.accessToken);
       
       if (error) {
-        setError(error);
+        console.warn('Project API not available:', error);
+        // Gracefully handle when backend isn't set up yet
+        setProjects([]);
+        setError('');
         return;
       }
 
       setProjects(data || []);
+      setError('');
     } catch (error) {
-      setError('Failed to load projects');
-      console.error('Load projects error:', error);
+      console.warn('Projects fetch failed (backend may not be configured):', error);
+      // Don't show error to user - just show empty state
+      setProjects([]);
+      setError('');
     } finally {
       setIsLoading(false);
     }
