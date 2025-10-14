@@ -45,6 +45,7 @@ import { PresentationPage } from './PresentationPage';
 import { PresentationsHubPage } from './PresentationsHubPage';
 import { BuyersPresentationPage } from './BuyersPresentationPage';
 import { ProjectsPresentationPage } from './ProjectsPresentationPage';
+import { AdminAnalyticsDashboard } from './AdminAnalyticsDashboard';
 import { Cpu, Flame, Coins } from 'lucide-react';
 
 interface PageRouterProps {
@@ -722,6 +723,14 @@ export function PageRouter({
         <AdvisoryBoardPage 
           onNavigate={navigateToSection}
           onContact={showContact}
+        />
+      );
+    
+    case 'admin':
+      return (
+        <AdminAnalyticsDashboard 
+          onNavigate={navigateToSection}
+          user={user}
         />
       );
     

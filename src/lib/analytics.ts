@@ -417,6 +417,94 @@ export async function updateProject(projectId: string, updates: Partial<{
 // 7. USER PROFILE MANAGEMENT
 // ============================================
 
+export async function uploadProfileImage(params: {
+  userId: string;
+  file: File;
+}): Promise<{ success: boolean; url?: string; error?: any }> {
+  try {
+    if (!supabase) {
+      console.log('📊 [Analytics] Profile image upload (Supabase not configured)');
+      return { success: false, error: 'Supabase not configured' };
+    }
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(params.file.type)) {
+      return { success: false, error: 'Invalid file type. Only JPEG, PNG, GIF, and WebP allowed.' };
+    }
+
+    // Validate file size (5MB)
+    if (params.file.size > 5 * 1024 * 1024) {
+      return { success: false, error: 'File too large. Maximum size is 5MB.' };
+    }
+
+    // Generate file path: {userId}/profile.{ext}
+    const fileExt = params.file.name.split('.').pop();
+    const filePath = `${params.userId}/profile.${fileExt}`;
+
+    // Delete existing profile image if any
+    const { data: existingFiles } = await supabase.storage
+      .from('profile-images')
+      .list(params.userId);
+
+    if (existingFiles && existingFiles.length > 0) {
+      const filesToDelete = existingFiles.map(file => `${params.userId}/${file.name}`);
+      await supabase.storage
+        .from('profile-images')
+        .remove(filesToDelete);
+    }
+
+    // Upload new image
+    const { data, error } = await supabase.storage
+      .from('profile-images')
+      .upload(filePath, params.file, {
+        cacheControl: '3600',
+        upsert: true
+      });
+
+    if (error) throw error;
+
+    // Get public URL
+    const { data: { publicUrl } } = supabase.storage
+      .from('profile-images')
+      .getPublicUrl(filePath);
+
+    console.log('✅ Profile image uploaded:', publicUrl);
+    return { success: true, url: publicUrl };
+  } catch (error) {
+    console.error('❌ Failed to upload profile image:', error);
+    return { success: false, error };
+  }
+}
+
+export async function getProfileImageUrl(userId: string): Promise<string | null> {
+  try {
+    if (!supabase) return null;
+
+    // List files in user's folder
+    const { data: files, error } = await supabase.storage
+      .from('profile-images')
+      .list(userId);
+
+    if (error) throw error;
+    if (!files || files.length === 0) return null;
+
+    // Get the most recent profile image
+    const profileImage = files.find(file => file.name.startsWith('profile.'));
+    if (!profileImage) return null;
+
+    const filePath = `${userId}/${profileImage.name}`;
+    const { data: { publicUrl } } = supabase.storage
+      .from('profile-images')
+      .getPublicUrl(filePath);
+
+    return publicUrl;
+  } catch (error) {
+    console.error('❌ Failed to get profile image URL:', error);
+    return null;
+  }
+}
+
 export async function createOrUpdateUserProfile(params: {
   userId: string;
   fullName: string;
@@ -615,6 +703,8 @@ export const analytics = {
   // Profiles
   createOrUpdateUserProfile,
   getUserProfile,
+  uploadProfileImage,
+  getProfileImageUrl,
   
   // Errors
   trackError,

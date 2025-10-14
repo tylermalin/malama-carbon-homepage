@@ -104,10 +104,24 @@ export function ProjectDashboard({ user }: ProjectDashboardProps) {
     'Coastal Restoration'
   ];
 
-  // Load user projects
+  // Load user projects and profile image
   useEffect(() => {
     loadProjects();
+    loadProfileImage();
   }, [user]);
+
+  const loadProfileImage = async () => {
+    try {
+      const { analytics } = await import('../lib/analytics');
+      const imageUrl = await analytics.getProfileImageUrl(user.id);
+      if (imageUrl) {
+        setProfileImage(imageUrl);
+        console.log('✅ Profile image loaded from Supabase:', imageUrl);
+      }
+    } catch (error) {
+      console.error('Failed to load profile image:', error);
+    }
+  };
 
   const loadProjects = async () => {
     try {
@@ -198,22 +212,78 @@ export function ProjectDashboard({ user }: ProjectDashboardProps) {
     };
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+
+    // Show preview immediately
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setProfileImage(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+
+    // Upload to Supabase Storage
+    try {
+      const { analytics } = await import('../lib/analytics');
+      const result = await analytics.uploadProfileImage({
+        userId: user.id,
+        file: file
+      });
+
+      if (result.success && result.url) {
+        console.log('✅ Profile image uploaded to Supabase:', result.url);
+        setProfileImage(result.url);
+        
+        // Update user profile with new image URL
+        await analytics.createOrUpdateUserProfile({
+          userId: user.id,
+          fullName: userProfile.name,
+          companyName: userProfile.company,
+          profileTypes: userProfile.profileTypes,
+          industry: userProfile.industry,
+          phone: userProfile.phone,
+          address: userProfile.address,
+          website: userProfile.website,
+          profileImageUrl: result.url
+        });
+      } else {
+        console.error('Failed to upload image:', result.error);
+        // Still keep the local preview
+      }
+    } catch (error) {
+      console.error('Image upload error:', error);
+      // Still keep the local preview
     }
   };
 
-  const handleSaveProfile = () => {
+  const handleSaveProfile = async () => {
     setUserProfile({ ...editableProfile });
     setIsEditProfileModalOpen(false);
-    // In production, save to database here
-    console.log('Profile saved:', editableProfile);
+    
+    // Save to Supabase
+    try {
+      const { analytics } = await import('../lib/analytics');
+      const result = await analytics.createOrUpdateUserProfile({
+        userId: user.id,
+        fullName: editableProfile.name,
+        companyName: editableProfile.company,
+        profileTypes: editableProfile.profileTypes,
+        industry: editableProfile.industry,
+        phone: editableProfile.phone,
+        address: editableProfile.address,
+        website: editableProfile.website,
+        profileImageUrl: profileImage || undefined
+      });
+      
+      if (result.success) {
+        console.log('✅ Profile saved to Supabase:', result.data);
+      } else {
+        console.error('Failed to save profile:', result.error);
+      }
+    } catch (error) {
+      console.error('Profile save error:', error);
+    }
   };
 
   const handleAddProfileType = (type: string) => {

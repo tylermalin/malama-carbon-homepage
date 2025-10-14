@@ -4,6 +4,7 @@ export type PageType =
   | 'home'
   | 'dashboard' 
   | 'dashboards'
+  | 'admin'
   | 'platform'
   | 'howItWorks'
   | 'getStarted'
@@ -39,6 +40,8 @@ const pathToPageMap: Record<string, PageType> = {
   '/advisory': 'advisory',
   '/advisoryboard': 'advisory',
   '/advisory-board': 'advisory',
+  '/admin': 'admin',
+  '/analytics': 'admin',
   '/presentation': 'presentation',
   '/presentations': 'presentations',
   '/presentations/buyers': 'presentationBuyers',
@@ -72,6 +75,7 @@ const pageToPathMap: Record<PageType, string> = {
   home: '/',
   investor: '/investors',
   advisory: '/advisory',
+  admin: '/admin',
   presentation: '/presentation',
   presentations: '/presentations',
   presentationBuyers: '/presentations/buyers',
@@ -119,6 +123,7 @@ export function useNavigation() {
         home: 'Mālama Labs - Digital Carbon Infrastructure',
         investor: 'Investor Portal | Mālama Labs',
         advisory: 'Advisory Board | Mālama Labs',
+        admin: 'Admin Analytics | Mālama Labs',
         presentation: 'Investor Presentation | Mālama Labs',
         presentations: 'Presentations | Mālama Labs',
         presentationBuyers: 'CO₂.0 for Buyers | Mālama Labs',
