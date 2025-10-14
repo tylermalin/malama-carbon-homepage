@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Your Email - Mālama Labs</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8fafc;">
+    <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f8fafc;">
+        <tr>
+            <td align="center" style="padding: 40px 20px;">
+                <table role="presentation" style="max-width: 600px; width: 100%; background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <!-- Header with Logo -->
+                    <tr>
+                        <td style="padding: 40px 40px 0; text-align: center; background: linear-gradient(135deg, #1b4332 0%, #0a3d3f 100%); border-radius: 12px 12px 0 0;">
+                            <div style="width: 80px; height: 80px; margin: 0 auto 20px; background-color: #10b981; border-radius: 16px; display: flex; align-items: center; justify-content: center;">
+                                <span style="color: #ffffff; font-size: 36px; font-weight: bold; line-height: 1;">M</span>
+                            </div>
+                            <h1 style="margin: 0 0 20px; color: #ffffff; font-size: 28px; font-weight: 600;">Mālama Labs</h1>
+                        </td>
+                    </tr>
+                    
+                    <!-- Main Content -->
+                    <tr>
+                        <td style="padding: 40px;">
+                            <h2 style="margin: 0 0 20px; color: #1e293b; font-size: 24px; font-weight: 600;">Thank you for registering! 🌱</h2>
+                            
+                            <p style="margin: 0 0 20px; color: #475569; font-size: 16px; line-height: 1.6;">
+                                We're excited to have you join our mission to accelerate carbon removal and create a more sustainable future.
+                            </p>
+                            
+                            <p style="margin: 0 0 30px; color: #475569; font-size: 16px; line-height: 1.6;">
+                                To get started, please verify your email address by clicking the button below:
+                            </p>
+                            
+                            <!-- CTA Button -->
+                            <table role="presentation" style="margin: 0 0 30px;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="{{ .ConfirmationURL }}" style="display: inline-block; padding: 16px 40px; background: linear-gradient(135deg, #1b4332 0%, #0a3d3f 100%); color: #ffffff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                                            Verify Email Address
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <p style="margin: 0 0 20px; color: #64748b; font-size: 14px; line-height: 1.6;">
+                                If the button doesn't work, copy and paste this link into your browser:
+                            </p>
+                            <p style="margin: 0 0 30px; color: #0ea5e9; font-size: 14px; word-break: break-all;">
+                                {{ .ConfirmationURL }}
+                            </p>
+                            
+                            <!-- Divider -->
+                            <div style="border-top: 1px solid #e2e8f0; margin: 30px 0;"></div>
+                            
+                            <!-- Help Section -->
+                            <h3 style="margin: 0 0 15px; color: #1e293b; font-size: 18px; font-weight: 600;">Have questions?</h3>
+                            <p style="margin: 0 0 20px; color: #475569; font-size: 16px; line-height: 1.6;">
+                                We're here to help! Reach out to our team at:
+                            </p>
+                            <p style="margin: 0; color: #0ea5e9; font-size: 16px; font-weight: 600;">
+                                <a href="mailto:aloha@malamalabs.com" style="color: #0ea5e9; text-decoration: none;">aloha@malamalabs.com</a>
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding: 30px 40px; background-color: #f8fafc; border-radius: 0 0 12px 12px; text-align: center;">
+                            <p style="margin: 0 0 10px; color: #64748b; font-size: 14px;">
+                                This email was sent to <strong>{{ .Email }}</strong>
+                            </p>
+                            <p style="margin: 0 0 15px; color: #64748b; font-size: 14px;">
+                                If you didn't create an account with Mālama Labs, you can safely ignore this email.
+                            </p>
+                            <p style="margin: 0; color: #94a3b8; font-size: 12px;">
+                                © 2025 Mālama Labs Inc. • 505 E Kuiaha Rd, Haiku, HI 96708
+                            </p>
+                            <p style="margin: 10px 0 0; color: #94a3b8; font-size: 12px;">
+                                <a href="https://malamalabs.com/privacy" style="color: #94a3b8; text-decoration: none;">Privacy Policy</a> • 
+                                <a href="https://malamalabs.com/terms" style="color: #94a3b8; text-decoration: none;">Terms of Use</a>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+
