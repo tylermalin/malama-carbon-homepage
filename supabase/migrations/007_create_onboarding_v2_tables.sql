@@ -21,6 +21,11 @@ CREATE INDEX IF NOT EXISTS idx_profiles_role ON public.profiles(role);
 -- Enable RLS
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policies if they exist (for idempotency)
+DROP POLICY IF EXISTS "Users can view own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Users can insert own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
+
 -- RLS Policies: Users can only access their own profile
 CREATE POLICY "Users can view own profile"
 ON public.profiles FOR SELECT
@@ -73,6 +78,9 @@ CREATE INDEX IF NOT EXISTS idx_task_templates_role ON public.task_templates(role
 -- Make task_templates publicly readable (templates are not sensitive)
 ALTER TABLE public.task_templates ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policy if it exists (for idempotency)
+DROP POLICY IF EXISTS "Task templates are publicly readable" ON public.task_templates;
+
 CREATE POLICY "Task templates are publicly readable"
 ON public.task_templates FOR SELECT
 TO authenticated
@@ -101,6 +109,12 @@ CREATE INDEX IF NOT EXISTS idx_user_tasks_status ON public.user_tasks(status);
 
 -- Enable RLS
 ALTER TABLE public.user_tasks ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policies if they exist (for idempotency)
+DROP POLICY IF EXISTS "Users can view own tasks" ON public.user_tasks;
+DROP POLICY IF EXISTS "Users can insert own tasks" ON public.user_tasks;
+DROP POLICY IF EXISTS "Users can update own tasks" ON public.user_tasks;
+DROP POLICY IF EXISTS "Users can delete own tasks" ON public.user_tasks;
 
 -- RLS Policies: Users can only access their own tasks
 CREATE POLICY "Users can view own tasks"
@@ -158,6 +172,11 @@ CREATE INDEX IF NOT EXISTS idx_onboarding_answers_role ON public.onboarding_answ
 
 -- Enable RLS
 ALTER TABLE public.onboarding_answers ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policies if they exist (for idempotency)
+DROP POLICY IF EXISTS "Users can view own answers" ON public.onboarding_answers;
+DROP POLICY IF EXISTS "Users can insert own answers" ON public.onboarding_answers;
+DROP POLICY IF EXISTS "Users can update own answers" ON public.onboarding_answers;
 
 -- RLS Policies: Users can only access their own answers
 CREATE POLICY "Users can view own answers"
