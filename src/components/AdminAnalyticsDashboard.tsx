@@ -273,31 +273,54 @@ export function AdminAnalyticsDashboard({ onNavigate, onShowGetStarted, user }: 
     if (!supabase) return;
 
     try {
-      // Get all users from auth.users (via profiles)
-      const { data: profilesData, error: profilesError } = await supabase
-        .from('profiles')
-        .select('*')
-        .order('created_at', { ascending: false });
+      // Get all users with full auth data
+      const { data: { users: authUsers }, error: authError } = await supabase.auth.admin.listUsers();
 
-      if (profilesError) throw profilesError;
+      if (authError) {
+        console.error('Error loading auth users:', authError);
+        // Fallback to profiles if admin API fails
+        const { data: profilesData, error: profilesError } = await supabase
+          .from('profiles')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (profilesError) throw profilesError;
+
+        setAllUsers((profilesData || []).map(p => ({
+          ...p,
+          id: p.user_id,
+          email: p.email || 'N/A'
+        })));
+        return;
+      }
+
+      // Get profiles for additional info
+      const { data: profilesData } = await supabase
+        .from('profiles')
+        .select('*');
 
       // Get user_profiles for additional info
       const { data: userProfilesData } = await supabase
         .from('user_profiles')
         .select('*');
 
-      // Merge data
-      const mergedUsers = (profilesData || []).map(profile => {
-        const userProfile = (userProfilesData || []).find(up => up.user_id === profile.user_id);
+      // Merge auth data with profile data
+      const mergedUsers = (authUsers || []).map(authUser => {
+        const profile = (profilesData || []).find(p => p.user_id === authUser.id);
+        const userProfile = (userProfilesData || []).find(up => up.user_id === authUser.id);
         return {
+          id: authUser.id,
+          email: authUser.email,
+          email_confirmed_at: authUser.email_confirmed_at,
+          last_sign_in_at: authUser.last_sign_in_at,
+          created_at: authUser.created_at,
           ...profile,
           ...userProfile,
-          id: profile.user_id
         };
       });
 
       setAllUsers(mergedUsers);
-      console.log('✅ Loaded users:', mergedUsers.length);
+      console.log('✅ Loaded users from auth.users:', mergedUsers.length);
     } catch (error) {
       console.error('Error loading users:', error);
       setAllUsers([]);
@@ -346,25 +369,59 @@ export function AdminAnalyticsDashboard({ onNavigate, onShowGetStarted, user }: 
     }
   };
 
-  const deleteUser = async (userId: string) => {
-    if (!supabase || !confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+  const sendEmailToUser = async (userEmail: string, userName: string) => {
+    if (!supabase) return;
+
+    const customMessage = prompt(
+      `Send magic link to ${userName} (${userEmail})?\n\nOptional: Add a personal message:`,
+      'You have been invited to sign in to Mālama Labs.'
+    );
+
+    if (customMessage === null) return; // User cancelled
+
+    try {
+      // Send magic link using Supabase Auth
+      const { error } = await supabase.auth.signInWithOtp({
+        email: userEmail,
+        options: {
+          emailRedirectTo: `${window.location.origin}/dashboard`,
+        }
+      });
+
+      if (error) throw error;
+
+      alert(`✅ Magic link sent to ${userEmail}`);
+    } catch (error: any) {
+      console.error('Error sending email:', error);
+      alert(`❌ Failed to send email: ${error.message || 'Unknown error'}`);
+    }
+  };
+
+  const deleteUser = async (userId: string, userEmail: string) => {
+    if (!supabase || !confirm(`⚠️ Delete user ${userEmail}?\n\nThis will:\n- Delete their profile\n- Delete all their projects\n- Delete all their tasks\n\nThis action CANNOT be undone!`)) {
       return;
     }
 
     try {
-      // Delete profile (cascade will handle related records)
-      const { error } = await supabase
-        .from('profiles')
-        .delete()
-        .eq('user_id', userId);
+      // Delete from auth.users (admin API)
+      const { error: authError } = await supabase.auth.admin.deleteUser(userId);
 
-      if (error) throw error;
+      if (authError) {
+        console.error('Auth delete error:', authError);
+        // Try deleting profile instead
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .delete()
+          .eq('user_id', userId);
 
-      alert('User deleted successfully');
+        if (profileError) throw profileError;
+      }
+
+      alert('✅ User deleted successfully');
       loadAllUsers();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error deleting user:', error);
-      alert('Failed to delete user');
+      alert(`❌ Failed to delete user: ${error.message || 'Unknown error'}`);
     }
   };
 
@@ -1051,6 +1108,8 @@ export function AdminAnalyticsDashboard({ onNavigate, onShowGetStarted, user }: 
                   className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                 >
                   <option value="all">All Users</option>
+                  <option value="verified">✅ Verified Email</option>
+                  <option value="unverified">❌ Unverified Email</option>
                   <option value="PROJECT_DEVELOPER">Project Developers</option>
                   <option value="TECHNOLOGY_DEVELOPER">Tech Developers</option>
                   <option value="CREDIT_BUYER">Credit Buyers</option>
@@ -1064,13 +1123,27 @@ export function AdminAnalyticsDashboard({ onNavigate, onShowGetStarted, user }: 
                 <CardTitle className="flex items-center justify-between">
                   <span className="flex items-center gap-2">
                     <Users className="w-5 h-5 text-primary" />
-                    Registered Users ({allUsers.filter(u => 
-                      (userFilter === 'all' || u.role === userFilter) &&
-                      (searchTerm === '' || 
-                        u.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                        u.org_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                        u.email?.toLowerCase().includes(searchTerm.toLowerCase()))
-                    ).length})
+                    Registered Users ({allUsers.filter(u => {
+                      // Role filter
+                      const roleMatch = userFilter === 'all' || 
+                                       userFilter === 'verified' || 
+                                       userFilter === 'unverified' || 
+                                       u.role === userFilter;
+                      
+                      // Email verification filter
+                      const emailVerifiedMatch = userFilter === 'all' || 
+                                                 (userFilter === 'verified' && u.email_confirmed_at) ||
+                                                 (userFilter === 'unverified' && !u.email_confirmed_at) ||
+                                                 (userFilter !== 'verified' && userFilter !== 'unverified');
+                      
+                      // Search filter
+                      const searchMatch = searchTerm === '' || 
+                                         u.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                         u.org_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                         u.email?.toLowerCase().includes(searchTerm.toLowerCase());
+                      
+                      return roleMatch && emailVerifiedMatch && searchMatch;
+                    }).length})
                   </span>
                   <Button variant="outline" size="sm" onClick={loadAllUsers}>
                     <RefreshCw className="w-4 h-4 mr-2" />
@@ -1086,39 +1159,83 @@ export function AdminAnalyticsDashboard({ onNavigate, onShowGetStarted, user }: 
                     <table className="w-full">
                       <thead className="bg-slate-50 border-b">
                         <tr>
-                          <th className="text-left p-3 text-sm font-semibold text-gray-700">Name</th>
-                          <th className="text-left p-3 text-sm font-semibold text-gray-700">Organization</th>
+                          <th className="text-left p-3 text-sm font-semibold text-gray-700">User</th>
+                          <th className="text-left p-3 text-sm font-semibold text-gray-700">Email Status</th>
                           <th className="text-left p-3 text-sm font-semibold text-gray-700">Role</th>
+                          <th className="text-left p-3 text-sm font-semibold text-gray-700">Last Sign In</th>
                           <th className="text-left p-3 text-sm font-semibold text-gray-700">Created</th>
                           <th className="text-right p-3 text-sm font-semibold text-gray-700">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
                         {allUsers
-                          .filter(u => 
-                            (userFilter === 'all' || u.role === userFilter) &&
-                            (searchTerm === '' || 
-                              u.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                              u.org_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                              u.email?.toLowerCase().includes(searchTerm.toLowerCase()))
-                          )
+                          .filter(u => {
+                            // Role filter
+                            const roleMatch = userFilter === 'all' || 
+                                             userFilter === 'verified' || 
+                                             userFilter === 'unverified' || 
+                                             u.role === userFilter;
+                            
+                            // Email verification filter
+                            const emailVerifiedMatch = userFilter === 'all' || 
+                                                       (userFilter === 'verified' && u.email_confirmed_at) ||
+                                                       (userFilter === 'unverified' && !u.email_confirmed_at) ||
+                                                       (userFilter !== 'verified' && userFilter !== 'unverified');
+                            
+                            // Search filter
+                            const searchMatch = searchTerm === '' || 
+                                               u.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                               u.org_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                               u.email?.toLowerCase().includes(searchTerm.toLowerCase());
+                            
+                            return roleMatch && emailVerifiedMatch && searchMatch;
+                          })
                           .map((user) => (
                           <tr key={user.id} className="border-b hover:bg-slate-50 transition-colors">
                             <td className="p-3">
                               <div>
-                                <p className="font-medium text-gray-900">{user.full_name || 'N/A'}</p>
-                                <p className="text-sm text-gray-500">{user.email || user.user_id}</p>
+                                <p className="font-medium text-gray-900">{user.full_name || user.email || 'N/A'}</p>
+                                <p className="text-sm text-gray-500">{user.email}</p>
+                                {user.org_name || user.company_name ? (
+                                  <p className="text-xs text-gray-400">{user.org_name || user.company_name}</p>
+                                ) : null}
                               </div>
                             </td>
-                            <td className="p-3 text-gray-700">{user.org_name || user.company_name || '—'}</td>
+                            <td className="p-3">
+                              <div className="space-y-1">
+                                <Badge 
+                                  variant={user.email_confirmed_at ? 'default' : 'destructive'}
+                                  className={user.email_confirmed_at ? 'bg-green-500' : 'bg-yellow-500'}
+                                >
+                                  {user.email_confirmed_at ? '✅ Verified' : '❌ Unverified'}
+                                </Badge>
+                                {user.email_confirmed_at && (
+                                  <p className="text-xs text-gray-500">
+                                    {new Date(user.email_confirmed_at).toLocaleDateString()}
+                                  </p>
+                                )}
+                              </div>
+                            </td>
                             <td className="p-3">
                               <Badge variant={
                                 user.role === 'PROJECT_DEVELOPER' ? 'default' :
                                 user.role === 'CREDIT_BUYER' ? 'secondary' :
                                 'outline'
                               }>
-                                {user.role || 'N/A'}
+                                {user.role || 'No Profile'}
                               </Badge>
+                            </td>
+                            <td className="p-3 text-sm text-gray-600">
+                              {user.last_sign_in_at ? (
+                                <div>
+                                  <p>{new Date(user.last_sign_in_at).toLocaleDateString()}</p>
+                                  <p className="text-xs text-gray-400">
+                                    {new Date(user.last_sign_in_at).toLocaleTimeString()}
+                                  </p>
+                                </div>
+                              ) : (
+                                <span className="text-gray-400">Never</span>
+                              )}
                             </td>
                             <td className="p-3 text-sm text-gray-600">
                               {user.created_at ? new Date(user.created_at).toLocaleDateString() : '—'}
@@ -1128,18 +1245,29 @@ export function AdminAnalyticsDashboard({ onNavigate, onShowGetStarted, user }: 
                                 <Button 
                                   variant="ghost" 
                                   size="sm"
-                                  onClick={() => {
-                                    const info = `User ID: ${user.id}\nName: ${user.full_name}\nEmail: ${user.email || 'N/A'}\nRole: ${user.role}\nOrganization: ${user.org_name || user.company_name || 'N/A'}\nCreated: ${user.created_at ? new Date(user.created_at).toLocaleString() : 'N/A'}`;
-                                    alert(info);
-                                  }}
+                                  onClick={() => sendEmailToUser(user.email, user.full_name || user.email)}
+                                  className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                                  title="Send magic link email"
                                 >
-                                  <Edit className="w-4 h-4" />
+                                  <Send className="w-4 h-4" />
                                 </Button>
                                 <Button 
                                   variant="ghost" 
                                   size="sm"
-                                  onClick={() => deleteUser(user.id)}
+                                  onClick={() => {
+                                    const info = `User ID: ${user.id}\nName: ${user.full_name || 'N/A'}\nEmail: ${user.email}\nEmail Verified: ${user.email_confirmed_at ? 'Yes' : 'No'}\nRole: ${user.role || 'No profile'}\nOrganization: ${user.org_name || user.company_name || 'N/A'}\nCreated: ${user.created_at ? new Date(user.created_at).toLocaleString() : 'N/A'}\nLast Sign In: ${user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleString() : 'Never'}`;
+                                    alert(info);
+                                  }}
+                                  title="View user details"
+                                >
+                                  <Eye className="w-4 h-4" />
+                                </Button>
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm"
+                                  onClick={() => deleteUser(user.id, user.email)}
                                   className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                                  title="Delete user (permanent)"
                                 >
                                   <Trash2 className="w-4 h-4" />
                                 </Button>
