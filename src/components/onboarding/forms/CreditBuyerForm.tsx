@@ -386,7 +386,7 @@ export function CreditBuyerForm({ onComplete }: CreditBuyerFormProps) {
                     </Button>
                     <Button
                       type="submit"
-                      className="flex-1 bg-gradient-to-r from-purple-500 to-pink-600"
+                      className="flex-1 bg-slate-900 text-white hover:bg-slate-800"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (

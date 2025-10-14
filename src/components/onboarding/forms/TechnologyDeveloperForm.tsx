@@ -351,7 +351,7 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
                     </Button>
                     <Button
                       type="submit"
-                      className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600"
+                      className="flex-1 bg-slate-900 text-white hover:bg-slate-800"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (

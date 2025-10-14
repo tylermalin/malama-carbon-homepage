@@ -434,7 +434,7 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
                     </Button>
                     <Button
                       type="submit"
-                      className="flex-1 bg-gradient-to-r from-emerald-500 to-green-600"
+                      className="flex-1 bg-slate-900 text-white hover:bg-slate-800"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (
