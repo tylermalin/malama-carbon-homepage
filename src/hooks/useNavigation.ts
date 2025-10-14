@@ -44,7 +44,12 @@ export type PageType =
   | 'presentation'
   | 'presentations'
   | 'presentationBuyers'
-  | 'presentationProjects';
+  | 'presentationProjects'
+  | 'onboardingV2'
+  | 'onboardingV2ProjectDeveloper'
+  | 'onboardingV2TechDeveloper'
+  | 'onboardingV2CreditBuyer'
+  | 'onboardingV2Partner';
 
 // Map URL paths to page types
 const pathToPageMap: Record<string, PageType> = {
@@ -84,6 +89,11 @@ const pathToPageMap: Record<string, PageType> = {
   '/dashboard': 'dashboard',
   '/dashboards': 'dashboards',
   '/land-steward': 'landSteward',
+  '/onboarding/v2': 'onboardingV2',
+  '/onboarding/v2/project-developer': 'onboardingV2ProjectDeveloper',
+  '/onboarding/v2/technology-developer': 'onboardingV2TechDeveloper',
+  '/onboarding/v2/credit-buyer': 'onboardingV2CreditBuyer',
+  '/onboarding/v2/partner': 'onboardingV2Partner',
 };
 
 // Map page types to URL paths
@@ -119,6 +129,11 @@ const pageToPathMap: Record<PageType, string> = {
   dmrvEngine: '/dmrv-engine',
   timeline: '/timeline',
   financials: '/financials',
+  onboardingV2: '/onboarding/v2',
+  onboardingV2ProjectDeveloper: '/onboarding/v2/project-developer',
+  onboardingV2TechDeveloper: '/onboarding/v2/technology-developer',
+  onboardingV2CreditBuyer: '/onboarding/v2/credit-buyer',
+  onboardingV2Partner: '/onboarding/v2/partner',
 };
 
 function getInitialPage(): PageType {

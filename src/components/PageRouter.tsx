@@ -50,6 +50,14 @@ import { AdminAnalyticsDashboard } from './AdminAnalyticsDashboard';
 import { StorageTest } from './StorageTest';
 import { Cpu, Flame, Coins } from 'lucide-react';
 
+// Onboarding V2 Components
+import { RoleSelectionV2 } from './onboarding/RoleSelectionV2';
+import { ProjectDeveloperForm } from './onboarding/forms/ProjectDeveloperForm';
+import { TechnologyDeveloperForm } from './onboarding/forms/TechnologyDeveloperForm';
+import { CreditBuyerForm } from './onboarding/forms/CreditBuyerForm';
+import { PartnerForm } from './onboarding/forms/PartnerForm';
+import { UserRole } from '../lib/onboardingV2';
+
 interface PageRouterProps {
   currentPage: PageType;
   user: AuthUser | null;
@@ -99,6 +107,19 @@ export function PageRouter({
     console.log('Account created with user type:', userType);
     setUserType(userType as 'steward' | 'developer' | 'buyer' | 'partner' | undefined);
     onAccountCreated(userData);
+  };
+
+  const handleRoleSelect = (role: UserRole) => {
+    console.log('Role selected:', role);
+    const roleToPageMap: Record<UserRole, string> = {
+      'PROJECT_DEVELOPER': '/onboarding/v2/project-developer',
+      'TECHNOLOGY_DEVELOPER': '/onboarding/v2/technology-developer',
+      'CREDIT_BUYER': '/onboarding/v2/credit-buyer',
+      'PARTNER': '/onboarding/v2/partner',
+    };
+    const targetPath = roleToPageMap[role];
+    window.history.pushState({}, '', targetPath);
+    window.dispatchEvent(new PopStateEvent('popstate'));
   };
   const {
     showPlatform,
@@ -713,6 +734,21 @@ export function PageRouter({
     
     case 'storageTest':
       return <StorageTest />;
+    
+    case 'onboardingV2':
+      return <RoleSelectionV2 onRoleSelect={handleRoleSelect} />;
+    
+    case 'onboardingV2ProjectDeveloper':
+      return <ProjectDeveloperForm onComplete={() => navigateToSection('dashboard')} />;
+    
+    case 'onboardingV2TechDeveloper':
+      return <TechnologyDeveloperForm onComplete={() => navigateToSection('dashboard')} />;
+    
+    case 'onboardingV2CreditBuyer':
+      return <CreditBuyerForm onComplete={() => navigateToSection('dashboard')} />;
+    
+    case 'onboardingV2Partner':
+      return <PartnerForm onComplete={() => navigateToSection('dashboard')} />;
     
     case 'presentation':
       return (
