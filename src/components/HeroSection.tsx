@@ -3,6 +3,21 @@ import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import malamaLogo from '../assets/malamalabbs.png';
 
+// Track CTA clicks
+async function trackCTA(buttonLabel: string, destination: string) {
+  try {
+    const { analytics } = await import('../lib/analytics');
+    await analytics.trackCTAClick({
+      buttonLabel,
+      buttonLocation: 'hero',
+      pageName: 'home',
+      destination
+    });
+  } catch (error) {
+    console.error('Failed to track CTA:', error);
+  }
+}
+
 interface HeroSectionProps {
   onExplorePlatform?: () => void;
   onHowItWorks?: () => void;
@@ -75,7 +90,10 @@ export function HeroSection({ onExplorePlatform, onHowItWorks, onStartProject, o
         >
           <Button 
             size="lg" 
-            onClick={onStartProject}
+            onClick={() => {
+              trackCTA('Start Your Project', '/get-started');
+              onStartProject?.();
+            }}
             className="bg-white text-primary hover:bg-white/90 hover:shadow-lg transition-all duration-300 hover:scale-105"
           >
             Start Your Project
@@ -83,7 +101,10 @@ export function HeroSection({ onExplorePlatform, onHowItWorks, onStartProject, o
           <Button 
             variant="outline" 
             size="lg"
-            onClick={onLandSteward}
+            onClick={() => {
+              trackCTA('For Project Developers', '/land-steward');
+              onLandSteward?.();
+            }}
             className="border-white text-[rgba(0,0,0,1)] hover:bg-white hover:text-primary transition-all duration-300 hover:shadow-lg hover:scale-105"
           >
             For Project Developers
@@ -91,7 +112,10 @@ export function HeroSection({ onExplorePlatform, onHowItWorks, onStartProject, o
           <Button 
             variant="outline" 
             size="lg"
-            onClick={onExplorePlatform}
+            onClick={() => {
+              trackCTA('Explore the Platform', '/platform');
+              onExplorePlatform?.();
+            }}
             className="border-white text-[rgba(0,0,0,1)] hover:bg-white hover:text-primary transition-all duration-300 hover:shadow-lg hover:scale-105"
           >
             Explore the Platform
@@ -99,7 +123,10 @@ export function HeroSection({ onExplorePlatform, onHowItWorks, onStartProject, o
           <Button 
             variant="outline" 
             size="lg"
-            onClick={onHowItWorks}
+            onClick={() => {
+              trackCTA('How It Works', '/how-it-works');
+              onHowItWorks?.();
+            }}
             className="border-white text-[rgba(0,0,0,1)] hover:bg-white hover:text-primary transition-all duration-300 hover:shadow-lg hover:scale-105"
           >
             How It Works

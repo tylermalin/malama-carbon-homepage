@@ -1,5 +1,18 @@
 import { useState, useEffect } from 'react';
 
+// Track page views
+async function trackPageView(pageName: string, pagePath: string) {
+  try {
+    const { analytics } = await import('../lib/analytics');
+    await analytics.trackPageView({
+      pageName,
+      pagePath
+    });
+  } catch (error) {
+    console.error('Failed to track page view:', error);
+  }
+}
+
 export type PageType = 
   | 'home'
   | 'dashboard' 
@@ -121,6 +134,9 @@ export function useNavigation() {
     const newPath = pageToPathMap[currentPage] || '/';
     if (window.location.pathname !== newPath) {
       window.history.pushState({}, '', newPath);
+      
+      // Track page view
+      trackPageView(currentPage, newPath);
       
       // Update page title
       const pageTitles: Record<PageType, string> = {
