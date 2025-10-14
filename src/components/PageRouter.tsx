@@ -706,6 +706,7 @@ export function PageRouter({
       return (
         <AdminAnalyticsDashboard 
           onNavigate={navigateToSection}
+          onShowGetStarted={showGetStarted}
           user={user}
         />
       );

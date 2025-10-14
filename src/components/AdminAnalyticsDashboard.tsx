@@ -24,12 +24,16 @@ import {
   BarChart3,
   Activity,
   Globe,
-  Zap
+  Zap,
+  Lock,
+  Shield,
+  LogIn
 } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 
 interface AdminAnalyticsDashboardProps {
   onNavigate: () => void;
+  onShowGetStarted?: () => void;
   user: any;
 }
 
@@ -41,8 +45,10 @@ interface MetricCard {
   color: string;
 }
 
-export function AdminAnalyticsDashboard({ onNavigate, user }: AdminAnalyticsDashboardProps) {
+export function AdminAnalyticsDashboard({ onNavigate, onShowGetStarted, user }: AdminAnalyticsDashboardProps) {
   const [isLoading, setIsLoading] = useState(true);
+  const [isCheckingAdmin, setIsCheckingAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [timeRange, setTimeRange] = useState('30'); // days
   const [metrics, setMetrics] = useState({
     totalUsers: 0,
@@ -64,9 +70,16 @@ export function AdminAnalyticsDashboard({ onNavigate, user }: AdminAnalyticsDash
   const [referralStats, setReferralStats] = useState<any[]>([]);
   const [errorStats, setErrorStats] = useState<any[]>([]);
 
+  // Check admin status on mount
   useEffect(() => {
-    loadAnalytics();
-  }, [timeRange]);
+    checkAdminStatus();
+  }, [user]);
+
+  useEffect(() => {
+    if (isAdmin) {
+      loadAnalytics();
+    }
+  }, [timeRange, isAdmin]);
 
   const loadAnalytics = async () => {
     setIsLoading(true);
@@ -226,6 +239,46 @@ export function AdminAnalyticsDashboard({ onNavigate, user }: AdminAnalyticsDash
     setIsLoading(false);
   };
 
+  const checkAdminStatus = async () => {
+    setIsCheckingAdmin(true);
+    
+    try {
+      // First check if user is logged in
+      if (!user) {
+        setIsAdmin(false);
+        setIsCheckingAdmin(false);
+        return;
+      }
+
+      // Check if Supabase is configured
+      if (!supabase) {
+        console.warn('Supabase not configured - defaulting to non-admin');
+        setIsAdmin(false);
+        setIsCheckingAdmin(false);
+        return;
+      }
+
+      // Query admin_users table to check if user is admin
+      const { data: adminData, error } = await supabase
+        .from('admin_users')
+        .select('email')
+        .eq('email', user.email)
+        .single();
+
+      if (error) {
+        console.warn('Error checking admin status:', error);
+        setIsAdmin(false);
+      } else {
+        setIsAdmin(!!adminData);
+      }
+    } catch (error) {
+      console.error('Error verifying admin access:', error);
+      setIsAdmin(false);
+    } finally {
+      setIsCheckingAdmin(false);
+    }
+  };
+
   const exportData = async (tableName: string) => {
     if (!supabase) {
       alert('Supabase not configured');
@@ -323,6 +376,109 @@ export function AdminAnalyticsDashboard({ onNavigate, user }: AdminAnalyticsDash
     },
   ];
 
+  // Show loading while checking admin status
+  if (isCheckingAdmin) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
+        <div className="text-center">
+          <Shield className="w-16 h-16 text-primary animate-pulse mx-auto mb-4" />
+          <p className="text-lg text-muted-foreground">Verifying access...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login prompt if user is not logged in
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-md w-full mx-4"
+        >
+          <Card className="shadow-2xl">
+            <CardHeader className="text-center pb-4">
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <LogIn className="w-10 h-10 text-white" />
+              </div>
+              <CardTitle className="text-2xl">Admin Access Required</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center space-y-6">
+              <p className="text-muted-foreground">
+                You need to sign in with an admin account to access the analytics dashboard.
+              </p>
+              <div className="space-y-3">
+                <Button 
+                  className="w-full" 
+                  size="lg"
+                  onClick={onShowGetStarted}
+                >
+                  <LogIn className="w-5 h-5 mr-2" />
+                  Sign In to Admin Account
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={onNavigate}
+                >
+                  <ArrowLeft className="w-5 h-5 mr-2" />
+                  Back to Home
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // Show access denied if user is logged in but not admin
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-md w-full mx-4"
+        >
+          <Card className="shadow-2xl border-red-200">
+            <CardHeader className="text-center pb-4">
+              <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Lock className="w-10 h-10 text-white" />
+              </div>
+              <CardTitle className="text-2xl text-red-600">Access Denied</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center space-y-6">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <p className="text-sm text-red-800 font-medium mb-2">
+                  Admin Privileges Required
+                </p>
+                <p className="text-sm text-red-600">
+                  Your account ({user.email}) does not have admin access to this dashboard.
+                </p>
+              </div>
+              <p className="text-muted-foreground text-sm">
+                If you believe you should have access, please contact an administrator.
+              </p>
+              <div className="space-y-3">
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={onNavigate}
+                >
+                  <ArrowLeft className="w-5 h-5 mr-2" />
+                  Back to Home
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // Show loading while fetching analytics data
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
@@ -334,6 +490,7 @@ export function AdminAnalyticsDashboard({ onNavigate, user }: AdminAnalyticsDash
     );
   }
 
+  // Show admin dashboard
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       {/* Header */}
