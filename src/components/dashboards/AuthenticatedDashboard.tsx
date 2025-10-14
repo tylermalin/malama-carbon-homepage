@@ -10,6 +10,7 @@ import { NextStepsCard } from '../dashboard/NextStepsCard';
 import { ProcessOverviewCard } from '../dashboard/ProcessOverviewCard';
 import { ScheduleCallCard } from '../dashboard/ScheduleCallCard';
 import { ProfileCompletionBanner } from '../dashboard/ProfileCompletionBanner';
+import { QuestionnaireTodoCard } from '../dashboard/QuestionnaireTodoCard';
 
 interface AuthenticatedDashboardProps {
   user: {
@@ -201,7 +202,14 @@ function DefaultDashboardWithOnboarding({ user }: AuthenticatedDashboardProps) {
           
           {/* Dashboard Cards */}
           <div className="grid md:grid-cols-3 gap-6 mt-8">
+            {/* Questionnaire To-Do (if role selected but not completed) */}
+            <QuestionnaireTodoCard 
+              userId={user.id}
+              onNavigate={handleNavigate}
+            />
+            
             <ProcessOverviewCard userId={user.id} />
+            
             <div className="md:col-span-2">
               <NextStepsCard userId={user.id} />
             </div>
