@@ -60,7 +60,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
         setSubmitStatus('success');
         console.log('✅ Form submitted successfully to database');
         
-        // Reset form after 2 seconds
+        // Reset form after 4 seconds (give user time to see success message)
         setTimeout(() => {
           setFormData({
             name: '',
@@ -70,7 +70,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
             message: ''
           });
           setSubmitStatus('idle');
-        }, 2000);
+        }, 4000);
       } else if (result.fallbackToMailto) {
         // Fallback to mailto if Supabase fails
         console.warn('⚠️ Supabase not configured, falling back to mailto');
