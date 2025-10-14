@@ -127,7 +127,7 @@ import { analytics } from '@/lib/analytics';
       buttonLabel: 'Get Started',
       buttonLocation: 'hero',
       pageName: 'home',
-      destination: '/get-started'
+      destination: '/onboarding/v2'
     });
     onGetStarted();
   }}

@@ -2,7 +2,7 @@
 
 ## 🎉 Status: LIVE & READY
 
-Onboarding V2 is now fully activated on **malamalabs.com/get-started**
+Onboarding V2 is now fully activated on **malamalabs.com/onboarding/v2**
 
 ---
 
@@ -39,7 +39,7 @@ Each role gets personalized tasks:
 ## 📊 User Flow
 
 ```
-1. Visit /get-started
+1. Visit /onboarding/v2
    ↓
 2. Select your role (4 options)
    ↓  

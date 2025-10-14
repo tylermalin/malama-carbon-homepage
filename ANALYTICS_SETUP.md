@@ -117,7 +117,7 @@ await analytics.trackCTAClick({
   buttonLabel: 'Get Started',
   buttonLocation: 'hero',
   pageName: 'home',
-  destination: '/get-started'
+  destination: '/onboarding/v2'
 });
 ```
 

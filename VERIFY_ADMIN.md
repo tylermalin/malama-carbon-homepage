@@ -76,7 +76,7 @@ GRANT EXECUTE ON FUNCTION is_admin() TO anon;
 
 ### Step 3: Test Admin Access
 
-1. **Sign in** to your app at `malamalabs.com/get-started` with `tyler@malamalabs.com`
+1. **Sign in** to your app at `malamalabs.com/onboarding/v2` with `tyler@malamalabs.com`
 2. **Navigate** to `malamalabs.com/admin`
 3. **Expected Behavior:**
    - ✅ If admin setup is correct: You'll see the full Analytics Dashboard

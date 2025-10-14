@@ -21,7 +21,7 @@ Follow these steps to update your Supabase email templates with the custom Māla
 
 ### Step 3: Save and Test
 1. Click **Save** at the bottom of the page
-2. Test by creating a new account at https://malamalabs.com/get-started
+2. Test by creating a new account at https://malamalabs.com/onboarding/v2
 3. Check your email inbox for the verification email
 
 ---

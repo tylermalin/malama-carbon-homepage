@@ -151,7 +151,7 @@ After uploading all templates, verify:
 
 - [ ] All 6 templates saved successfully
 - [ ] Subject lines updated for each
-- [ ] Test confirm signup (register new user at `/get-started`)
+- [ ] Test confirm signup (register new user at `/onboarding/v2`)
 - [ ] Test magic link (use "Sign in with magic link" option)
 - [ ] Test invite user (from Admin Dashboard → Invite tab)
 - [ ] Test password reset (from sign-in page)
