@@ -1,9 +1,3 @@
--- ============================================
--- CREATE ADMIN ROLE FOR TYLER
--- ============================================
-
--- Create dedicated admin_users table (not a view)
--- This table explicitly lists who is an admin
 CREATE TABLE IF NOT EXISTS public.admin_users (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   email TEXT UNIQUE NOT NULL,
@@ -11,17 +5,14 @@ CREATE TABLE IF NOT EXISTS public.admin_users (
   added_by TEXT
 );
 
--- Enable RLS
 ALTER TABLE public.admin_users ENABLE ROW LEVEL SECURITY;
 
--- RLS Policy: Anyone can read admin list (component needs to check)
 CREATE POLICY "Allow read access to admin list"
 ON public.admin_users
 FOR SELECT
 TO authenticated
 USING (true);
 
--- RLS Policy: Only admins can insert new admins
 CREATE POLICY "Only admins can add admins"
 ON public.admin_users
 FOR INSERT
@@ -33,14 +24,12 @@ WITH CHECK (
   )
 );
 
--- Insert tyler@malamalabs.com as admin
 INSERT INTO public.admin_users (email, added_by)
 VALUES 
   ('tyler@malamalabs.com', 'initial_setup'),
   ('tylermalin@gmail.com', 'initial_setup')
 ON CONFLICT (email) DO NOTHING;
 
--- Helper function to check if current user is admin
 CREATE OR REPLACE FUNCTION is_admin()
 RETURNS BOOLEAN AS $$
 BEGIN
@@ -53,19 +42,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Grant usage on the function
 GRANT EXECUTE ON FUNCTION is_admin() TO authenticated;
 GRANT EXECUTE ON FUNCTION is_admin() TO anon;
 
-COMMENT ON FUNCTION is_admin() IS 'Returns true if current user email is in admin_users table';
-COMMENT ON TABLE public.admin_users IS 'Explicitly lists admin user emails';
-
--- Success message
-DO $$
-BEGIN
-  RAISE NOTICE '✅ Admin role configured!';
-  RAISE NOTICE '   - tyler@malamalabs.com → Admin';
-  RAISE NOTICE '   - tylermalin@gmail.com → Admin';
-  RAISE NOTICE '   - admin_users table created';
-  RAISE NOTICE '   - is_admin() function created';
-END $$;
