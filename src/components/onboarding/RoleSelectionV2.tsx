@@ -92,35 +92,33 @@ export function RoleSelectionV2({ onRoleSelect }: RoleSelectionV2Props) {
                 <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer group"
                   onClick={() => onRoleSelect(roleData.role)}
                 >
-                  {/* Gradient Background */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${roleData.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-                  
                   <CardContent className="p-8">
                     {/* Icon */}
-                    <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${roleData.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                      <Icon className="w-8 h-8 text-white" />
+                    <div className="w-16 h-16 rounded-xl bg-slate-100 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                      <Icon className="w-8 h-8 text-slate-900" />
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                    <h3 className="text-2xl font-bold text-slate-900 mb-3">
                       {roleData.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-gray-600 mb-6 leading-relaxed">
+                    <p className="text-slate-700 mb-6 leading-relaxed">
                       {roleData.description}
                     </p>
 
                     {/* CTA Button */}
                     <Button 
-                      className={`w-full bg-gradient-to-r ${roleData.gradient} text-white hover:shadow-lg transition-all duration-300 group-hover:translate-x-1`}
+                      variant="outline"
+                      className="w-full border-2 border-slate-900 text-slate-900 bg-transparent hover:bg-slate-900 hover:text-white transition-all duration-300 group/btn"
                       onClick={(e) => {
                         e.stopPropagation();
                         onRoleSelect(roleData.role);
                       }}
                     >
                       {roleData.ctaText}
-                      <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform" />
                     </Button>
                   </CardContent>
                 </Card>
