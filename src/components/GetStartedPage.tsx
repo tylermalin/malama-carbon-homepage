@@ -1156,21 +1156,23 @@ export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards,
               <div className="space-y-1">
                 <Label htmlFor="agreeToTerms" className="text-sm text-muted-foreground cursor-pointer">
                   I agree to the{' '}
-                  <button
-                    type="button"
-                    onClick={() => onNavigate('terms')}
+                  <a
+                    href="/terms"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-primary hover:underline"
                   >
                     Terms of Service
-                  </button>
+                  </a>
                   {' '}and{' '}
-                  <button
-                    type="button"
-                    onClick={() => onNavigate('privacyPolicy')}
+                  <a
+                    href="/privacy-policy"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-primary hover:underline"
                   >
                     Privacy Policy
-                  </button>
+                  </a>
                 </Label>
               </div>
             </div>
@@ -1489,21 +1491,23 @@ export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards,
               <div className="space-y-1">
                 <Label htmlFor="agreeToTerms" className="text-sm text-muted-foreground cursor-pointer">
                   I agree to the{' '}
-                  <button
-                    type="button"
-                    onClick={() => onNavigate('terms')}
+                  <a
+                    href="/terms"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-primary hover:underline"
                   >
                     Terms of Service
-                  </button>
+                  </a>
                   {' '}and{' '}
-                  <button
-                    type="button"
-                    onClick={() => onNavigate('privacyPolicy')}
+                  <a
+                    href="/privacy-policy"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-primary hover:underline"
                   >
                     Privacy Policy
-                  </button>
+                  </a>
                 </Label>
               </div>
             </div>
@@ -1855,21 +1859,23 @@ export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards,
               <div className="space-y-1">
                 <Label htmlFor="agreeToTerms" className="text-sm text-muted-foreground cursor-pointer">
                   I agree to the{' '}
-                  <button
-                    type="button"
-                    onClick={() => onNavigate('terms')}
+                  <a
+                    href="/terms"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-primary hover:underline"
                   >
                     Terms of Service
-                  </button>
+                  </a>
                   {' '}and{' '}
-                  <button
-                    type="button"
-                    onClick={() => onNavigate('privacyPolicy')}
+                  <a
+                    href="/privacy-policy"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-primary hover:underline"
                   >
                     Privacy Policy
-                  </button>
+                  </a>
                 </Label>
               </div>
             </div>

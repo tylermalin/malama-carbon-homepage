@@ -555,7 +555,7 @@ export function AccountCreationForm({ onNavigate, onAccountCreated }: AccountCre
                   onCheckedChange={(checked) => updateFormData('agreeToTerms', checked)}
                 />
                 <Label htmlFor="terms" className="cursor-pointer text-sm leading-relaxed">
-                  I agree to the <button className="text-primary hover:underline">Terms of Service</button> and <button className="text-primary hover:underline">Privacy Policy</button>, and consent to receive project updates and LC token distributions
+                  I agree to the <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Terms of Service</a> and <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Privacy Policy</a>, and consent to receive project updates and LC token distributions
                 </Label>
               </div>
 
