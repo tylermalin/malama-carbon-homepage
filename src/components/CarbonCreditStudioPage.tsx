@@ -322,12 +322,12 @@ export function CarbonCreditStudioPage({
           >
             <Card className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-slate-700 overflow-hidden">
               <CardContent className="p-12">
-                <div className="text-center mb-12">
+                <div className="text-center mb-16">
                   <h2 className="text-3xl font-bold text-primary mb-4">How It Works: Carbon Credit Studio</h2>
                   <p className="text-slate-300 text-lg">A single system for issuance, pre-sales, and market access</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <div className="max-w-4xl mx-auto">
                   {[
                     {
                       step: "1",
@@ -359,27 +359,53 @@ export function CarbonCreditStudioPage({
                       icon: "💰",
                       description: "Validated data flows seamlessly to Mālama's Carbon Studio, enabling pre-sales, LC02/VC02 tokens, and direct access to verified buyers."
                     }
-                  ].map((step, index) => (
+                  ].map((step, index, array) => (
                     <motion.div
                       key={step.step}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.1 * index }}
-                      className="text-center"
+                      initial={{ opacity: 0, x: 50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.6, delay: 0.15 * index }}
+                      className="relative"
                     >
-                      <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span className="text-primary font-bold text-lg">{step.step}</span>
+                      {/* Timeline connector line */}
+                      {index < array.length - 1 && (
+                        <div className="absolute left-8 top-20 bottom-0 w-0.5 bg-gradient-to-b from-emerald-500 to-blue-500 opacity-30" />
+                      )}
+                      
+                      <div className="flex gap-6 mb-8">
+                        {/* Step number circle */}
+                        <div className="flex-shrink-0">
+                          <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg shadow-emerald-500/50">
+                            <span className="text-white font-bold text-xl">{step.step}</span>
+                          </div>
+                        </div>
+                        
+                        {/* Content area */}
+                        <div className="flex-1 pt-1">
+                          {/* Title and Icon on same line */}
+                          <div className="flex items-center gap-3 mb-3">
+                            <h3 className="text-xl font-semibold text-primary">{step.title}</h3>
+                            <span className="text-3xl">{step.icon}</span>
+                          </div>
+                          
+                          {/* Description */}
+                          <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50">
+                            <p className="text-slate-300 text-sm leading-relaxed">{step.description}</p>
+                          </div>
+                        </div>
                       </div>
-                      <h3 className="text-lg font-semibold text-primary mb-2">{step.title}</h3>
-                      <div className="text-3xl mb-3">{step.icon}</div>
-                      <p className="text-slate-300 text-sm">{step.description}</p>
                     </motion.div>
                   ))}
                 </div>
 
-                <div className="mt-12 text-center">
-                  <div className="bg-slate-800/50 rounded-lg p-6 mb-6">
-                    <p className="text-slate-300">
+                <div className="mt-16 text-center">
+                  <div className="bg-gradient-to-r from-slate-800/50 to-slate-700/50 rounded-xl p-8 border border-emerald-500/20 shadow-lg">
+                    <div className="flex items-center justify-center gap-3 mb-4">
+                      <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+                      <h3 className="text-lg font-semibold text-emerald-400">Universal Protocol Suite</h3>
+                      <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+                    </div>
+                    <p className="text-slate-300 leading-relaxed max-w-3xl mx-auto">
                       Mālama's Universal Protocol Suite connects multiple durable carbon removal methods into one trusted framework, ensuring compatibility with the world's most respected certification bodies and registries.
                     </p>
                   </div>
