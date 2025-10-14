@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'motion/react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
@@ -36,13 +36,15 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
     handleSubmit,
     formState: { errors },
     watch,
-    setValue
+    setValue,
+    control
   } = useForm<ProjectDeveloperFormData>({
     resolver: zodResolver(projectDeveloperSchema),
     defaultValues: {
       biomass_types: [],
       interests: [],
-      locations: []
+      locations: [],
+      accept_terms: false
     }
   });
 
@@ -403,9 +405,16 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
 
                   {/* Terms */}
                   <div className="flex items-start">
-                    <Checkbox
-                      id="accept_terms"
-                      {...register('accept_terms')}
+                    <Controller
+                      name="accept_terms"
+                      control={control}
+                      render={({ field }) => (
+                        <Checkbox
+                          id="accept_terms"
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      )}
                     />
                     <label htmlFor="accept_terms" className="ml-2 text-sm">
                       I agree to the{' '}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'motion/react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
@@ -35,12 +35,14 @@ export function CreditBuyerForm({ onComplete }: CreditBuyerFormProps) {
     handleSubmit,
     formState: { errors },
     watch,
-    setValue
+    setValue,
+    control
   } = useForm<CreditBuyerFormData>({
     resolver: zodResolver(creditBuyerSchema),
     defaultValues: {
       intended_use: [],
-      preferred_methods: []
+      preferred_methods: [],
+      accept_terms: false
     }
   });
 
@@ -355,9 +357,16 @@ export function CreditBuyerForm({ onComplete }: CreditBuyerFormProps) {
 
                   {/* Terms */}
                   <div className="flex items-start">
-                    <Checkbox
-                      id="accept_terms"
-                      {...register('accept_terms')}
+                    <Controller
+                      name="accept_terms"
+                      control={control}
+                      render={({ field }) => (
+                        <Checkbox
+                          id="accept_terms"
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      )}
                     />
                     <label htmlFor="accept_terms" className="ml-2 text-sm">
                       I agree to the{' '}
