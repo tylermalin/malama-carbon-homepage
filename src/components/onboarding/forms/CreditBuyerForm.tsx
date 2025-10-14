@@ -395,7 +395,8 @@ export function CreditBuyerForm({ onComplete }: CreditBuyerFormProps) {
                     </Button>
                     <Button
                       type="submit"
-                      className="flex-1 bg-slate-900 text-white hover:bg-slate-800"
+                      variant="outline"
+                      className="flex-1 border-2 border-slate-900 text-slate-900 bg-transparent hover:bg-slate-900 hover:text-white transition-all duration-300"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (
