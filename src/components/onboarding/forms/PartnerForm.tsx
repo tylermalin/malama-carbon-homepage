@@ -61,22 +61,43 @@ export function PartnerForm({ onComplete }: PartnerFormProps) {
     setError(null);
 
     try {
+      console.log('🚀 Starting signup with:', { email: data.email, name: data.contact_name });
+      
       // 1. Create account
-      const signUpResult = await authHelpers.signUp(
+      const { data: signUpData, error: signUpError } = await authHelpers.signUp(
         data.email,
         data.password,
         data.contact_name
       );
 
-      console.log('Sign up result:', signUpResult);
+      console.log('📋 Sign up result:', { data: signUpData, error: signUpError });
 
-      if (!signUpResult.success || !signUpResult.user) {
-        const errorMsg = signUpResult.error || 'Failed to create account';
-        console.error('Sign up failed:', errorMsg);
+      if (signUpError || !signUpData?.user) {
+        console.error('❌ Sign up failed:', signUpError);
+        
+        // Provide user-friendly error messages
+        let errorMsg = 'Failed to create account';
+        if (signUpError) {
+          const errorStr = signUpError.toLowerCase();
+          if (errorStr.includes('rate') || errorStr.includes('too many')) {
+            errorMsg = 'Please wait a moment before trying again (rate limit)';
+          } else if (errorStr.includes('already registered') || errorStr.includes('already exists')) {
+            errorMsg = 'This email is already registered. Please sign in instead.';
+          } else if (errorStr.includes('invalid email')) {
+            errorMsg = 'Please enter a valid email address';
+          } else if (errorStr.includes('password')) {
+            errorMsg = 'Password must be at least 6 characters';
+          } else {
+            errorMsg = signUpError;
+          }
+        }
+        
         throw new Error(errorMsg);
       }
 
-      const userId = signUpResult.user.id;
+      console.log('✅ Account created, user ID:', signUpData.user.id);
+
+      const userId = signUpData.user.id;
 
       // 2. Save role
       await saveUserRole(
