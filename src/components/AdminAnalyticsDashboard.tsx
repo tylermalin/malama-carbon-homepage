@@ -27,7 +27,15 @@ import {
   Zap,
   Lock,
   Shield,
-  LogIn
+  LogIn,
+  Image as ImageIcon,
+  UserPlus,
+  Edit,
+  Trash2,
+  Search,
+  Filter,
+  Send,
+  ExternalLink
 } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 
@@ -49,6 +57,7 @@ export function AdminAnalyticsDashboard({ onNavigate, onShowGetStarted, user }: 
   const [isLoading, setIsLoading] = useState(true);
   const [isCheckingAdmin, setIsCheckingAdmin] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [activeTab, setActiveTab] = useState<'analytics' | 'users' | 'images' | 'invite'>('analytics');
   const [timeRange, setTimeRange] = useState('30'); // days
   const [metrics, setMetrics] = useState({
     totalUsers: 0,
@@ -69,6 +78,19 @@ export function AdminAnalyticsDashboard({ onNavigate, onShowGetStarted, user }: 
   const [presentationStats, setPresentationStats] = useState<any[]>([]);
   const [referralStats, setReferralStats] = useState<any[]>([]);
   const [errorStats, setErrorStats] = useState<any[]>([]);
+  
+  // User Management
+  const [allUsers, setAllUsers] = useState<any[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [userFilter, setUserFilter] = useState('all');
+  
+  // Image Gallery
+  const [uploadedImages, setUploadedImages] = useState<any[]>([]);
+  
+  // Invite Users
+  const [inviteEmail, setInviteEmail] = useState('');
+  const [inviteRole, setInviteRole] = useState('PROJECT_DEVELOPER');
+  const [inviteMessage, setInviteMessage] = useState('');
 
   // Check admin status on mount
   useEffect(() => {

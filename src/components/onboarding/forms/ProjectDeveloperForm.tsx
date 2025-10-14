@@ -33,6 +33,8 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
   const [step, setStep] = useState(1);
   const [showEmailVerification, setShowEmailVerification] = useState(false);
   const [userEmail, setUserEmail] = useState<string>('');
+  const [existingUser, setExistingUser] = useState<{ id: string; email: string } | null>(null);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   
   const {
     register,
@@ -50,6 +52,27 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
       accept_terms: false
     }
   });
+
+  // Check if user is already logged in
+  React.useEffect(() => {
+    async function checkExistingSession() {
+      try {
+        const currentUser = await authHelpers.getCurrentUser();
+        if (currentUser) {
+          console.log('✅ User already logged in:', currentUser.email);
+          setExistingUser({ id: currentUser.id, email: currentUser.email });
+          setUserEmail(currentUser.email);
+          // Skip to step 2 (questionnaire) if already logged in
+          setStep(2);
+        }
+      } catch (err) {
+        console.log('No existing session');
+      } finally {
+        setIsCheckingAuth(false);
+      }
+    }
+    checkExistingSession();
+  }, []);
 
   const biomassTypes = watch('biomass_types') || [];
   const interests = watch('interests') || [];
@@ -75,43 +98,51 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
     setError(null);
 
     try {
-      console.log('🚀 Starting signup with:', { email: data.email, name: data.full_name });
+      let userId: string;
       
-      // 1. Create account with Supabase Auth
-      const { data: signUpData, error: signUpError } = await authHelpers.signUp(
-        data.email,
-        data.password,
-        data.full_name
-      );
-
-      console.log('📋 Sign up result:', { data: signUpData, error: signUpError });
-
-      if (signUpError || !signUpData?.user) {
-        console.error('❌ Sign up failed:', signUpError);
+      // If user is already logged in, use their existing account
+      if (existingUser) {
+        console.log('✅ Using existing logged-in user:', existingUser.email);
+        userId = existingUser.id;
+      } else {
+        console.log('🚀 Starting signup with:', { email: data.email, name: data.full_name });
         
-        // Provide user-friendly error messages
-        let errorMsg = 'Failed to create account';
-        if (signUpError) {
-          const errorStr = signUpError.toLowerCase();
-          if (errorStr.includes('rate') || errorStr.includes('too many')) {
-            errorMsg = 'Please wait a moment before trying again (rate limit)';
-          } else if (errorStr.includes('already registered') || errorStr.includes('already exists')) {
-            errorMsg = 'This email is already registered. Please sign in instead.';
-          } else if (errorStr.includes('invalid email')) {
-            errorMsg = 'Please enter a valid email address';
-          } else if (errorStr.includes('password')) {
-            errorMsg = 'Password must be at least 6 characters';
-          } else {
-            errorMsg = signUpError;
+        // 1. Create account with Supabase Auth
+        const { data: signUpData, error: signUpError } = await authHelpers.signUp(
+          data.email,
+          data.password,
+          data.full_name
+        );
+
+        console.log('📋 Sign up result:', { data: signUpData, error: signUpError });
+
+        if (signUpError || !signUpData?.user) {
+          console.error('❌ Sign up failed:', signUpError);
+          
+          // Provide user-friendly error messages
+          let errorMsg = 'Failed to create account';
+          if (signUpError) {
+            const errorStr = signUpError.toLowerCase();
+            if (errorStr.includes('rate') || errorStr.includes('too many')) {
+              errorMsg = 'Please wait a moment before trying again (rate limit)';
+            } else if (errorStr.includes('already registered') || errorStr.includes('already exists')) {
+              errorMsg = 'This email is already registered. Please sign in instead.';
+            } else if (errorStr.includes('invalid email')) {
+              errorMsg = 'Please enter a valid email address';
+            } else if (errorStr.includes('password')) {
+              errorMsg = 'Password must be at least 6 characters';
+            } else {
+              errorMsg = signUpError;
+            }
           }
+          
+          throw new Error(errorMsg);
         }
-        
-        throw new Error(errorMsg);
+
+        console.log('✅ Account created, user ID:', signUpData.user.id);
+        userId = signUpData.user.id;
+        setUserEmail(data.email);
       }
-
-      console.log('✅ Account created, user ID:', signUpData.user.id);
-
-      const userId = signUpData.user.id;
 
       // 2. Save role to profile
       const roleResult = await saveUserRole(
@@ -143,10 +174,16 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
         console.warn('Failed to generate tasks:', tasksResult.error);
       }
 
-      // 5. Show email verification screen
-      console.log('✅ Account created! Showing email verification instructions');
-      setUserEmail(data.email);
-      setShowEmailVerification(true);
+      // 5. Handle completion based on user type
+      if (existingUser) {
+        // Existing user - go straight to dashboard
+        console.log('✅ Existing user onboarding complete! Redirecting to dashboard');
+        onComplete();
+      } else {
+        // New user - show email verification screen
+        console.log('✅ Account created! Showing email verification instructions');
+        setShowEmailVerification(true);
+      }
       setIsSubmitting(false);
     } catch (err) {
       console.error('Onboarding error:', err);
