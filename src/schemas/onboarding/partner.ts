@@ -32,9 +32,9 @@ export const partnerSchema = z.object({
   // Contact Information
   contact_name: z.string().min(2, 'Contact name is required'),
   org_name: z.string().min(2, 'Organization name is required'),
-  email: z.string().email('Valid email is required'),
+  email: z.string().min(1, 'Email is required').email('Please enter a valid email address'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
-  password_confirm: z.string(),
+  password_confirm: z.string().min(1, 'Please confirm your password'),
   accept_terms: z.literal(true, {
     errorMap: () => ({ message: 'You must accept the terms and conditions' }),
   }),
