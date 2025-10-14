@@ -22,6 +22,7 @@ import { UnifiedCarbonTimeline } from './UnifiedCarbonTimeline';
 
 // Page components
 import { ProjectDashboard } from './ProjectDashboard';
+import { AuthenticatedDashboard } from './dashboards/AuthenticatedDashboard';
 import { PlatformPage } from './PlatformPage';
 import { HowItWorksPage } from './HowItWorksPage';
 import { GetStartedPage } from './GetStartedPage';
@@ -154,7 +155,7 @@ export function PageRouter({
   // Render individual pages
   switch (currentPage) {
     case 'dashboard':
-      return user ? <ProjectDashboard user={user} /> : null;
+      return user ? <AuthenticatedDashboard user={user} /> : null;
     
     case 'platform':
       return (

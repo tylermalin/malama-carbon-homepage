@@ -76,7 +76,7 @@ const pathToPageMap: Record<string, PageType> = {
   '/blog': 'blog',
   '/documentation': 'documentation',
   '/how-it-works': 'howItWorks',
-  '/get-started': 'getStarted',
+  '/get-started': 'onboardingV2',
   '/carbon-studio': 'carbonStudio',
   '/carbon-protocols': 'carbonProtocols',
   '/dmrv-engine': 'dmrvEngine',

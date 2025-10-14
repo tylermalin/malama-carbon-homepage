@@ -10,6 +10,7 @@ import { Textarea } from '../../ui/textarea';
 import { Checkbox } from '../../ui/checkbox';
 import { Alert, AlertDescription } from '../../ui/alert';
 import { Loader2, Leaf, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { EmailVerificationSuccess } from '../EmailVerificationSuccess';
 import { 
   projectDeveloperSchema, 
   ProjectDeveloperFormData,
@@ -30,6 +31,8 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState(1);
+  const [showEmailVerification, setShowEmailVerification] = useState(false);
+  const [userEmail, setUserEmail] = useState<string>('');
   
   const {
     register,
@@ -140,14 +143,21 @@ export function ProjectDeveloperForm({ onComplete }: ProjectDeveloperFormProps) 
         console.warn('Failed to generate tasks:', tasksResult.error);
       }
 
-      // 5. Complete onboarding
-      console.log('✅ Project Developer onboarding complete!');
-      onComplete();
+      // 5. Show email verification screen
+      console.log('✅ Account created! Showing email verification instructions');
+      setUserEmail(data.email);
+      setShowEmailVerification(true);
+      setIsSubmitting(false);
     } catch (err) {
       console.error('Onboarding error:', err);
       setError(err instanceof Error ? err.message : 'An error occurred during registration');
       setIsSubmitting(false);
     }
+  }
+
+  // Show email verification success screen
+  if (showEmailVerification) {
+    return <EmailVerificationSuccess email={userEmail} onContinue={onComplete} />;
   }
 
   return (

@@ -30,6 +30,8 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState(1);
+  const [showEmailVerification, setShowEmailVerification] = useState(false);
+  const [userEmail, setUserEmail] = useState<string>('');
   
   const {
     register,
