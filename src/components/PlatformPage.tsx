@@ -245,37 +245,36 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
           >
             <Card className="border-none bg-gradient-to-r from-[rgba(27,67,50,0.03)] via-[rgba(10,61,63,0.02)] to-[rgba(236,230,218,0.05)] backdrop-blur-sm shadow-[0_8px_24px_rgba(27,67,50,0.08)]">
               <CardContent className="p-12">
-                <div className="grid lg:grid-cols-2 gap-12 items-center">
-                  <div>
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center">
-                        <Cpu className="w-8 h-8 text-white" />
-                      </div>
-                      <h3 className="text-3xl font-medium text-primary">dMRV Engine</h3>
+                <div>
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center">
+                      <Cpu className="w-8 h-8 text-white" />
                     </div>
-                    
-                    <div className="space-y-4 mb-8">
-                      <div className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                        <span className="text-foreground/80">Real-time IoT sensor monitoring</span>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                        <span className="text-foreground/80">AI-powered data validation</span>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                        <span className="text-foreground/80">Blockchain-secured measurements</span>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                        <span className="text-foreground/80">Automated reporting systems</span>
-                      </div>
+                    <h3 className="text-3xl font-medium text-primary">dMRV Engine</h3>
+                  </div>
+                  
+                  <div className="space-y-4 mb-8">
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                      <span className="text-foreground/80">Real-time IoT sensor monitoring</span>
                     </div>
-                    
-                    <p className="text-lg text-primary font-medium mb-6">
-                      Reduce verification costs by 70% while increasing accuracy
-                    </p>
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                      <span className="text-foreground/80">AI-powered data validation</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                      <span className="text-foreground/80">Blockchain-secured measurements</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                      <span className="text-foreground/80">Automated reporting systems</span>
+                    </div>
+                  </div>
+                  
+                  <p className="text-lg text-primary font-medium mb-6">
+                    Reduce verification costs by 70% while increasing accuracy
+                  </p>
                     
                     {/* Methodology Management Dashboard Mockup */}
                     <div className="bg-slate-100 rounded-lg p-4 mb-6">
@@ -284,23 +283,23 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                         <div className="bg-slate-800 border-b border-slate-700 px-6 py-4 flex items-center justify-between">
                           <div className="flex items-center gap-4">
                             <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
-                              <span className="text-white text-sm font-bold">M</span>
+                              <span className="text-slate-900 text-sm font-bold">M</span>
                             </div>
-                            <span className="text-white font-semibold text-lg">Mālama</span>
+                            <span className="text-slate-900 font-semibold text-lg">Mālama</span>
                           </div>
                           <div className="flex items-center gap-6">
                             <div className="flex items-center gap-2">
-                              <button className="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium">Dashboard</button>
-                              <button className="px-4 py-2 text-slate-400 hover:text-white text-sm">Methodologies</button>
-                              <button className="px-4 py-2 text-slate-400 hover:text-white text-sm">Reports</button>
-                              <button className="px-4 py-2 text-slate-400 hover:text-white text-sm">Integrations</button>
+                              <button className="px-4 py-2 bg-emerald-600 text-slate-900 rounded-lg text-sm font-medium">Dashboard</button>
+                              <button className="px-4 py-2 text-slate-400 hover:text-slate-900 text-sm">Methodologies</button>
+                              <button className="px-4 py-2 text-slate-400 hover:text-slate-900 text-sm">Reports</button>
+                              <button className="px-4 py-2 text-slate-400 hover:text-slate-900 text-sm">Integrations</button>
                             </div>
                             <div className="flex items-center gap-3">
                               <div className="flex items-center gap-2">
                                 <div className="w-8 h-8 bg-slate-600 rounded-full flex items-center justify-center">
-                                  <Users className="w-4 h-4 text-white" />
+                                  <Users className="w-4 h-4 text-slate-900" />
                                 </div>
-                                <span className="text-white text-sm">Dr. Anya Sharma</span>
+                                <span className="text-slate-900 text-sm">Dr. Anya Sharma</span>
                               </div>
                               <Bell className="w-5 h-5 text-slate-400" />
                               <HelpCircle className="w-5 h-5 text-slate-400" />
@@ -313,20 +312,20 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                           {/* Sidebar */}
                           <div className="w-80 bg-slate-800 border-r border-slate-700 p-6">
                             <div className="mb-8">
-                              <h2 className="text-2xl font-bold text-white mb-2">KPI</h2>
+                              <h2 className="text-2xl font-bold text-slate-900 mb-2">KPI</h2>
                               <h3 className="text-3xl font-bold text-emerald-400 mb-2">dMRV</h3>
                               <p className="text-slate-400">Returns</p>
                             </div>
                             <div className="mb-6">
                               <p className="text-slate-400 text-sm mb-2">Current Project:</p>
-                              <p className="text-white font-medium">Amazon Reforestation 2024</p>
+                              <p className="text-slate-900 font-medium">Amazon Reforestation 2024</p>
                             </div>
                             <div className="space-y-3">
-                              <Button variant="outline" className="w-full bg-slate-700 hover:bg-slate-600 text-white border-slate-600">
+                              <Button variant="outline" className="w-full bg-slate-700 hover:bg-slate-600 text-slate-900 border-slate-600">
                                 <Plus className="w-4 h-4 mr-2" />
                                 New Methodology
                               </Button>
-                              <Button variant="outline" className="w-full bg-slate-700 hover:bg-slate-600 text-white border-slate-600">
+                              <Button variant="outline" className="w-full bg-slate-700 hover:bg-slate-600 text-slate-900 border-slate-600">
                                 <Plus className="w-4 h-4 mr-2" />
                                 Add Sensor Network
                               </Button>
@@ -337,21 +336,21 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                           {/* Main Content */}
                           <div className="flex-1 p-6 overflow-auto">
                             <div className="mb-6">
-                              <h1 className="text-2xl font-bold text-white mb-4">Methodology Management</h1>
+                              <h1 className="text-2xl font-bold text-slate-900 mb-4">Methodology Management</h1>
                               <div className="flex items-center gap-4 mb-6">
                                 <div className="relative flex-1">
                                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                                   <input 
                                     type="text" 
                                     placeholder="Search methodologies..." 
-                                    className="w-full pl-10 pr-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400"
+                                    className="w-full pl-10 pr-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-900 placeholder-slate-400"
                                   />
                                 </div>
-                                <Button variant="outline" className="bg-slate-700 hover:bg-slate-600 text-white border-slate-600">
+                                <Button variant="outline" className="bg-slate-700 hover:bg-slate-600 text-slate-900 border-slate-600">
                                   <Funnel className="w-4 h-4 mr-2" />
                                   Filter
                                 </Button>
-                                <Button className="bg-emerald-600 hover:bg-emerald-700 text-white">
+                                <Button className="bg-emerald-600 hover:bg-emerald-700 text-slate-900">
                                   <Plus className="w-4 h-4 mr-2" />
                                   New Methodology
                                 </Button>
@@ -362,19 +361,19 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                               <Card className="bg-slate-700 border-slate-600">
                                 <CardContent className="p-6">
                                   <div className="flex items-start justify-between mb-4">
-                                    <h3 className="text-lg font-semibold text-white">VM0042 - Reforestation & Afforestation</h3>
-                                    <Badge className="bg-emerald-600 text-white">Active</Badge>
+                                    <h3 className="text-lg font-semibold text-slate-900">VM0042 - Reforestation & Afforestation</h3>
+                                    <Badge className="bg-emerald-600 text-slate-900">Active</Badge>
                                   </div>
                                   <p className="text-slate-300 text-sm mb-4">Associated Projects: Amazon Basin Project, African Savannah Initiative...</p>
                                   <div className="flex items-center gap-2">
                                     <div className="w-6 h-6 bg-blue-500 rounded flex items-center justify-center">
-                                      <Database className="w-3 h-3 text-white" />
+                                      <Database className="w-3 h-3 text-slate-900" />
                                     </div>
                                     <div className="w-6 h-6 bg-purple-500 rounded flex items-center justify-center">
-                                      <Shield className="w-3 h-3 text-white" />
+                                      <Shield className="w-3 h-3 text-slate-900" />
                                     </div>
                                     <div className="w-6 h-6 bg-orange-500 rounded flex items-center justify-center">
-                                      <Zap className="w-3 h-3 text-white" />
+                                      <Zap className="w-3 h-3 text-slate-900" />
                                     </div>
                                     <span className="text-xs text-slate-400 ml-2">Blockchain Technology</span>
                                   </div>
@@ -384,8 +383,8 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                               <Card className="bg-slate-700 border-slate-600">
                                 <CardContent className="p-6">
                                   <div className="flex items-start justify-between mb-4">
-                                    <h3 className="text-lg font-semibold text-white">REDD+ v3.0</h3>
-                                    <Badge className="bg-yellow-600 text-white">Active</Badge>
+                                    <h3 className="text-lg font-semibold text-slate-900">REDD+ v3.0</h3>
+                                    <Badge className="bg-yellow-600 text-slate-900">Active</Badge>
                                   </div>
                                   <p className="text-slate-300 text-sm mb-4">Measures carbon sequestration through planting native trees...</p>
                                   <div className="flex items-center gap-2">
@@ -400,22 +399,15 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                       </div>
                     </div>
                     
-                    {onNavigateToDMRV && (
-                      <button 
-                        onClick={onNavigateToDMRV}
-                        className="flex items-center gap-2 text-primary hover:text-secondary transition-colors duration-300 font-medium"
-                      >
-                        <span>Learn more about dMRV Engine</span>
-                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                      </button>
-                    )}
-                  </div>
-                  
-                  <div className="flex items-center justify-center">
-                    <div className="w-32 h-32 bg-primary/10 rounded-3xl flex items-center justify-center">
-                      <BarChart3 className="w-16 h-16 text-primary" />
-                    </div>
-                  </div>
+                  {onNavigateToDMRV && (
+                    <button 
+                      onClick={onNavigateToDMRV}
+                      className="flex items-center gap-2 text-primary hover:text-secondary transition-colors duration-300 font-medium"
+                    >
+                      <span>Learn more about dMRV Engine</span>
+                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </button>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -432,47 +424,40 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
           >
             <Card className="border-none bg-gradient-to-r from-[rgba(10,61,63,0.03)] via-[rgba(27,67,50,0.02)] to-[rgba(236,230,218,0.05)] backdrop-blur-sm shadow-[0_8px_24px_rgba(10,61,63,0.08)]">
               <CardContent className="p-12">
-                <div className="grid lg:grid-cols-2 gap-12 items-center">
-                  <div className="order-2 lg:order-1 flex items-center justify-center">
-                    <div className="w-32 h-32 bg-secondary/10 rounded-3xl flex items-center justify-center">
-                      <Leaf className="w-16 h-16 text-secondary" />
+                <div>
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center">
+                      <FileText className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-3xl font-medium text-primary">Carbon Credit Protocols</h3>
+                  </div>
+                  
+                  <div className="space-y-4 mb-8">
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
+                      <span className="text-foreground/80">Biochar & Rock Weathering protocols</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
+                      <span className="text-foreground/80">Afforestation & Regenerative Agriculture</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
+                      <span className="text-foreground/80">Blue Carbon & ecosystem restoration</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
+                      <span className="text-foreground/80">3rd party validator integration</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
+                      <span className="text-foreground/80">Multi-standard compliance support</span>
                     </div>
                   </div>
                   
-                  <div className="order-1 lg:order-2">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center">
-                        <FileText className="w-8 h-8 text-white" />
-                      </div>
-                      <h3 className="text-3xl font-medium text-primary">Carbon Credit Protocols</h3>
-                    </div>
-                    
-                    <div className="space-y-4 mb-8">
-                      <div className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
-                        <span className="text-foreground/80">Biochar & Rock Weathering protocols</span>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
-                        <span className="text-foreground/80">Afforestation & Regenerative Agriculture</span>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
-                        <span className="text-foreground/80">Blue Carbon & ecosystem restoration</span>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
-                        <span className="text-foreground/80">3rd party validator integration</span>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
-                        <span className="text-foreground/80">Multi-standard compliance support</span>
-                      </div>
-                    </div>
-                    
-                    <p className="text-lg text-secondary font-medium mb-6">
-                      Support all carbon removal methodologies with verified impact
-                    </p>
+                  <p className="text-lg text-secondary font-medium mb-6">
+                    Support all carbon removal methodologies with verified impact
+                  </p>
                     
                     {/* Universal Protocol Suite Mockup */}
                     <div className="relative z-10 p-12 text-center bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 rounded-xl shadow-2xl mb-6">
@@ -485,27 +470,27 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8">
                           <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-600 rounded-lg p-4 hover:bg-slate-700/80 transition-colors">
                             <div className="text-2xl mb-2">🔥</div>
-                            <h3 className="text-sm font-semibold text-white mb-1">Biochar</h3>
+                            <h3 className="text-sm font-semibold text-slate-900 mb-1">Biochar</h3>
                             <p className="text-xs text-slate-300">Pre-certification pathways</p>
                           </div>
                           <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-600 rounded-lg p-4 hover:bg-slate-700/80 transition-colors">
                             <div className="text-2xl mb-2">💎</div>
-                            <h3 className="text-sm font-semibold text-white mb-1">Enhanced Rock Weathering</h3>
+                            <h3 className="text-sm font-semibold text-slate-900 mb-1">Enhanced Rock Weathering</h3>
                             <p className="text-xs text-slate-300">Mineral permanence</p>
                           </div>
                           <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-600 rounded-lg p-4 hover:bg-slate-700/80 transition-colors">
                             <div className="text-2xl mb-2">🌊</div>
-                            <h3 className="text-sm font-semibold text-white mb-1">Blue Carbon</h3>
+                            <h3 className="text-sm font-semibold text-slate-900 mb-1">Blue Carbon</h3>
                             <p className="text-xs text-slate-300">Ecosystem co-benefits</p>
                           </div>
                           <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-600 rounded-lg p-4 hover:bg-slate-700/80 transition-colors">
                             <div className="text-2xl mb-2">🌱</div>
-                            <h3 className="text-sm font-semibold text-white mb-1">Reforestation & Afforestation</h3>
+                            <h3 className="text-sm font-semibold text-slate-900 mb-1">Reforestation & Afforestation</h3>
                             <p className="text-xs text-slate-300">Biodiversity & growth</p>
                           </div>
                           <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-600 rounded-lg p-4 hover:bg-slate-700/80 transition-colors">
                             <div className="text-2xl mb-2">🌾</div>
-                            <h3 className="text-sm font-semibold text-white mb-1">Soil Carbon & Regenerative Agriculture</h3>
+                            <h3 className="text-sm font-semibold text-slate-900 mb-1">Soil Carbon & Regenerative Agriculture</h3>
                             <p className="text-xs text-slate-300">Soil health & yields</p>
                           </div>
                         </div>
@@ -515,7 +500,7 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                           </div>
                         </div>
                         <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-600 rounded-lg p-6">
-                          <h3 className="text-lg font-semibold text-white mb-4">Recognized by Leading Global Standards</h3>
+                          <h3 className="text-lg font-semibold text-slate-900 mb-4">Recognized by Leading Global Standards</h3>
                           <div className="flex flex-wrap justify-center gap-4">
                             <div className="bg-slate-700/80 px-3 py-1 rounded-full text-xs text-slate-300 border border-slate-600">Verra</div>
                             <div className="bg-slate-700/80 px-3 py-1 rounded-full text-xs text-slate-300 border border-slate-600">Gold Standard</div>
@@ -529,16 +514,15 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                       </div>
                     </div>
                     
-                    {onNavigateToProtocols && (
-                      <button 
-                        onClick={onNavigateToProtocols}
-                        className="flex items-center gap-2 text-secondary hover:text-primary transition-colors duration-300 font-medium"
-                      >
-                        <span>Learn more about Carbon Protocols</span>
-                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                      </button>
-                    )}
-                  </div>
+                  {onNavigateToProtocols && (
+                    <button 
+                      onClick={onNavigateToProtocols}
+                      className="flex items-center gap-2 text-secondary hover:text-primary transition-colors duration-300 font-medium"
+                    >
+                      <span>Learn more about Carbon Protocols</span>
+                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </button>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -555,37 +539,36 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
           >
             <Card className="border-none bg-gradient-to-r from-[rgba(236,230,218,0.05)] via-[rgba(27,67,50,0.02)] to-[rgba(10,61,63,0.03)] backdrop-blur-sm shadow-[0_8px_24px_rgba(236,230,218,0.1)]">
               <CardContent className="p-12">
-                <div className="grid lg:grid-cols-2 gap-12 items-center">
-                  <div>
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="w-16 h-16 bg-accent-foreground rounded-2xl flex items-center justify-center">
-                        <Coins className="w-8 h-8 text-white" />
-                      </div>
-                      <h3 className="text-3xl font-medium text-primary">Carbon Credit Studio</h3>
+                <div>
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-16 h-16 bg-accent-foreground rounded-2xl flex items-center justify-center">
+                      <Coins className="w-8 h-8 text-white" />
                     </div>
-                    
-                    <div className="space-y-4 mb-8">
-                      <div className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-accent-foreground mt-1 flex-shrink-0" />
-                        <span className="text-foreground/80">Automated credit issuance</span>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-accent-foreground mt-1 flex-shrink-0" />
-                        <span className="text-foreground/80">Smart contract compliance</span>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-accent-foreground mt-1 flex-shrink-0" />
-                        <span className="text-foreground/80">Marketplace integration</span>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-accent-foreground mt-1 flex-shrink-0" />
-                        <span className="text-foreground/80">Revenue optimization</span>
-                      </div>
+                    <h3 className="text-3xl font-medium text-primary">Carbon Credit Studio</h3>
+                  </div>
+                  
+                  <div className="space-y-4 mb-8">
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-accent-foreground mt-1 flex-shrink-0" />
+                      <span className="text-foreground/80">Automated credit issuance</span>
                     </div>
-                    
-                    <p className="text-lg text-accent-foreground font-medium mb-6">
-                      Access premium markets for durable carbon removal credits
-                    </p>
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-accent-foreground mt-1 flex-shrink-0" />
+                      <span className="text-foreground/80">Smart contract compliance</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-accent-foreground mt-1 flex-shrink-0" />
+                      <span className="text-foreground/80">Marketplace integration</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-accent-foreground mt-1 flex-shrink-0" />
+                      <span className="text-foreground/80">Revenue optimization</span>
+                    </div>
+                  </div>
+                  
+                  <p className="text-lg text-accent-foreground font-medium mb-6">
+                    Access premium markets for durable carbon removal credits
+                  </p>
                     
                     {/* Carbon Credit Studio Financing Mockup */}
                     <div className="bg-slate-100 rounded-lg p-4 mb-6">
@@ -594,12 +577,12 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                         <div className="bg-slate-800 border-b border-slate-700 px-6 py-4 flex items-center justify-between">
                           <div className="flex items-center gap-4">
                             <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
-                              <span className="text-white text-sm font-bold">M</span>
+                              <span className="text-slate-900 text-sm font-bold">M</span>
                             </div>
-                            <span className="text-white font-semibold text-lg">Mālama</span>
+                            <span className="text-slate-900 font-semibold text-lg">Mālama</span>
                           </div>
                           <div className="flex items-center gap-6">
-                            <h2 className="text-white text-lg font-medium">Carbon Credit Studio: Accelerate Your Financing</h2>
+                            <h2 className="text-slate-900 text-lg font-medium">Carbon Credit Studio: Accelerate Your Financing</h2>
                             <div className="flex items-center gap-3">
                               <Bell className="w-5 h-5 text-slate-400" />
                               <Search className="w-5 h-5 text-slate-400" />
@@ -615,7 +598,7 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                             <div className="space-y-4">
                               <div className="text-slate-400 text-sm">Product</div>
                               <div className="text-slate-400 text-sm">Dashboard</div>
-                              <div className="bg-emerald-600 text-white px-3 py-2 rounded-lg flex items-center justify-between">
+                              <div className="bg-emerald-600 text-slate-900 px-3 py-2 rounded-lg flex items-center justify-between">
                                 <div className="flex items-center gap-2">
                                   <DollarSign className="w-4 h-4" />
                                   <span className="text-sm">Issuance & Pre-Sale</span>
@@ -637,7 +620,7 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                               <div className="flex items-center gap-2 text-slate-300 text-sm">
                                 <FileText className="w-4 h-4" />
                                 <span>Documents</span>
-                                <Badge className="bg-emerald-600 text-white px-1 py-0.5 text-xs">Active</Badge>
+                                <Badge className="bg-emerald-600 text-slate-900 px-1 py-0.5 text-xs">Active</Badge>
                               </div>
                               <div className="flex items-center gap-2 text-slate-300 text-sm">
                                 <Shield className="w-4 h-4" />
@@ -665,11 +648,11 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                                 <CardContent className="p-6">
                                   <div className="flex items-start justify-between mb-4">
                                     <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
-                                      <TrendingUp className="w-5 h-5 text-white" />
+                                      <TrendingUp className="w-5 h-5 text-slate-900" />
                                     </div>
                                     <Ellipsis className="w-5 h-5 text-slate-400" />
                                   </div>
-                                  <h3 className="text-2xl font-bold text-white mb-2">$1,250,000 USD</h3>
+                                  <h3 className="text-2xl font-bold text-slate-900 mb-2">$1,250,000 USD</h3>
                                   <p className="text-slate-400 text-sm">Pre-Sale Capital Raised From Credits Pre-Sold On-Chain</p>
                                 </CardContent>
                               </Card>
@@ -678,11 +661,11 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                                 <CardContent className="p-6">
                                   <div className="flex items-start justify-between mb-4">
                                     <div className="w-10 h-10 bg-slate-600 rounded-full flex items-center justify-center">
-                                      <CircleIcon className="w-5 h-5 text-white" />
+                                      <CircleIcon className="w-5 h-5 text-slate-900" />
                                     </div>
                                     <Ellipsis className="w-5 h-5 text-slate-400" />
                                   </div>
-                                  <h3 className="text-2xl font-bold text-white mb-2">2,000,000 tCO2e</h3>
+                                  <h3 className="text-2xl font-bold text-slate-900 mb-2">2,000,000 tCO2e</h3>
                                   <p className="text-slate-400 text-sm">Credits Available for Pre-Sale / Issuance Verified Eligible On-Chain Issuance</p>
                                 </CardContent>
                               </Card>
@@ -691,11 +674,11 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                                 <CardContent className="p-6">
                                   <div className="flex items-start justify-between mb-4">
                                     <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center">
-                                      <BarChart3 className="w-5 h-5 text-white" />
+                                      <BarChart3 className="w-5 h-5 text-slate-900" />
                                     </div>
                                     <Ellipsis className="w-5 h-5 text-slate-400" />
                                   </div>
-                                  <h3 className="text-2xl font-bold text-white mb-2">$32.00 / tCO2e</h3>
+                                  <h3 className="text-2xl font-bold text-slate-900 mb-2">$32.00 / tCO2e</h3>
                                   <div className="flex items-center gap-2 mb-2">
                                     <CheckCircle className="w-4 h-4 text-emerald-400" />
                                     <span className="text-emerald-400 text-sm">Premium Market</span>
@@ -708,7 +691,7 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                             <div className="grid grid-cols-1 gap-6">
                               <Card className="bg-slate-800 border-slate-700">
                                 <CardContent className="p-6">
-                                  <h3 className="text-lg font-semibold text-white mb-4">Active Pre-Sale Campaigns</h3>
+                                  <h3 className="text-lg font-semibold text-slate-900 mb-4">Active Pre-Sale Campaigns</h3>
                                   <div className="space-y-4">
                                     <div className="grid grid-cols-3 gap-4 text-sm text-slate-400 mb-3">
                                       <div>Campaign Name</div>
@@ -716,15 +699,15 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                                       <div>Status</div>
                                     </div>
                                     <div className="grid grid-cols-3 gap-4 items-center py-3 border-b border-slate-700">
-                                      <div className="text-white font-medium">Seed Round - Q2 2024</div>
-                                      <div className="text-white">64%</div>
+                                      <div className="text-slate-900 font-medium">Seed Round - Q2 2024</div>
+                                      <div className="text-slate-900">64%</div>
                                       <div className="flex items-center gap-2">
-                                        <span className="text-white">$102,400</span>
-                                        <Badge className="bg-emerald-600 text-white">Open</Badge>
+                                        <span className="text-slate-900">$102,400</span>
+                                        <Badge className="bg-emerald-600 text-slate-900">Open</Badge>
                                       </div>
                                     </div>
                                   </div>
-                                  <Button className="w-full mt-4 bg-emerald-600 hover:bg-emerald-700 text-white">
+                                  <Button className="w-full mt-4 bg-emerald-600 hover:bg-emerald-700 text-slate-900">
                                     <Plus className="w-4 h-4 mr-2" />
                                     Launch New Pre-Sale Campaign
                                   </Button>
@@ -733,22 +716,22 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                               
                               <Card className="bg-slate-800 border-slate-700">
                                 <CardContent className="p-6">
-                                  <h3 className="text-lg font-semibold text-white mb-4">On-Chain Issuance & Verification</h3>
+                                  <h3 className="text-lg font-semibold text-slate-900 mb-4">On-Chain Issuance & Verification</h3>
                                   <div className="space-y-4">
                                     <div className="flex items-center gap-2">
                                       <CheckCircle className="w-5 h-5 text-emerald-400" />
-                                      <span className="text-white">Next Issuance Batch: Ready</span>
+                                      <span className="text-slate-900">Next Issuance Batch: Ready</span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                       <CheckCircle className="w-5 h-5 text-emerald-400" />
-                                      <span className="text-white">Connected to [Blockchain Network]</span>
+                                      <span className="text-slate-900">Connected to [Blockchain Network]</span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                       <Eye className="w-5 h-5 text-blue-400" />
                                       <span className="text-blue-400 text-sm">View on-chain transactions</span>
                                     </div>
                                   </div>
-                                  <Button className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white">
+                                  <Button className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-slate-900">
                                     Review & Issue Credits
                                   </Button>
                                 </CardContent>
@@ -759,22 +742,15 @@ export function PlatformPage({ onNavigate, onStartProject, onNavigateToDMRV, onN
                       </div>
                     </div>
                     
-                    {onNavigateToStudio && (
-                      <button 
-                        onClick={onNavigateToStudio}
-                        className="flex items-center gap-2 text-accent-foreground hover:text-primary transition-colors duration-300 font-medium"
-                      >
-                        <span>Learn more about Carbon Credit Studio</span>
-                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                      </button>
-                    )}
-                  </div>
-                  
-                  <div className="flex items-center justify-center">
-                    <div className="w-32 h-32 bg-accent-foreground/10 rounded-3xl flex items-center justify-center">
-                      <Zap className="w-16 h-16 text-accent-foreground" />
-                    </div>
-                  </div>
+                  {onNavigateToStudio && (
+                    <button 
+                      onClick={onNavigateToStudio}
+                      className="flex items-center gap-2 text-accent-foreground hover:text-primary transition-colors duration-300 font-medium"
+                    >
+                      <span>Learn more about Carbon Credit Studio</span>
+                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </button>
+                  )}
                 </div>
               </CardContent>
             </Card>
