@@ -2373,7 +2373,7 @@ export function GetStartedPage({ onNavigate, onAccountCreated, onShowDashboards,
                       Account Created Successfully!
                     </h3>
                     <p className="text-blue-700 mb-4">
-                      Your account has been created. Please sign in to continue to your dashboard.
+                      Please verify your email address by clicking the verification link in the email we just sent you. Once verified, you can sign in to access your dashboard.
                     </p>
                     <Button
                       onClick={() => {
