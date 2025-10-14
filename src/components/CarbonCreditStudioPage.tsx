@@ -375,10 +375,8 @@ export function CarbonCreditStudioPage({
                       <div className="flex gap-6 mb-8">
                         {/* Step number circle */}
                         <div className="flex-shrink-0">
-                          <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg shadow-emerald-500/50 p-0.5">
-                            <div className="w-full h-full bg-slate-900 rounded-full flex items-center justify-center">
-                              <span className="text-white font-bold text-xl">{step.step}</span>
-                            </div>
+                          <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg shadow-emerald-500/50">
+                            <span className="text-slate-900 font-bold text-xl">{step.step}</span>
                           </div>
                         </div>
                         
