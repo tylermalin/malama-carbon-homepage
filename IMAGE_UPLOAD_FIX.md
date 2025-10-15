@@ -5,11 +5,37 @@
 Failed to upload image. new row violates row-level security policy
 ```
 
-This error occurs when the Supabase storage RLS (Row Level Security) policies are too restrictive or not properly configured.
+OR
+
+```
+ERROR: 42501: must be owner of table objects
+```
+
+These errors occur when the Supabase storage RLS (Row Level Security) policies are not properly configured or you don't have permissions to set them.
 
 ## Solution
 
-### Option 1: Run the Fix Script (RECOMMENDED)
+### Option 1: Use Supabase Dashboard (RECOMMENDED - NO SQL NEEDED!)
+
+**This is the easiest method and works around permission issues.**
+
+See the complete guide: **`supabase/SIMPLE_FIX_VIA_DASHBOARD.md`**
+
+**Quick Steps:**
+1. Go to Supabase Dashboard → **Storage**
+2. Find/create **`profile-images`** bucket
+3. Make sure **"Public bucket"** is ✅ **CHECKED**
+4. Go to **Policies** tab
+5. Create 4 policies (INSERT, UPDATE, DELETE, SELECT)
+   - See the markdown file above for exact policy settings
+
+✅ **This method bypasses SQL permission issues!**
+
+---
+
+### Option 2: Run SQL Script with Elevated Role
+
+If you have database admin access:
 
 1. **Open Supabase Dashboard**
    - Go to your Supabase project
