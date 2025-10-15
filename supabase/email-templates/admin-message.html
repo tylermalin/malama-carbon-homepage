@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Message from Mālama Labs</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f9fafb;
+    }
+    .email-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+    }
+    .header {
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+      padding: 40px 30px;
+      text-align: center;
+    }
+    .logo {
+      font-size: 32px;
+      font-weight: bold;
+      color: #ffffff;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+    .tagline {
+      color: #d1fae5;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+    .content {
+      padding: 40px 30px;
+    }
+    .greeting {
+      font-size: 16px;
+      color: #374151;
+      margin-bottom: 24px;
+    }
+    .message-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-general { background-color: #dbeafe; color: #1e40af; }
+    .badge-update { background-color: #dcfce7; color: #15803d; }
+    .badge-action { background-color: #fed7aa; color: #c2410c; }
+    .badge-credits { background-color: #f3e8ff; color: #7c3aed; }
+    .badge-urgent { background-color: #fee2e2; color: #b91c1c; }
+    .message-content {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #1f2937;
+      white-space: pre-wrap;
+    }
+    .cta-container {
+      text-align: center;
+      margin: 32px 0;
+    }
+    .cta-button {
+      display: inline-block;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    .divider {
+      border-top: 1px solid #e5e7eb;
+      margin: 32px 0;
+    }
+    .footer {
+      background-color: #f9fafb;
+      padding: 30px;
+      text-align: center;
+      font-size: 13px;
+      color: #6b7280;
+    }
+    .footer-links {
+      margin: 16px 0;
+    }
+    .footer-link {
+      color: #16a34a;
+      text-decoration: none;
+      margin: 0 12px;
+    }
+    .company-info {
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+    .priority-banner {
+      background-color: #fef2f2;
+      border-left: 4px solid #dc2626;
+      padding: 12px 16px;
+      margin-bottom: 24px;
+      border-radius: 4px;
+    }
+    .priority-banner-text {
+      color: #991b1b;
+      font-weight: 600;
+      font-size: 14px;
+      margin: 0;
+    }
+    @media only screen and (max-width: 600px) {
+      .header {
+        padding: 30px 20px;
+      }
+      .content {
+        padding: 30px 20px;
+      }
+      .footer {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <!-- Header -->
+    <div class="header">
+      <h1 class="logo">Mālama Labs</h1>
+      <p class="tagline">Scaling Durable Carbon Removal</p>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <div class="greeting">Aloha {{ .ConfirmationURL }}</div>
+
+      <!-- Priority Banner (only shown for urgent messages) -->
+      {{ if eq .Priority "urgent" }}
+      <div class="priority-banner">
+        <p class="priority-banner-text">⚠️ URGENT: Immediate Action Required</p>
+      </div>
+      {{ end }}
+
+      <!-- Message Type Badge -->
+      <div class="message-badge badge-{{ .MessageType }}">
+        {{ if eq .MessageType "general" }}General Update{{ end }}
+        {{ if eq .MessageType "project_update" }}Project Update{{ end }}
+        {{ if eq .MessageType "credit_availability" }}Credits Available{{ end }}
+        {{ if eq .MessageType "action_required" }}Action Required{{ end }}
+        {{ if eq .MessageType "announcement" }}Announcement{{ end }}
+      </div>
+
+      <!-- Message Content -->
+      <div class="message-content">{{ .Message }}</div>
+
+      <!-- CTA Button -->
+      <div class="cta-container">
+        <a href="{{ .SiteURL }}/dashboard" class="cta-button">
+          View in Dashboard
+        </a>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Contact Info -->
+      <p style="font-size: 14px; color: #6b7280; margin: 0;">
+        Have questions? Reply to this email or contact us at 
+        <a href="mailto:aloha@malamalabs.com" style="color: #16a34a;">aloha@malamalabs.com</a>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-links">
+        <a href="{{ .SiteURL }}" class="footer-link">Home</a>
+        <a href="{{ .SiteURL }}/platform" class="footer-link">Platform</a>
+        <a href="{{ .SiteURL }}/contact" class="footer-link">Contact</a>
+      </div>
+      
+      <div class="company-info">
+        <p style="margin: 0;"><strong>Mālama Labs Inc.</strong></p>
+        <p style="margin: 4px 0 0 0;">Hawaiʻi, USA</p>
+        <p style="margin: 4px 0 0 0;">
+          <a href="{{ .SiteURL }}/privacy-policy" class="footer-link">Privacy Policy</a> | 
+          <a href="{{ .SiteURL }}/terms-of-service" class="footer-link">Terms of Service</a>
+        </p>
+      </div>
+
+      <p style="font-size: 12px; color: #9ca3af; margin-top: 20px;">
+        You're receiving this message because you have an account with Mālama Labs.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
+
+

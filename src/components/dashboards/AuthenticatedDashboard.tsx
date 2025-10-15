@@ -3,6 +3,7 @@ import { ScheduleCallCard } from '../dashboard/ScheduleCallCard';
 import { ProfileCompletionBanner } from '../dashboard/ProfileCompletionBanner';
 import { ProfileEditor } from '../dashboard/ProfileEditor';
 import { QuestionnaireTodos } from '../dashboard/QuestionnaireTodos';
+import { MessageInbox } from '../dashboard/MessageInbox';
 
 interface AuthenticatedDashboardProps {
   user: {
@@ -63,6 +64,11 @@ export function AuthenticatedDashboard({ user }: AuthenticatedDashboardProps) {
               userEmail={user.email}
               onNavigate={handleNavigate}
             />
+          </div>
+          
+          {/* Message Inbox */}
+          <div className="mb-6">
+            <MessageInbox userId={user.id} />
           </div>
           
           {/* Questionnaire Todos */}

@@ -5,7 +5,7 @@
 
 import { supabase } from './supabaseClient';
 
-export type UserRole = 'PROJECT_DEVELOPER' | 'TECHNOLOGY_DEVELOPER' | 'CREDIT_BUYER' | 'PARTNER';
+export type UserRole = 'PROJECT_DEVELOPER' | 'TECHNOLOGY_DEVELOPER' | 'CREDIT_BUYER' | 'PARTNER' | 'ADVISOR' | 'INVESTOR';
 export type TaskStatus = 'PENDING' | 'IN_PROGRESS' | 'DONE' | 'BLOCKED';
 
 export interface UserProfile {

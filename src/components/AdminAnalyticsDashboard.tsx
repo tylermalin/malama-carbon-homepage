@@ -35,9 +35,12 @@ import {
   Search,
   Filter,
   Send,
-  ExternalLink
+  ExternalLink,
+  MessageSquare
 } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
+import { MessageComposer } from './admin/MessageComposer';
+import { MessageHistoryTable } from './admin/MessageHistoryTable';
 
 interface AdminAnalyticsDashboardProps {
   onNavigate: () => void;
@@ -57,7 +60,7 @@ export function AdminAnalyticsDashboard({ onNavigate, onShowGetStarted, user }: 
   const [isLoading, setIsLoading] = useState(true);
   const [isCheckingAdmin, setIsCheckingAdmin] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [activeTab, setActiveTab] = useState<'analytics' | 'users' | 'images' | 'invite'>('analytics');
+  const [activeTab, setActiveTab] = useState<'analytics' | 'users' | 'images' | 'invite' | 'messages'>('analytics');
   const [timeRange, setTimeRange] = useState('30'); // days
   const [metrics, setMetrics] = useState({
     totalUsers: 0,
@@ -817,6 +820,17 @@ export function AdminAnalyticsDashboard({ onNavigate, onShowGetStarted, user }: 
               <UserPlus className="w-4 h-4 inline-block mr-2" />
               Invite User
             </button>
+            <button
+              onClick={() => setActiveTab('messages')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                activeTab === 'messages'
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <MessageSquare className="w-4 h-4 inline-block mr-2" />
+              Messages
+            </button>
           </div>
         </div>
       </div>
@@ -1448,6 +1462,31 @@ export function AdminAnalyticsDashboard({ onNavigate, onShowGetStarted, user }: 
                 </p>
               </CardContent>
             </Card>
+          </div>
+        )}
+
+        {/* Messages Tab */}
+        {activeTab === 'messages' && (
+          <div className="space-y-6">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold text-gray-900">Message Center</h1>
+              <p className="mt-2 text-gray-600">
+                Send messages to users and track engagement
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+              {/* Message Composer */}
+              <MessageComposer 
+                adminEmail={user?.email || ''}
+                onMessageSent={() => {
+                  // Optionally refresh message history
+                }}
+              />
+            </div>
+
+            {/* Message History */}
+            <MessageHistoryTable />
           </div>
         )}
       </div>

@@ -89,26 +89,26 @@ export function QuestionnaireTodos({ userId, onNavigate }: QuestionnaireTodosPro
     return null;
   }
 
-  // Show "Up To Date" message when all questionnaires are completed
+  // Show "Awaiting Next Steps" message when all questionnaires are completed
   if (userRoles.length === 0) {
     return (
       <div className="space-y-4">
         <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
           <CheckCircle2 className="w-5 h-5 text-green-500" />
-          All Caught Up
+          Awaiting Next Steps
         </h2>
-        <Card className="border-green-200 bg-gradient-to-r from-green-50 to-emerald-50">
+        <Card className="border-blue-200 bg-gradient-to-r from-blue-50 to-cyan-50">
           <CardContent className="p-6">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <CheckCircle2 className="w-6 h-6 text-green-600" />
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <Clock className="w-6 h-6 text-blue-600" />
               </div>
               <div className="flex-1">
                 <h3 className="font-semibold text-gray-900 mb-2">
-                  Up To Date
+                  Under Review
                 </h3>
                 <p className="text-sm text-gray-700">
-                  Your project team will notify you when final onboarding is available.
+                  Thank you for completing your questionnaire! Our team is reviewing your submission and will reach out soon with next steps. You'll receive a message here and via email when we're ready to proceed.
                 </p>
               </div>
             </div>
