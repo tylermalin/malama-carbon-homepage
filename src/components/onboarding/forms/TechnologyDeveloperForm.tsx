@@ -72,6 +72,8 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
   }, []);
 
   const integrationTypes = watch('integration_types') || [];
+  const selectedUseCase = watch('use_case');
+  const selectedEnv = watch('env');
 
   const toggleIntegrationType = (type: string) => {
     const current = integrationTypes;
@@ -215,19 +217,28 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
                   <div>
                     <Label>Primary Use Case *</Label>
                     <div className="grid grid-cols-1 gap-2 mt-3">
-                      {Object.entries(technologyDeveloperLabels.use_case).map(([value, label]) => (
-                        <label key={value} className="relative">
-                          <input
-                            type="radio"
-                            value={value}
-                            {...register('use_case')}
-                            className="peer sr-only"
-                          />
-                          <div className="p-4 border-2 border-gray-800 rounded-lg cursor-pointer hover:bg-gray-100 peer-checked:bg-gray-800 peer-checked:border-gray-800 transition-all">
-                            <p className="text-sm font-medium text-gray-900 peer-checked:text-white transition-colors">{label}</p>
-                          </div>
-                        </label>
-                      ))}
+                      {Object.entries(technologyDeveloperLabels.use_case).map(([value, label]) => {
+                        const isSelected = selectedUseCase === value;
+                        return (
+                          <label key={value} className="relative cursor-pointer">
+                            <input
+                              type="radio"
+                              value={value}
+                              {...register('use_case')}
+                              className="sr-only"
+                            />
+                            <div className={`p-4 border-2 rounded-lg transition-all ${
+                              isSelected
+                                ? 'border-gray-800 bg-gray-800'
+                                : 'border-gray-800 hover:bg-gray-100'
+                            }`}>
+                              <p className={`text-sm font-medium transition-colors ${
+                                isSelected ? 'text-white' : 'text-gray-900'
+                              }`}>{label}</p>
+                            </div>
+                          </label>
+                        );
+                      })}
                     </div>
                     {errors.use_case && (
                       <p className="text-sm text-red-600 mt-1">{errors.use_case.message}</p>
@@ -262,19 +273,28 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
                   <div>
                     <Label>Preferred Environment *</Label>
                     <div className="grid grid-cols-1 gap-2 mt-3">
-                      {Object.entries(technologyDeveloperLabels.env).map(([value, label]) => (
-                        <label key={value} className="relative">
-                          <input
-                            type="radio"
-                            value={value}
-                            {...register('env')}
-                            className="peer sr-only"
-                          />
-                          <div className="p-3 border-2 border-gray-800 rounded-lg cursor-pointer hover:bg-gray-100 peer-checked:bg-gray-800 peer-checked:border-gray-800 transition-all">
-                            <p className="text-sm font-medium text-gray-900 peer-checked:text-white transition-colors">{label}</p>
-                          </div>
-                        </label>
-                      ))}
+                      {Object.entries(technologyDeveloperLabels.env).map(([value, label]) => {
+                        const isSelected = selectedEnv === value;
+                        return (
+                          <label key={value} className="relative cursor-pointer">
+                            <input
+                              type="radio"
+                              value={value}
+                              {...register('env')}
+                              className="sr-only"
+                            />
+                            <div className={`p-3 border-2 rounded-lg transition-all ${
+                              isSelected
+                                ? 'border-gray-800 bg-gray-800'
+                                : 'border-gray-800 hover:bg-gray-100'
+                            }`}>
+                              <p className={`text-sm font-medium transition-colors ${
+                                isSelected ? 'text-white' : 'text-gray-900'
+                              }`}>{label}</p>
+                            </div>
+                          </label>
+                        );
+                      })}
                     </div>
                     {errors.env && (
                       <p className="text-sm text-red-600 mt-1">{errors.env.message}</p>
