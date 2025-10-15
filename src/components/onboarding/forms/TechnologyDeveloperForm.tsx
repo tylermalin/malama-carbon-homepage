@@ -224,7 +224,7 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
                             className="peer sr-only"
                           />
                           <div className="p-4 border-2 border-gray-800 rounded-lg cursor-pointer hover:bg-gray-100 peer-checked:bg-gray-800 peer-checked:border-gray-800 transition-all">
-                            <p className="text-sm font-medium text-gray-900 peer-checked:text-white">{label}</p>
+                            <p className="text-sm font-medium text-gray-900 peer-checked:text-white transition-colors">{label}</p>
                           </div>
                         </label>
                       ))}
@@ -246,10 +246,10 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
                           className={`p-3 border-2 rounded-lg text-left transition-all ${
                             integrationTypes.includes(value as any)
                               ? 'border-gray-800 bg-gray-800 text-white'
-                              : 'border-gray-800 text-gray-800 hover:bg-gray-100'
+                              : 'border-gray-800 text-gray-900 hover:bg-gray-100'
                           }`}
                         >
-                          <p className={`text-sm font-medium ${integrationTypes.includes(value as any) ? 'text-white' : 'text-gray-900'}`}>{label}</p>
+                          <p className="text-sm font-medium">{label}</p>
                         </button>
                       ))}
                     </div>
@@ -271,7 +271,7 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
                             className="peer sr-only"
                           />
                           <div className="p-3 border-2 border-gray-800 rounded-lg cursor-pointer hover:bg-gray-100 peer-checked:bg-gray-800 peer-checked:border-gray-800 transition-all">
-                            <p className="text-sm font-medium text-gray-900 peer-checked:text-white">{label}</p>
+                            <p className="text-sm font-medium text-gray-900 peer-checked:text-white transition-colors">{label}</p>
                           </div>
                         </label>
                       ))}
