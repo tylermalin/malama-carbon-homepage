@@ -75,6 +75,13 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
   const selectedUseCase = watch('use_case');
   const selectedEnv = watch('env');
 
+  // Debug logging
+  React.useEffect(() => {
+    console.log('Selected Use Case:', selectedUseCase);
+    console.log('Selected Env:', selectedEnv);
+    console.log('Integration Types:', integrationTypes);
+  }, [selectedUseCase, selectedEnv, integrationTypes]);
+
   const toggleIntegrationType = (type: string) => {
     const current = integrationTypes;
     const updated = current.includes(type as any)
@@ -220,21 +227,26 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
                       {Object.entries(technologyDeveloperLabels.use_case).map(([value, label]) => {
                         const isSelected = selectedUseCase === value;
                         return (
-                          <label key={value} className="relative cursor-pointer">
+                          <label key={value} className="relative cursor-pointer block">
                             <input
                               type="radio"
                               value={value}
                               {...register('use_case')}
                               className="sr-only"
                             />
-                            <div className={`p-4 border-2 rounded-lg transition-all ${
-                              isSelected
-                                ? 'border-gray-800 bg-gray-800'
-                                : 'border-gray-800 hover:bg-gray-100'
-                            }`}>
-                              <p className={`text-sm font-medium transition-colors ${
-                                isSelected ? 'text-white' : 'text-gray-900'
-                              }`}>{label}</p>
+                            <div 
+                              className="p-4 border-2 border-gray-800 rounded-lg transition-all"
+                              style={{
+                                backgroundColor: isSelected ? '#1f2937' : 'transparent',
+                                borderColor: '#1f2937'
+                              }}
+                            >
+                              <p 
+                                className="text-sm font-medium transition-colors"
+                                style={{
+                                  color: isSelected ? '#ffffff' : '#111827'
+                                }}
+                              >{label}</p>
                             </div>
                           </label>
                         );
@@ -249,20 +261,24 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
                   <div>
                     <Label>Integration Types * (Select all that apply)</Label>
                     <div className="grid grid-cols-2 gap-3 mt-3">
-                      {Object.entries(technologyDeveloperLabels.integration_types).map(([value, label]) => (
-                        <button
-                          key={value}
-                          type="button"
-                          onClick={() => toggleIntegrationType(value)}
-                          className={`p-3 border-2 rounded-lg text-left transition-all ${
-                            integrationTypes.includes(value as any)
-                              ? 'border-gray-800 bg-gray-800 text-white'
-                              : 'border-gray-800 text-gray-900 hover:bg-gray-100'
-                          }`}
-                        >
-                          <p className="text-sm font-medium">{label}</p>
-                        </button>
-                      ))}
+                      {Object.entries(technologyDeveloperLabels.integration_types).map(([value, label]) => {
+                        const isSelected = integrationTypes.includes(value as any);
+                        return (
+                          <button
+                            key={value}
+                            type="button"
+                            onClick={() => toggleIntegrationType(value)}
+                            className="p-3 border-2 border-gray-800 rounded-lg text-left transition-all hover:bg-gray-100"
+                            style={{
+                              backgroundColor: isSelected ? '#1f2937' : 'transparent',
+                              borderColor: '#1f2937',
+                              color: isSelected ? '#ffffff' : '#111827'
+                            }}
+                          >
+                            <p className="text-sm font-medium">{label}</p>
+                          </button>
+                        );
+                      })}
                     </div>
                     {errors.integration_types && (
                       <p className="text-sm text-red-600 mt-1">{errors.integration_types.message}</p>
@@ -276,21 +292,26 @@ export function TechnologyDeveloperForm({ onComplete }: TechnologyDeveloperFormP
                       {Object.entries(technologyDeveloperLabels.env).map(([value, label]) => {
                         const isSelected = selectedEnv === value;
                         return (
-                          <label key={value} className="relative cursor-pointer">
+                          <label key={value} className="relative cursor-pointer block">
                             <input
                               type="radio"
                               value={value}
                               {...register('env')}
                               className="sr-only"
                             />
-                            <div className={`p-3 border-2 rounded-lg transition-all ${
-                              isSelected
-                                ? 'border-gray-800 bg-gray-800'
-                                : 'border-gray-800 hover:bg-gray-100'
-                            }`}>
-                              <p className={`text-sm font-medium transition-colors ${
-                                isSelected ? 'text-white' : 'text-gray-900'
-                              }`}>{label}</p>
+                            <div 
+                              className="p-3 border-2 border-gray-800 rounded-lg transition-all"
+                              style={{
+                                backgroundColor: isSelected ? '#1f2937' : 'transparent',
+                                borderColor: '#1f2937'
+                              }}
+                            >
+                              <p 
+                                className="text-sm font-medium transition-colors"
+                                style={{
+                                  color: isSelected ? '#ffffff' : '#111827'
+                                }}
+                              >{label}</p>
                             </div>
                           </label>
                         );
