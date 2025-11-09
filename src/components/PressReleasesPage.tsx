@@ -31,6 +31,15 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
   const [viewingRelease, setViewingRelease] = React.useState<string | null>(null);
   const [copied, setCopied] = React.useState(false);
 
+  // Handle URL hash on page load (for direct links to specific press releases)
+  React.useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && pressReleases.find(r => r.id === hash)) {
+      setViewingRelease(hash);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, []);
+
   // Helper function to copy link to clipboard
   const copyToClipboard = async (text: string) => {
     try {
@@ -44,8 +53,7 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
 
   // Social share functions
   const shareToLinkedIn = (release: any) => {
-    const url = `${window.location.origin}/press`;
-    const text = `${release.title} - ${release.excerpt}`;
+    const url = `${window.location.origin}/press#${release.id}`;
     window.open(
       `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
       '_blank',
@@ -54,8 +62,8 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
   };
 
   const shareToTwitter = (release: any) => {
-    const url = `${window.location.origin}/press`;
-    const text = `${release.title}\n\n${release.excerpt}\n\nRead more:`;
+    const url = `${window.location.origin}/press#${release.id}`;
+    const text = `${release.title}`;
     const hashtags = release.tags.slice(0, 3).join(',').replace(/\s+/g, '');
     window.open(
       `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}&hashtags=${encodeURIComponent(hashtags)}`,
@@ -65,7 +73,7 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
   };
 
   const shareToFacebook = (release: any) => {
-    const url = `${window.location.origin}/press`;
+    const url = `${window.location.origin}/press#${release.id}`;
     window.open(
       `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
       '_blank',
@@ -260,6 +268,7 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
               variant="ghost" 
               onClick={() => {
                 setViewingRelease(null);
+                window.history.pushState({}, '', '/press');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               className="mb-8"
@@ -312,7 +321,8 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
                 <div className="flex flex-wrap gap-3 mb-6">
                   <Button 
                     onClick={() => shareToLinkedIn(release)}
-                    className="bg-[#0077B5] hover:bg-[#006399] text-white"
+                    variant="outline"
+                    className="border-[#0077B5] text-[#0077B5] hover:bg-[#0077B5] hover:text-white"
                   >
                     <Linkedin className="w-4 h-4 mr-2" />
                     Share on LinkedIn
@@ -320,7 +330,8 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
                   
                   <Button 
                     onClick={() => shareToTwitter(release)}
-                    className="bg-[#1DA1F2] hover:bg-[#1a8cd8] text-white"
+                    variant="outline"
+                    className="border-[#1DA1F2] text-[#1DA1F2] hover:bg-[#1DA1F2] hover:text-white"
                   >
                     <Twitter className="w-4 h-4 mr-2" />
                     Share on Twitter
@@ -328,7 +339,8 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
                   
                   <Button 
                     onClick={() => shareToFacebook(release)}
-                    className="bg-[#1877F2] hover:bg-[#166fe5] text-white"
+                    variant="outline"
+                    className="border-[#1877F2] text-[#1877F2] hover:bg-[#1877F2] hover:text-white"
                   >
                     <Facebook className="w-4 h-4 mr-2" />
                     Share on Facebook
@@ -339,7 +351,7 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
                 <div className="flex items-center gap-3">
                   <Button 
                     variant="outline"
-                    onClick={() => copyToClipboard(`${window.location.origin}/press`)}
+                    onClick={() => copyToClipboard(`${window.location.origin}/press#${release.id}`)}
                     className="flex-1 max-w-md"
                   >
                     {copied ? (
@@ -363,7 +375,7 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
                         navigator.share({
                           title: release.title,
                           text: release.excerpt,
-                          url: `${window.location.origin}/press`
+                          url: `${window.location.origin}/press#${release.id}`
                         });
                       }}
                     >
@@ -381,12 +393,12 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
                       <p className="text-xs font-semibold text-muted-foreground mb-1">LinkedIn/Facebook:</p>
                       <p className="text-sm">{release.title}</p>
                       <p className="text-sm mt-2">{release.excerpt}</p>
-                      <p className="text-sm text-secondary mt-2">Read the full press release: {window.location.origin}/press</p>
+                      <p className="text-sm text-secondary mt-2">Read the full press release: {window.location.origin}/press#{release.id}</p>
                     </div>
                     <div className="p-3 bg-background rounded border border-border">
                       <p className="text-xs font-semibold text-muted-foreground mb-1">Twitter/X:</p>
                       <p className="text-sm">{release.title}</p>
-                      <p className="text-sm mt-2 text-secondary">{window.location.origin}/press</p>
+                      <p className="text-sm mt-2 text-secondary">{window.location.origin}/press#{release.id}</p>
                       <p className="text-xs text-muted-foreground mt-2">
                         #{release.tags.slice(0, 3).join(' #').replace(/\s+/g, '')}
                       </p>
@@ -539,6 +551,7 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
                         <Button 
                           onClick={() => {
                             setViewingRelease(release.id);
+                            window.history.pushState({}, '', `/press#${release.id}`);
                             window.scrollTo({ top: 0, behavior: 'smooth' });
                           }}
                           className="group-hover:gap-3 transition-all duration-300"
@@ -555,6 +568,7 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
                           }}
                           size="icon"
                           title="Share on LinkedIn"
+                          className="border-[#0077B5] text-[#0077B5] hover:bg-[#0077B5] hover:text-white"
                         >
                           <Linkedin className="w-4 h-4" />
                         </Button>
@@ -567,6 +581,7 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
                           }}
                           size="icon"
                           title="Share on Twitter"
+                          className="border-[#1DA1F2] text-[#1DA1F2] hover:bg-[#1DA1F2] hover:text-white"
                         >
                           <Twitter className="w-4 h-4" />
                         </Button>
