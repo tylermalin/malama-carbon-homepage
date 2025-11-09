@@ -53,17 +53,21 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
 
   // Social share functions
   const shareToLinkedIn = (release: any) => {
-    const url = `${window.location.origin}/press#${release.id}`;
+    // Use main site URL - it has proper server-rendered OG tags for preview
+    const url = 'https://malamalabs.com';
+    // LinkedIn will use the text parameter for the post content
+    const text = `${release.title}\n\n${release.excerpt}\n\nRead more about our latest announcement:`;
     window.open(
-      `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+      `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&summary=${encodeURIComponent(text)}`,
       '_blank',
       'width=600,height=600'
     );
   };
 
   const shareToTwitter = (release: any) => {
-    const url = `${window.location.origin}/press#${release.id}`;
-    const text = `${release.title}`;
+    // Use main site URL - it has proper server-rendered OG tags for preview
+    const url = 'https://malamalabs.com';
+    const text = `${release.title}\n\n${release.excerpt}`;
     const hashtags = release.tags.slice(0, 3).join(',').replace(/\s+/g, '');
     window.open(
       `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}&hashtags=${encodeURIComponent(hashtags)}`,
@@ -73,9 +77,11 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
   };
 
   const shareToFacebook = (release: any) => {
-    const url = `${window.location.origin}/press#${release.id}`;
+    // Use main site URL - it has proper server-rendered OG tags for preview
+    const url = 'https://malamalabs.com';
+    const quote = `${release.title}\n\n${release.excerpt}`;
     window.open(
-      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(quote)}`,
       '_blank',
       'width=600,height=600'
     );
@@ -351,7 +357,7 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
                 <div className="flex items-center gap-3">
                   <Button 
                     variant="outline"
-                    onClick={() => copyToClipboard(`${window.location.origin}/press#${release.id}`)}
+                    onClick={() => copyToClipboard('https://malamalabs.com/press')}
                     className="flex-1 max-w-md"
                   >
                     {copied ? (
@@ -375,7 +381,7 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
                         navigator.share({
                           title: release.title,
                           text: release.excerpt,
-                          url: `${window.location.origin}/press#${release.id}`
+                          url: 'https://malamalabs.com/press'
                         });
                       }}
                     >
@@ -393,12 +399,12 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
                       <p className="text-xs font-semibold text-muted-foreground mb-1">LinkedIn/Facebook:</p>
                       <p className="text-sm">{release.title}</p>
                       <p className="text-sm mt-2">{release.excerpt}</p>
-                      <p className="text-sm text-secondary mt-2">Read the full press release: {window.location.origin}/press#{release.id}</p>
+                      <p className="text-sm text-secondary mt-2">📰 Read the full press release: https://malamalabs.com/press</p>
                     </div>
                     <div className="p-3 bg-background rounded border border-border">
                       <p className="text-xs font-semibold text-muted-foreground mb-1">Twitter/X:</p>
                       <p className="text-sm">{release.title}</p>
-                      <p className="text-sm mt-2 text-secondary">{window.location.origin}/press#{release.id}</p>
+                      <p className="text-sm mt-2 text-secondary">https://malamalabs.com/press</p>
                       <p className="text-xs text-muted-foreground mt-2">
                         #{release.tags.slice(0, 3).join(' #').replace(/\s+/g, '')}
                       </p>
