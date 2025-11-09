@@ -6,6 +6,7 @@ import { Twitter, Linkedin, Github, Youtube } from 'lucide-react';
 interface FooterProps {
   onShowDocumentation?: () => void;
   onShowBlog?: () => void;
+  onShowPressReleases?: () => void;
   onShowPlatform?: () => void;
   onShowHowItWorks?: () => void;
   onShowAbout?: () => void;
@@ -25,6 +26,7 @@ interface FooterProps {
   onShowPresentation?: () => void;
   onShowPresentations?: () => void;
   onShowProjectGallery?: () => void;
+  onShowIdahoPilot?: () => void;
 }
 
 const socialLinks = [
@@ -37,6 +39,7 @@ const socialLinks = [
 export function Footer({ 
   onShowDocumentation, 
   onShowBlog, 
+  onShowPressReleases,
   onShowPlatform,
   onShowHowItWorks,
   onShowAbout,
@@ -55,13 +58,15 @@ export function Footer({
   onShowAdvisory,
   onShowPresentation,
   onShowPresentations,
-  onShowProjectGallery
+  onShowProjectGallery,
+  onShowIdahoPilot
 }: FooterProps) {
   
   const companyLinks = [
     { name: "About Mālama Labs", action: onShowAbout, description: "Our mission, vision, and values" },
     { name: "Our Technology", action: onShowPlatform, description: "Universal dMRV, Risk & Integrity Engine" },
     { name: "Projects", action: onShowProjectGallery, description: "Active carbon innovation sites" },
+    { name: "Idaho Pilot Project 2026 - Participate!", action: onShowIdahoPilot, description: "Enhanced rock weathering for farmers" },
     { name: "Our Team", action: onShowTeam, description: "Leadership and advisors" },
     { name: "Careers", action: onShowCareers, description: "Join the Mālama mission" }
   ];
@@ -82,7 +87,8 @@ export function Footer({
 
   const resourceLinks = [
     { name: "Knowledge Base", action: onShowDocumentation, description: "Educational materials & docs" },
-    { name: "Media & Press", action: onShowBlog, description: "Announcements and features" },
+    { name: "Blog", action: onShowBlog, description: "Insights and thought leadership" },
+    { name: "Press Releases", action: onShowPressReleases, description: "Company announcements" },
     { name: "FAQ", action: onShowFAQ, description: "Frequently asked questions" },
     { name: "Contact Us", action: onShowContact, description: "Partnership inquiries" }
   ];

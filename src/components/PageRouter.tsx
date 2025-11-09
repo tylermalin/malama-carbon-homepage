@@ -29,6 +29,7 @@ import { GetStartedPage } from './GetStartedPage';
 import { LandStewardPage } from './LandStewardPage';
 import { DocumentationPage } from './DocumentationPage';
 import { BlogPage } from './BlogPage';
+import { PressReleasesPage } from './PressReleasesPage';
 import { ProjectGallery } from './ProjectGallery';
 import { AboutPage } from './AboutPage';
 import { TeamPage } from './TeamPage';
@@ -49,6 +50,8 @@ import { BuyersPresentationPage } from './BuyersPresentationPage';
 import { ProjectsPresentationPage } from './ProjectsPresentationPage';
 import { AdminAnalyticsDashboard } from './AdminAnalyticsDashboard';
 import { StorageTest } from './StorageTest';
+import { IdahoPilotPage } from './IdahoPilotPage';
+import { IdahoPilotRegistrationPage } from './IdahoPilotRegistrationPage';
 import { Cpu, Flame, Coins } from 'lucide-react';
 
 // Onboarding V2 Components
@@ -71,6 +74,7 @@ interface PageRouterProps {
     showLandSteward: () => void;
     showDocumentation: () => void;
     showBlog: () => void;
+    showPressReleases: () => void;
     showProjectGallery: () => void;
     showAbout: () => void;
     showTeam: () => void;
@@ -130,6 +134,7 @@ export function PageRouter({
     showLandSteward,
     showDocumentation,
     showBlog,
+    showPressReleases,
     showProjectGallery,
     showAbout,
     showTeam,
@@ -150,7 +155,8 @@ export function PageRouter({
     showPresentation,
     showPresentations,
     showPresentationBuyers,
-    showPresentationProjects
+    showPresentationProjects,
+    showIdahoPilot
   } = navigationFunctions;
 
   // Render individual pages
@@ -171,6 +177,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -189,6 +196,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -200,6 +209,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -218,6 +228,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -239,6 +251,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -257,6 +270,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -280,6 +295,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -298,6 +314,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -309,6 +327,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -327,6 +346,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -338,6 +359,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -356,6 +378,40 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
+          />
+        </>
+      );
+    
+    case 'pressReleases':
+      return (
+        <>
+          <PressReleasesPage onNavigate={navigateToSection} />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -367,6 +423,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -385,6 +442,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -396,6 +455,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -414,6 +474,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -425,6 +487,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -443,6 +506,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -454,6 +519,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -472,6 +538,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -483,6 +551,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -501,6 +570,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -512,6 +583,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -530,6 +602,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -553,6 +627,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -571,6 +646,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -585,6 +662,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -603,6 +681,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -617,6 +697,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -635,6 +716,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -649,6 +732,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -667,6 +751,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -692,6 +778,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -710,6 +797,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );
@@ -820,6 +909,41 @@ export function PageRouter({
           onNavigate={navigateToSection}
         />
       );
+
+    case 'idahoPilot':
+      return (
+        <>
+          <IdahoPilotPage onNavigate={navigateToSection} />
+          <Footer 
+            onShowDocumentation={showDocumentation} 
+            onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
+            onShowPlatform={showPlatform}
+            onShowHowItWorks={showHowItWorks}
+            onShowAbout={showAbout}
+            onShowTeam={showTeam}
+            onShowContact={showContact}
+            onShowCareers={showCareers}
+            onShowFAQ={showFAQ}
+            onShowPrivacyPolicy={showPrivacyPolicy}
+            onShowTermsOfService={showTermsOfService}
+            onShowCookiePolicy={showCookiePolicy}
+            onShowCarbonStudio={showCarbonStudio}
+            onShowCarbonProtocols={showCarbonProtocols}
+            onShowDMRVEngine={showDMRVEngine}
+            onShowFinancials={showFinancials}
+            onShowInvestor={showInvestor}
+            onShowAdvisory={showAdvisory}
+            onShowPresentation={showPresentation}
+            onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
+          />
+        </>
+      );
+    
+    case 'idahoPilotRegister':
+      return <IdahoPilotRegistrationPage onNavigate={navigateToSection} />;
     
     case 'home':
     default:
@@ -853,6 +977,7 @@ export function PageRouter({
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
+            onShowPressReleases={showPressReleases}
             onShowPlatform={showPlatform}
             onShowHowItWorks={showHowItWorks}
             onShowAbout={showAbout}
@@ -871,6 +996,8 @@ export function PageRouter({
             onShowAdvisory={showAdvisory}
             onShowPresentation={showPresentation}
             onShowPresentations={showPresentations}
+            onShowProjectGallery={showProjectGallery}
+            onShowIdahoPilot={showIdahoPilot}
           />
         </>
       );

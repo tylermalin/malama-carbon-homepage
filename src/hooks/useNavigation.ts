@@ -27,6 +27,7 @@ export type PageType =
   | 'landSteward'
   | 'documentation'
   | 'blog'
+  | 'pressReleases'
   | 'projectGallery'
   | 'about'
   | 'team'
@@ -51,7 +52,9 @@ export type PageType =
   | 'onboardingV2ProjectDeveloper'
   | 'onboardingV2TechDeveloper'
   | 'onboardingV2CreditBuyer'
-  | 'onboardingV2Partner';
+  | 'onboardingV2Partner'
+  | 'idahoPilot'
+  | 'idahoPilotRegister';
 
 // Map URL paths to page types
 const pathToPageMap: Record<string, PageType> = {
@@ -76,6 +79,8 @@ const pathToPageMap: Record<string, PageType> = {
   '/faq': 'faq',
   '/careers': 'careers',
   '/blog': 'blog',
+  '/press': 'pressReleases',
+  '/press-releases': 'pressReleases',
   '/documentation': 'documentation',
   '/how-it-works': 'howItWorks',
   '/carbon-studio': 'carbonStudio',
@@ -98,6 +103,8 @@ const pathToPageMap: Record<string, PageType> = {
   '/onboarding/v2/technology-developer': 'onboardingV2TechDeveloper',
   '/onboarding/v2/credit-buyer': 'onboardingV2CreditBuyer',
   '/onboarding/v2/partner': 'onboardingV2Partner',
+  '/idaho-pilot': 'idahoPilot',
+  '/idaho-pilot/register': 'idahoPilotRegister',
 };
 
 // Map page types to URL paths
@@ -118,6 +125,7 @@ const pageToPathMap: Record<PageType, string> = {
   faq: '/faq',
   careers: '/careers',
   blog: '/blog',
+  pressReleases: '/press',
   documentation: '/documentation',
   howItWorks: '/how-it-works',
   getStarted: '/signup',
@@ -140,6 +148,8 @@ const pageToPathMap: Record<PageType, string> = {
   onboardingV2TechDeveloper: '/onboarding/v2/technology-developer',
   onboardingV2CreditBuyer: '/onboarding/v2/credit-buyer',
   onboardingV2Partner: '/onboarding/v2/partner',
+  idahoPilot: '/idaho-pilot',
+  idahoPilotRegister: '/idaho-pilot/register',
 };
 
 function getInitialPage(): PageType {
@@ -177,6 +187,7 @@ export function useNavigation() {
         faq: 'FAQ | Mālama Labs',
         careers: 'Careers | Mālama Labs',
         blog: 'Blog | Mālama Labs',
+        pressReleases: 'Press Releases | Mālama Labs',
         documentation: 'Documentation | Mālama Labs',
         howItWorks: 'How It Works | Mālama Labs',
         getStarted: 'Get Started | Mālama Labs',
@@ -199,6 +210,8 @@ export function useNavigation() {
         onboardingV2TechDeveloper: 'Tech Developer Registration | Mālama Labs',
         onboardingV2CreditBuyer: 'Credit Buyer Registration | Mālama Labs',
         onboardingV2Partner: 'Partner Registration | Mālama Labs',
+        idahoPilot: 'Idaho Rock Weathering Pilot – Farmers & Landowners | Mālama Labs',
+        idahoPilotRegister: 'Apply for Idaho Pilot | Mālama Labs',
       };
       
       document.title = pageTitles[currentPage] || 'Mālama Labs';
@@ -270,6 +283,7 @@ export function useNavigation() {
     showContact: () => navigateToPage('contact'),
     showFAQ: () => navigateToPage('faq'),
     showCareers: () => navigateToPage('careers'),
+    showPressReleases: () => navigateToPage('pressReleases'),
     showPrivacyPolicy: () => navigateToPage('privacyPolicy'),
     showTermsOfService: () => navigateToPage('termsOfService'),
     showCookiePolicy: () => navigateToPage('cookiePolicy'),
@@ -284,6 +298,7 @@ export function useNavigation() {
     showPresentations: () => navigateToPage('presentations'),
     showPresentationBuyers: () => navigateToPage('presentationBuyers'),
     showPresentationProjects: () => navigateToPage('presentationProjects'),
+    showIdahoPilot: () => navigateToPage('idahoPilot'),
   };
 
   const isOnSubPage = currentPage !== 'home';
