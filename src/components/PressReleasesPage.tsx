@@ -14,7 +14,13 @@ import {
   Megaphone,
   Building2,
   Award,
-  TrendingUp
+  TrendingUp,
+  Linkedin,
+  Twitter,
+  Facebook,
+  Link as LinkIcon,
+  Copy,
+  CheckCircle2
 } from 'lucide-react';
 
 interface PressReleasesPageProps {
@@ -23,6 +29,84 @@ interface PressReleasesPageProps {
 
 export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
   const [viewingRelease, setViewingRelease] = React.useState<string | null>(null);
+  const [copied, setCopied] = React.useState(false);
+
+  // Helper function to copy link to clipboard
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
+  // Social share functions
+  const shareToLinkedIn = (release: any) => {
+    const url = `${window.location.origin}/press`;
+    const text = `${release.title} - ${release.excerpt}`;
+    window.open(
+      `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+      '_blank',
+      'width=600,height=600'
+    );
+  };
+
+  const shareToTwitter = (release: any) => {
+    const url = `${window.location.origin}/press`;
+    const text = `${release.title}\n\n${release.excerpt}\n\nRead more:`;
+    const hashtags = release.tags.slice(0, 3).join(',').replace(/\s+/g, '');
+    window.open(
+      `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}&hashtags=${encodeURIComponent(hashtags)}`,
+      '_blank',
+      'width=600,height=600'
+    );
+  };
+
+  const shareToFacebook = (release: any) => {
+    const url = `${window.location.origin}/press`;
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+      '_blank',
+      'width=600,height=600'
+    );
+  };
+
+  // Update meta tags for better sharing
+  React.useEffect(() => {
+    if (viewingRelease) {
+      const release = pressReleases.find(r => r.id === viewingRelease);
+      if (release) {
+        // Update page title
+        document.title = `${release.title} | Mālama Labs Press Release`;
+        
+        // Update or create Open Graph meta tags
+        updateMetaTag('og:title', release.title);
+        updateMetaTag('og:description', release.excerpt);
+        updateMetaTag('og:image', release.image);
+        updateMetaTag('og:url', `${window.location.origin}/press`);
+        updateMetaTag('og:type', 'article');
+        
+        // Twitter Card meta tags
+        updateMetaTag('twitter:card', 'summary_large_image', 'name');
+        updateMetaTag('twitter:title', release.title, 'name');
+        updateMetaTag('twitter:description', release.excerpt, 'name');
+        updateMetaTag('twitter:image', release.image, 'name');
+        updateMetaTag('twitter:site', '@malamalabs', 'name');
+      }
+    }
+  }, [viewingRelease]);
+
+  const updateMetaTag = (property: string, content: string, attributeName: string = 'property') => {
+    let element = document.querySelector(`meta[${attributeName}="${property}"]`);
+    if (!element) {
+      element = document.createElement('meta');
+      element.setAttribute(attributeName, property);
+      document.head.appendChild(element);
+    }
+    element.setAttribute('content', content);
+  };
 
   // Press releases data
   const pressReleases = [
@@ -222,23 +306,92 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
               />
 
               <div className="mt-12 pt-8 border-t border-border">
-                <h3 className="text-2xl mb-4 text-primary">Share This Release</h3>
-                <div className="flex gap-4">
+                <h3 className="text-2xl mb-6 text-primary">Share This Release</h3>
+                
+                {/* Social Share Buttons */}
+                <div className="flex flex-wrap gap-3 mb-6">
+                  <Button 
+                    onClick={() => shareToLinkedIn(release)}
+                    className="bg-[#0077B5] hover:bg-[#006399] text-white"
+                  >
+                    <Linkedin className="w-4 h-4 mr-2" />
+                    Share on LinkedIn
+                  </Button>
+                  
+                  <Button 
+                    onClick={() => shareToTwitter(release)}
+                    className="bg-[#1DA1F2] hover:bg-[#1a8cd8] text-white"
+                  >
+                    <Twitter className="w-4 h-4 mr-2" />
+                    Share on Twitter
+                  </Button>
+                  
+                  <Button 
+                    onClick={() => shareToFacebook(release)}
+                    className="bg-[#1877F2] hover:bg-[#166fe5] text-white"
+                  >
+                    <Facebook className="w-4 h-4 mr-2" />
+                    Share on Facebook
+                  </Button>
+                </div>
+
+                {/* Copy Link Button */}
+                <div className="flex items-center gap-3">
                   <Button 
                     variant="outline"
-                    onClick={() => {
-                      if (navigator.share) {
+                    onClick={() => copyToClipboard(`${window.location.origin}/press`)}
+                    className="flex-1 max-w-md"
+                  >
+                    {copied ? (
+                      <>
+                        <CheckCircle2 className="w-4 h-4 mr-2 text-green-500" />
+                        Link Copied!
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-4 h-4 mr-2" />
+                        Copy Link
+                      </>
+                    )}
+                  </Button>
+                  
+                  {/* Native Share (for mobile) */}
+                  {navigator.share && (
+                    <Button 
+                      variant="outline"
+                      onClick={() => {
                         navigator.share({
                           title: release.title,
                           text: release.excerpt,
-                          url: window.location.href
+                          url: `${window.location.origin}/press`
                         });
-                      }
-                    }}
-                  >
-                    <Share2 className="w-4 h-4 mr-2" />
-                    Share
-                  </Button>
+                      }}
+                    >
+                      <Share2 className="w-4 h-4 mr-2" />
+                      More Options
+                    </Button>
+                  )}
+                </div>
+
+                {/* Pre-formatted Social Media Copy */}
+                <div className="mt-6 p-4 bg-accent/20 rounded-lg border border-border">
+                  <p className="text-sm font-semibold text-primary mb-2">Ready-to-post content:</p>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-background rounded border border-border">
+                      <p className="text-xs font-semibold text-muted-foreground mb-1">LinkedIn/Facebook:</p>
+                      <p className="text-sm">{release.title}</p>
+                      <p className="text-sm mt-2">{release.excerpt}</p>
+                      <p className="text-sm text-secondary mt-2">Read the full press release: {window.location.origin}/press</p>
+                    </div>
+                    <div className="p-3 bg-background rounded border border-border">
+                      <p className="text-xs font-semibold text-muted-foreground mb-1">Twitter/X:</p>
+                      <p className="text-sm">{release.title}</p>
+                      <p className="text-sm mt-2 text-secondary">{window.location.origin}/press</p>
+                      <p className="text-xs text-muted-foreground mt-2">
+                        #{release.tags.slice(0, 3).join(' #').replace(/\s+/g, '')}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -382,16 +535,42 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
                         ))}
                       </div>
                       
-                      <Button 
-                        onClick={() => {
-                          setViewingRelease(release.id);
-                          window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }}
-                        className="group-hover:gap-3 transition-all duration-300"
-                      >
-                        Read Full Release
-                        <ArrowRight className="w-4 h-4 ml-2 group-hover:ml-3 transition-all duration-300" />
-                      </Button>
+                      <div className="flex flex-wrap gap-3">
+                        <Button 
+                          onClick={() => {
+                            setViewingRelease(release.id);
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }}
+                          className="group-hover:gap-3 transition-all duration-300"
+                        >
+                          Read Full Release
+                          <ArrowRight className="w-4 h-4 ml-2 group-hover:ml-3 transition-all duration-300" />
+                        </Button>
+                        
+                        <Button 
+                          variant="outline"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            shareToLinkedIn(release);
+                          }}
+                          size="icon"
+                          title="Share on LinkedIn"
+                        >
+                          <Linkedin className="w-4 h-4" />
+                        </Button>
+                        
+                        <Button 
+                          variant="outline"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            shareToTwitter(release);
+                          }}
+                          size="icon"
+                          title="Share on Twitter"
+                        >
+                          <Twitter className="w-4 h-4" />
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </Card>
