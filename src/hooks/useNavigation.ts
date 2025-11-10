@@ -299,6 +299,7 @@ export function useNavigation() {
     showPresentationBuyers: () => navigateToPage('presentationBuyers'),
     showPresentationProjects: () => navigateToPage('presentationProjects'),
     showIdahoPilot: () => navigateToPage('idahoPilot'),
+    showIdahoPilotRegister: () => navigateToPage('idahoPilotRegister'),
   };
 
   const isOnSubPage = currentPage !== 'home';

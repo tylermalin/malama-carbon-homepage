@@ -913,7 +913,10 @@ export function PageRouter({
     case 'idahoPilot':
       return (
         <>
-          <IdahoPilotPage onNavigate={navigateToSection} />
+          <IdahoPilotPage 
+            onNavigate={navigateToSection}
+            onShowRegister={navigationFunctions.showIdahoPilotRegister}
+          />
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 

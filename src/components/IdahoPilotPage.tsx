@@ -26,9 +26,10 @@ import {
 
 interface IdahoPilotPageProps {
   onNavigate: (section?: string) => void;
+  onShowRegister?: () => void;
 }
 
-export function IdahoPilotPage({ onNavigate }: IdahoPilotPageProps) {
+export function IdahoPilotPage({ onNavigate, onShowRegister }: IdahoPilotPageProps) {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -82,7 +83,7 @@ export function IdahoPilotPage({ onNavigate }: IdahoPilotPageProps) {
               <Button 
                 size="lg" 
                 className="text-lg px-8 py-4"
-                onClick={() => onNavigate('idaho-pilot-register')}
+                onClick={() => onShowRegister?.()}
               >
                 <CheckCircle className="w-5 h-5 mr-2" />
                 Apply Now - Check Eligibility
@@ -638,7 +639,7 @@ export function IdahoPilotPage({ onNavigate }: IdahoPilotPageProps) {
               <Button 
                 size="lg" 
                 className="text-lg px-12 py-6"
-                onClick={() => onNavigate('idaho-pilot-register')}
+                onClick={() => onShowRegister?.()}
               >
                 <CheckCircle className="w-5 h-5 mr-2" />
                 Apply Now - Check Eligibility
