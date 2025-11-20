@@ -204,14 +204,14 @@ export function MessageComposer({
   };
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="flex flex-col max-h-[80vh]">
+      <CardHeader className="flex-shrink-0">
         <CardTitle className="flex items-center gap-2">
           <Send className="w-5 h-5" />
           Compose Message
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 overflow-y-auto flex-1">
         {/* Template Selector */}
         <div className="space-y-2">
           <Label>Message Template (Optional)</Label>
@@ -219,7 +219,7 @@ export function MessageComposer({
             <SelectTrigger>
               <SelectValue placeholder="Choose a template..." />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="max-h-[300px] overflow-y-auto">
               <SelectItem value="">-- No template --</SelectItem>
               {templates.map(template => (
                 <SelectItem key={template.id} value={template.id.toString()}>
@@ -248,7 +248,7 @@ export function MessageComposer({
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="max-h-[300px] overflow-y-auto">
               <SelectItem value="individual">Individual User</SelectItem>
               <SelectItem value="role">All Users in a Role</SelectItem>
               <SelectItem value="all">All Users</SelectItem>
@@ -264,7 +264,7 @@ export function MessageComposer({
               <SelectTrigger>
                 <SelectValue placeholder="Choose a user..." />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="max-h-[300px] overflow-y-auto">
                 {users.map(user => (
                   <SelectItem key={user.user_id} value={user.user_id}>
                     {user.full_name || user.email}
@@ -282,7 +282,7 @@ export function MessageComposer({
               <SelectTrigger>
                 <SelectValue placeholder="Choose a role..." />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="max-h-[300px] overflow-y-auto">
                 <SelectItem value="PROJECT_DEVELOPER">Project Developers</SelectItem>
                 <SelectItem value="TECHNOLOGY_DEVELOPER">Technology Developers</SelectItem>
                 <SelectItem value="CREDIT_BUYER">Credit Buyers</SelectItem>
@@ -309,7 +309,7 @@ export function MessageComposer({
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="max-h-[300px] overflow-y-auto">
               <SelectItem value="general">General</SelectItem>
               <SelectItem value="project_update">Project Update</SelectItem>
               <SelectItem value="credit_availability">Credit Availability</SelectItem>
@@ -326,7 +326,7 @@ export function MessageComposer({
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="max-h-[300px] overflow-y-auto">
               <SelectItem value="normal">Normal</SelectItem>
               <SelectItem value="high">High</SelectItem>
               <SelectItem value="urgent">Urgent</SelectItem>
@@ -395,5 +395,8 @@ export function MessageComposer({
     </Card>
   );
 }
+
+
+
 
 

@@ -87,19 +87,31 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
     );
   };
 
-  // Update meta tags for better sharing
+  // Update meta tags for better sharing and handle URL parameters
   React.useEffect(() => {
+    // Check URL parameters for direct links to press releases
+    const urlParams = new URLSearchParams(window.location.search);
+    const releaseParam = urlParams.get('release');
+    
+    if (releaseParam && !viewingRelease) {
+      setViewingRelease(releaseParam);
+    }
+    
     if (viewingRelease) {
       const release = pressReleases.find(r => r.id === viewingRelease);
       if (release) {
         // Update page title
         document.title = `${release.title} | Mālama Labs Press Release`;
         
+        // Update URL without page reload
+        const newUrl = `${window.location.origin}/press?release=${release.id}`;
+        window.history.replaceState({}, '', newUrl);
+        
         // Update or create Open Graph meta tags
         updateMetaTag('og:title', release.title);
         updateMetaTag('og:description', release.excerpt);
         updateMetaTag('og:image', release.image);
-        updateMetaTag('og:url', `${window.location.origin}/press`);
+        updateMetaTag('og:url', newUrl);
         updateMetaTag('og:type', 'article');
         
         // Twitter Card meta tags
@@ -109,8 +121,12 @@ export function PressReleasesPage({ onNavigate }: PressReleasesPageProps) {
         updateMetaTag('twitter:image', release.image, 'name');
         updateMetaTag('twitter:site', '@malamalabs', 'name');
       }
+    } else {
+      // Reset to default page meta tags
+      document.title = 'Press Releases | Mālama Labs';
+      window.history.replaceState({}, '', `${window.location.origin}/press`);
     }
-  }, [viewingRelease]);
+  }, [viewingRelease, pressReleases]);
 
   const updateMetaTag = (property: string, content: string, attributeName: string = 'property') => {
     let element = document.querySelector(`meta[${attributeName}="${property}"]`);

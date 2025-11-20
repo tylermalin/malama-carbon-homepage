@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Lock, 
@@ -20,7 +20,6 @@ import {
   Zap
 } from 'lucide-react';
 import { FinancialsPage } from './FinancialsPage';
-import { RequestAccessForm } from './RequestAccessForm';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -38,15 +37,23 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
   const [error, setError] = useState('');
   const [selectedTab, setSelectedTab] = useState('overview');
   const [financialsTab, setFinancialsTab] = useState('overview');
-  const [showRequestAccess, setShowRequestAccess] = useState(false);
+
+  useEffect(() => {
+    // Check if user is already authenticated from session storage
+    const authStatus = sessionStorage.getItem('investor_authenticated');
+    if (authStatus === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (password === 'malama2025' || password === 'investor2025') {
       setIsAuthenticated(true);
+      sessionStorage.setItem('investor_authenticated', 'true');
       setError('');
     } else {
-      setError('Invalid access code. Please contact us for access.');
+      setError('Invalid access code. Please contact tyler@malamalabs.com for access.');
     }
   };
 
@@ -95,29 +102,14 @@ export const InvestorPage: React.FC<InvestorPageProps> = ({ onNavigate, onContac
           </form>
 
           <div className="mt-6 text-center">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setShowRequestAccess(true)}
-              className="w-full border-emerald-500/30 text-emerald-700 hover:bg-emerald-50"
-            >
-              Request Access
-            </Button>
-            <p className="text-sm text-gray-500 mt-4">
-              Or contact us at{' '}
-              <a href="mailto:tyler@malamalabs.com" className="text-emerald-600 hover:text-emerald-700">
+            <p className="text-sm text-gray-500">
+              Need access? Contact us at{' '}
+              <a href="mailto:tyler@malamalabs.com" className="text-emerald-600 hover:text-emerald-700 font-medium">
                 tyler@malamalabs.com
               </a>
             </p>
           </div>
         </motion.div>
-
-        <RequestAccessForm
-          isOpen={showRequestAccess}
-          onClose={() => setShowRequestAccess(false)}
-          onSuccess={() => onNavigate('home')}
-          portalType="investor"
-        />
       </div>
     );
   }
