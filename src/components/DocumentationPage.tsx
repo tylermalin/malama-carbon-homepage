@@ -19,9 +19,22 @@ import {
 
 interface DocumentationPageProps {
   onNavigate: (section?: string) => void;
+  onShowGreenPaper?: () => void;
 }
 
-export function DocumentationPage({ onNavigate }: DocumentationPageProps) {
+export function DocumentationPage({ onNavigate, onShowGreenPaper }: DocumentationPageProps) {
+  const availableDocs = [
+    {
+      title: "The Mālama Green Paper V3.1",
+      description: "Universal Digital Integrity for the Carbon Economy - A comprehensive blueprint for carbon market clarity, ecological stewardship, and scalability",
+      icon: FileText,
+      status: "Available Now",
+      category: "Whitepaper",
+      action: onShowGreenPaper,
+      tags: ["Carbon Markets", "Digital MRV", "Blockchain", "Standards"]
+    }
+  ];
+
   const upcomingSections = [
     {
       title: "Getting Started",
@@ -121,6 +134,88 @@ export function DocumentationPage({ onNavigate }: DocumentationPageProps) {
         <div className="absolute top-1/4 left-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-1/4 right-10 w-40 h-40 bg-secondary/10 rounded-full blur-3xl"></div>
       </section>
+
+      {/* Knowledge Base - Available Now */}
+      {availableDocs.length > 0 && (
+        <section className="py-20 px-6 bg-gradient-to-br from-primary/5 via-background to-secondary/5">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <Badge variant="default" className="mb-6 text-lg px-6 py-2">
+                <BookOpen className="w-5 h-5 mr-2" />
+                Knowledge Base
+              </Badge>
+              <h2 className="text-5xl mb-6 text-primary">
+                Available Documentation
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Explore our published documentation and resources.
+              </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {availableDocs.map((doc, index) => (
+                <motion.div
+                  key={doc.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 group hover:border-primary cursor-pointer"
+                    onClick={doc.action}
+                  >
+                    <CardHeader className="pb-4">
+                      <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+                        <doc.icon className="w-8 h-8 text-primary" />
+                      </div>
+                      <div className="flex items-center justify-between mb-2">
+                        <Badge variant="secondary" className="text-xs">
+                          {doc.category}
+                        </Badge>
+                        <Badge variant="default" className="text-xs bg-green-500 hover:bg-green-600">
+                          {doc.status}
+                        </Badge>
+                      </div>
+                      <CardTitle className="text-xl text-primary group-hover:text-primary/80 transition-colors">
+                        {doc.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
+                        {doc.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {doc.tags?.map((tag) => (
+                          <Badge key={tag} variant="outline" className="text-xs">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                      <Button 
+                        variant="outline" 
+                        className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          doc.action?.();
+                        }}
+                      >
+                        Read Now
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Coming Soon Sections */}
       <section className="py-20 px-6">
