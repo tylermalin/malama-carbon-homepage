@@ -80,7 +80,8 @@ export const authHelpers = {
   async getCurrentSession() {
     try {
       if (!supabase) {
-        throw new Error('Supabase client not initialized');
+        // Supabase not configured - silently return null session
+        return { session: null, error: null };
       }
       
       const { data: { session }, error } = await supabase.auth.getSession();
@@ -91,7 +92,10 @@ export const authHelpers = {
 
       return { session, error: null };
     } catch (error) {
-      console.error('Get session error:', error);
+      // Only log errors if Supabase is configured (to avoid noise when it's intentionally not set up)
+      if (supabase) {
+        console.error('Get session error:', error);
+      }
       return { session: null, error: error instanceof Error ? error.message : 'Unknown error' };
     }
   },

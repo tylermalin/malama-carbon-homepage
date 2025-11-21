@@ -27,6 +27,7 @@ interface FooterProps {
   onShowPresentations?: () => void;
   onShowProjectGallery?: () => void;
   onShowIdahoPilot?: () => void;
+  onShowStake?: () => void;
 }
 
 const socialLinks = [
@@ -59,13 +60,15 @@ export function Footer({
   onShowPresentation,
   onShowPresentations,
   onShowProjectGallery,
-  onShowIdahoPilot
+  onShowIdahoPilot,
+  onShowStake
 }: FooterProps) {
   
   const companyLinks = [
     { name: "About Mālama Labs", action: onShowAbout, description: "Our mission, vision, and values" },
     { name: "Our Technology", action: onShowPlatform, description: "Universal dMRV, Risk & Integrity Engine" },
     { name: "Projects", action: onShowProjectGallery, description: "Active carbon innovation sites" },
+    { name: "Stake to Mālama", action: onShowStake, description: "Delegate ADA and support climate action" },
     { name: "Idaho Pilot Project 2026 - Participate!", action: onShowIdahoPilot, description: "Enhanced rock weathering for farmers" },
     { name: "Our Team", action: onShowTeam, description: "Leadership and advisors" },
     { name: "Careers", action: onShowCareers, description: "Join the Mālama mission" }

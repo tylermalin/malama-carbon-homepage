@@ -15,6 +15,12 @@ export function useAuth() {
     try {
       const { session, error } = await authHelpers.getCurrentSession();
       
+      // Silently skip if Supabase is not configured
+      if (!session && !error) {
+        setIsCheckingAuth(false);
+        return;
+      }
+      
       if (!error && session?.access_token) {
         setUser({
           id: session.user.id,
@@ -24,7 +30,10 @@ export function useAuth() {
         });
       }
     } catch (error) {
-      console.error('Error checking session:', error);
+      // Only log if Supabase is configured (to avoid noise)
+      if (import.meta.env.VITE_SUPABASE_URL) {
+        console.error('Error checking session:', error);
+      }
     } finally {
       setIsCheckingAuth(false);
     }

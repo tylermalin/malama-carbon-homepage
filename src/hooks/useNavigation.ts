@@ -54,7 +54,9 @@ export type PageType =
   | 'onboardingV2CreditBuyer'
   | 'onboardingV2Partner'
   | 'idahoPilot'
-  | 'idahoPilotRegister';
+  | 'idahoPilotRegister'
+  | 'greenPaper'
+  | 'stake';
 
 // Map URL paths to page types
 const pathToPageMap: Record<string, PageType> = {
@@ -105,6 +107,9 @@ const pathToPageMap: Record<string, PageType> = {
   '/onboarding/v2/partner': 'onboardingV2Partner',
   '/idaho-pilot': 'idahoPilot',
   '/idaho-pilot/register': 'idahoPilotRegister',
+  '/green-paper': 'greenPaper',
+  '/stake': 'stake',
+  '/stake-to-malama': 'stake',
 };
 
 // Map page types to URL paths
@@ -150,6 +155,8 @@ const pageToPathMap: Record<PageType, string> = {
   onboardingV2Partner: '/onboarding/v2/partner',
   idahoPilot: '/idaho-pilot',
   idahoPilotRegister: '/idaho-pilot/register',
+  greenPaper: '/green-paper',
+  stake: '/stake',
 };
 
 function getInitialPage(): PageType {
@@ -212,6 +219,8 @@ export function useNavigation() {
         onboardingV2Partner: 'Partner Registration | Mālama Labs',
         idahoPilot: 'Idaho Rock Weathering Pilot – Farmers & Landowners | Mālama Labs',
         idahoPilotRegister: 'Apply for Idaho Pilot | Mālama Labs',
+        greenPaper: 'The Mālama Green Paper V3.1 | Mālama Labs',
+        stake: 'Stake to Mālama | Mālama Labs',
       };
       
       document.title = pageTitles[currentPage] || 'Mālama Labs';
@@ -300,6 +309,8 @@ export function useNavigation() {
     showPresentationProjects: () => navigateToPage('presentationProjects'),
     showIdahoPilot: () => navigateToPage('idahoPilot'),
     showIdahoPilotRegister: () => navigateToPage('idahoPilotRegister'),
+    showGreenPaper: () => navigateToPage('greenPaper'),
+    showStake: () => navigateToPage('stake'),
   };
 
   const isOnSubPage = currentPage !== 'home';

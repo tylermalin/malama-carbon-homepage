@@ -52,6 +52,8 @@ import { AdminAnalyticsDashboard } from './AdminAnalyticsDashboard';
 import { StorageTest } from './StorageTest';
 import { IdahoPilotPage } from './IdahoPilotPage';
 import { IdahoPilotRegistrationPage } from './IdahoPilotRegistrationPage';
+import { GreenPaperPage } from './GreenPaperPage';
+import { StakePage } from './StakePage';
 import { Cpu, Flame, Coins } from 'lucide-react';
 
 // Onboarding V2 Components
@@ -96,6 +98,8 @@ interface PageRouterProps {
     showPresentations: () => void;
     showPresentationBuyers: () => void;
     showPresentationProjects: () => void;
+    showGreenPaper: () => void;
+    showStake: () => void;
   };
   navigateToSection: (section?: string) => void;
 }
@@ -156,7 +160,9 @@ export function PageRouter({
     showPresentations,
     showPresentationBuyers,
     showPresentationProjects,
-    showIdahoPilot
+    showIdahoPilot,
+    showGreenPaper,
+    showStake
   } = navigationFunctions;
 
   // Render individual pages
@@ -198,6 +204,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -230,6 +237,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -272,6 +280,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -316,6 +325,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -323,7 +333,10 @@ export function PageRouter({
     case 'documentation':
       return (
         <>
-          <DocumentationPage onNavigate={navigateToSection} />
+          <DocumentationPage 
+            onNavigate={navigateToSection} 
+            onShowGreenPaper={showGreenPaper}
+          />
           <Footer 
             onShowDocumentation={showDocumentation} 
             onShowBlog={showBlog} 
@@ -348,6 +361,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -380,6 +394,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -412,6 +427,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -444,6 +460,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -476,6 +493,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -508,6 +526,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -540,6 +559,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -572,6 +592,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -604,6 +625,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -648,6 +670,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -683,6 +706,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -718,6 +742,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -753,6 +778,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -799,6 +825,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
@@ -941,12 +968,51 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
     
     case 'idahoPilotRegister':
       return <IdahoPilotRegistrationPage onNavigate={navigateToSection} />;
+    
+    case 'greenPaper':
+      return <GreenPaperPage />;
+    
+    case 'stake':
+      return (
+        <>
+          <StakePage 
+            onNavigate={navigateToSection}
+            navigationFunctions={{
+              onShowDocumentation: showDocumentation,
+              onShowBlog: showBlog,
+              onShowPressReleases: showPressReleases,
+              onShowPlatform: showPlatform,
+              onShowHowItWorks: showHowItWorks,
+              onShowAbout: showAbout,
+              onShowTeam: showTeam,
+              onShowContact: showContact,
+              onShowCareers: showCareers,
+              onShowFAQ: showFAQ,
+              onShowPrivacyPolicy: showPrivacyPolicy,
+              onShowTermsOfService: showTermsOfService,
+              onShowCookiePolicy: showCookiePolicy,
+              onShowCarbonStudio: showCarbonStudio,
+              onShowCarbonProtocols: showCarbonProtocols,
+              onShowDMRVEngine: showDMRVEngine,
+              onShowFinancials: showFinancials,
+              onShowInvestor: showInvestor,
+              onShowAdvisory: showAdvisory,
+              onShowPresentation: showPresentation,
+              onShowPresentations: showPresentations,
+              onShowProjectGallery: showProjectGallery,
+              onShowIdahoPilot: showIdahoPilot,
+              onShowStake: showStake,
+            }}
+          />
+        </>
+      );
     
     case 'home':
     default:
@@ -1001,6 +1067,7 @@ export function PageRouter({
             onShowPresentations={showPresentations}
             onShowProjectGallery={showProjectGallery}
             onShowIdahoPilot={showIdahoPilot}
+            onShowStake={showStake}
           />
         </>
       );
