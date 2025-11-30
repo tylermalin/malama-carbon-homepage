@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { AuthModal } from './components/AuthModal';
 import { NavigationBar } from './components/NavigationBar';
 import { PageRouter } from './components/PageRouter';
@@ -90,6 +91,7 @@ export default function App() {
           onClose={closeAuthModal}
           onAuthSuccess={handleAuthSuccess}
         />
+        <Analytics />
       </main>
     </DataProvider>
   );
